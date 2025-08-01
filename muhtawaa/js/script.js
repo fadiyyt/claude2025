@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
     // متغيرات عامة
     let currentPage = 1;
     let isLoading = false;
-    let noMoreContent = false; // إضافة متغير لمنع الرسائل المتكررة
+    let noMoreContent = false;
     let searchTimeout;
     let readingStartTime = Date.now();
     let maxScrollDepth = 0;
@@ -792,4 +792,185 @@ jQuery(document).ready(function($) {
                     left: '-10000px',
                     width: '1px',
                     height: '1px'
+                })
+                .appendTo('body');
+        }
+    }
+    
+    // تتبع سلوك المستخدم
+    function trackUserBehavior() {
+        // تتبع التمرير
+        $(window).on('scroll', throttle(function() {
+            const scrollTop = $(window).scrollTop();
+            const docHeight = $(document).height();
+            const winHeight = $(window).height();
+            const scrollPercent = Math.round((scrollTop / (docHeight - winHeight)) * 100);
+            
+            if (scrollPercent > maxScrollDepth) {
+                maxScrollDepth = scrollPercent;
+            }
+        }, 250));
+        
+        // تتبع وقت القراءة
+        $(window).on('beforeunload', function() {
+            if (window.muhtawaa_ajax && window.muhtawaa_ajax.post_id) {
+                const timeSpent = Math.round((Date.now() - readingStartTime) / 1000);
                 
+                if (timeSpent > 10 && maxScrollDepth > 25) {
+                    navigator.sendBeacon(window.muhtawaa_ajax.ajax_url, new URLSearchParams({
+                        action: 'track_reading',
+                        post_id: window.muhtawaa_ajax.post_id,
+                        reading_time: timeSpent,
+                        scroll_depth: maxScrollDepth,
+                        nonce: window.muhtawaa_ajax.nonce
+                    }));
+                }
+            }
+        });
+    }
+    
+    // دوال مساعدة
+    function throttle(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function trackSearch(searchTerm, resultsCount) {
+        if (!window.muhtawaa_ajax) return;
+        
+        $.ajax({
+            url: window.muhtawaa_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'track_search',
+                search_term: searchTerm,
+                results_count: resultsCount,
+                nonce: window.muhtawaa_ajax.nonce
+            }
+        });
+    }
+    
+    function trackShare(platform, url) {
+        if (!window.muhtawaa_ajax) return;
+        
+        $.ajax({
+            url: window.muhtawaa_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'track_share',
+                platform: platform,
+                url: url,
+                nonce: window.muhtawaa_ajax.nonce
+            }
+        });
+    }
+    
+    // دالة إظهار الإشعارات
+    function showNotification(message, type = 'info') {
+        // إزالة الإشعارات السابقة
+        $('.notification').remove();
+        
+        const notification = $(`
+            <div class="notification notification-${type}">
+                <span class="notification-message">${message}</span>
+                <button class="notification-close" aria-label="إغلاق الإشعار">&times;</button>
+            </div>
+        `);
+        
+        $('body').append(notification);
+        
+        // إظهار الإشعار
+        setTimeout(() => {
+            notification.addClass('show');
+        }, 100);
+        
+        // إخفاء تلقائي بعد 5 ثوان
+        setTimeout(() => {
+            hideNotification(notification);
+        }, 5000);
+        
+        // إغلاق عند الضغط على X
+        notification.find('.notification-close').on('click', function() {
+            hideNotification(notification);
+        });
+        
+        // تحديث ARIA live region
+        $('#aria-live-region').text(message);
+    }
+    
+    function hideNotification(notification) {
+        notification.removeClass('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }
+    
+    // تسجيل أخطاء JavaScript
+    window.addEventListener('error', function(e) {
+        if (window.muhtawaa_ajax) {
+            $.ajax({
+                url: window.muhtawaa_ajax.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'log_js_error',
+                    error: e.message,
+                    url: window.location.href,
+                    nonce: window.muhtawaa_ajax.nonce
+                }
+            });
+        }
+    });
+    
+    // دوال عامة للاستخدام في الصفحات الأخرى
+    window.searchFor = function(term) {
+        const $searchInput = $('.search-field, .search-bar input[type="search"]').first();
+        if ($searchInput.length) {
+            $searchInput.val(term).focus();
+            hideSearchResults();
+            performLiveSearch(term);
+        }
+    };
+    
+    window.loadRandomTip = loadRandomTip;
+    window.showNotification = showNotification;
+    window.copyToClipboard = copyToClipboard;
+    
+});
+
+// دوال خارج jQuery للاستخدام العام
+function searchFor(term) {
+    if (window.searchFor) {
+        window.searchFor(term);
+    }
+}
+
+function loadRandomTip() {
+    if (window.loadRandomTip) {
+        window.loadRandomTip();
+    }
+}
+                    
