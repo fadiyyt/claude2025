@@ -151,9 +151,35 @@ function muhtawaa_create_solution_categories() {
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
         'show_tagcloud' => true,
+        'query_var' => true,
+        'show_in_rest' => true,
     ));
 }
 add_action('init', 'muhtawaa_create_solution_categories');
+
+// إنشاء فئات افتراضية
+function muhtawaa_create_default_categories() {
+    $categories = array(
+        'المنزل والتنظيف' => 'حلول عملية للتنظيف والترتيب المنزلي',
+        'المطبخ والطبخ' => 'نصائح وحيل للمطبخ والطبخ',
+        'توفير المال' => 'طرق ذكية لتوفير المال في الحياة اليومية',
+        'السيارات' => 'نصائح صيانة وحلول لمشاكل السيارات',
+        'التكنولوجيا' => 'حلول للمشاكل التقنية والأجهزة الذكية',
+        'الطقس والمناخ' => 'حلول للتعامل مع الطقس الحار والبارد'
+    );
+    
+    foreach ($categories as $name => $description) {
+        if (!term_exists($name, 'solution_category')) {
+            wp_insert_term($name, 'solution_category', array(
+                'description' => $description,
+                'slug' => sanitize_title($name)
+            ));
+        }
+    }
+}
+
+// تنشيط الجداول عند تفعيل القالب
+add_action('after_switch_theme', 'muhtawaa_create_custom_tables');
 
 // إضافة حقول مخصصة للمقالات
 function muhtawaa_add_solution_meta_boxes() {
@@ -434,84 +460,14 @@ function muhtawaa_defer_scripts($tag, $handle, $src) {
 }
 add_filter('script_loader_tag', 'muhtawaa_defer_scripts', 10, 3);
 
-// إضافة خيارات مخصصة للقالب
-function muhtawaa_customize_register($wp_customize) {
-    // قسم إعدادات الموقع
-    $wp_customize->add_section('muhtawaa_settings', array(
-        'title' => __('إعدادات محتوى', 'muhtawaa'),
-        'priority' => 30,
-    ));
-    
-    // رابط تويتر
-    $wp_customize->add_setting('muhtawaa_twitter', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('muhtawaa_twitter', array(
-        'label' => __('رابط تويتر', 'muhtawaa'),
-        'section' => 'muhtawaa_settings',
-        'type' => 'url',
-    ));
-    
-    // رابط فيسبوك
-    $wp_customize->add_setting('muhtawaa_facebook', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('muhtawaa_facebook', array(
-        'label' => __('رابط فيسبوك', 'muhtawaa'),
-        'section' => 'muhtawaa_settings',
-        'type' => 'url',
-    ));
-    
-    // رابط انستغرام
-    $wp_customize->add_setting('muhtawaa_instagram', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('muhtawaa_instagram', array(
-        'label' => __('رابط انستغرام', 'muhtawaa'),
-        'section' => 'muhtawaa_settings',
-        'type' => 'url',
-    ));
-    
-    // رابط يوتيوب
-    $wp_customize->add_setting('muhtawaa_youtube', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('muhtawaa_youtube', array(
-        'label' => __('رابط يوتيوب', 'muhtawaa'),
-        'section' => 'muhtawaa_settings',
-        'type' => 'url',
-    ));
-    
-    // رابط تيك توك
-    $wp_customize->add_setting('muhtawaa_tiktok', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
-    ));
-    
-    $wp_customize->add_control('muhtawaa_tiktok', array(
-        'label' => __('رابط تيك توك', 'muhtawaa'),
-        'section' => 'muhtawaa_settings',
-        'type' => 'url',
-    ));
-}
-add_action('customize_register', 'muhtawaa_customize_register');
-
 // دالة مساعدة للحصول على روابط وسائل التواصل
 function muhtawaa_get_social_links() {
     return array(
-        'twitter' => get_theme_mod('muhtawaa_twitter', ''),
-        'facebook' => get_theme_mod('muhtawaa_facebook', ''),
-        'instagram' => get_theme_mod('muhtawaa_instagram', ''),
-        'youtube' => get_theme_mod('muhtawaa_youtube', ''),
-        'tiktok' => get_theme_mod('muhtawaa_tiktok', ''),
+        'twitter' => '',
+        'facebook' => '',
+        'instagram' => '',
+        'youtube' => '',
+        'tiktok' => '',
     );
 }
 
@@ -523,7 +479,7 @@ function muhtawaa_create_custom_tables() {
     
     // جدول المشتركين
     $subscribers_table = $wpdb->prefix . 'muhtawaa_subscribers';
-    $sql_subscribers = "CREATE TABLE $subscribers_table (
+    $sql_subscribers = "CREATE TABLE IF NOT EXISTS $subscribers_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         email varchar(100) NOT NULL,
         date_subscribed datetime DEFAULT CURRENT_TIMESTAMP,
@@ -535,7 +491,7 @@ function muhtawaa_create_custom_tables() {
     
     // جدول البحثات
     $searches_table = $wpdb->prefix . 'muhtawaa_searches';
-    $sql_searches = "CREATE TABLE $searches_table (
+    $sql_searches = "CREATE TABLE IF NOT EXISTS $searches_table (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         search_term varchar(255) NOT NULL,
         results_count int(11) DEFAULT 0,
@@ -554,32 +510,10 @@ function muhtawaa_create_custom_tables() {
     muhtawaa_create_default_categories();
 }
 
-// إنشاء فئات افتراضية
-function muhtawaa_create_default_categories() {
-    $categories = array(
-        'المنزل والتنظيف' => 'حلول عملية للتنظيف والترتيب المنزلي',
-        'المطبخ والطبخ' => 'نصائح وحيل للمطبخ والطبخ',
-        'توفير المال' => 'طرق ذكية لتوفير المال في الحياة اليومية',
-        'السيارات' => 'نصائح صيانة وحلول لمشاكل السيارات',
-        'التكنولوجيا' => 'حلول للمشاكل التقنية والأجهزة الذكية',
-        'الطقس والمناخ' => 'حلول للتعامل مع الطقس الحار والبارد'
-    );
-    
-    foreach ($categories as $name => $description) {
-        if (!term_exists($name, 'solution_category')) {
-            wp_insert_term($name, 'solution_category', array(
-                'description' => $description,
-                'slug' => sanitize_title($name)
-            ));
-        }
-    }
+// تضمين ملف وظائف AJAX إذا كان موجوداً
+if (file_exists(get_template_directory() . '/inc/ajax-functions.php')) {
+    require_once get_template_directory() . '/inc/ajax-functions.php';
 }
-
-// تنشيط الجداول عند تفعيل القالب
-add_action('after_switch_theme', 'muhtawaa_create_custom_tables');
-
-// تضمين ملف وظائف AJAX
-require_once get_template_directory() . '/inc/ajax-functions.php';
 
 // تنظيف قاعدة البيانات من البيانات القديمة
 function muhtawaa_cleanup_old_data() {
@@ -803,9 +737,11 @@ add_action('init', 'muhtawaa_disable_emojis');
 // تحسين أداء ووردبريس
 function muhtawaa_optimize_performance() {
     // إزالة query strings من static resources
-    function remove_query_strings($src) {
-        $parts = explode('?ver', $src);
-        return $parts[0];
+    if (!function_exists('remove_query_strings')) {
+        function remove_query_strings($src) {
+            $parts = explode('?ver', $src);
+            return $parts[0];
+        }
     }
     add_filter('script_loader_src', 'remove_query_strings', 15, 1);
     add_filter('style_loader_src', 'remove_query_strings', 15, 1);
