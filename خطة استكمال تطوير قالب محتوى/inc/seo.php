@@ -576,74 +576,10 @@ class MuhtawaaSEO {
      * إضافة قواعد إعادة كتابة Sitemap
      */
     public static function add_sitemap_rewrite() {
-        add_rewrite_rule('^sitemap\.xml<?php
-/**
- * تحسين محركات البحث المتقدم - قالب محتوى
- * Advanced SEO Optimization
- * 
- * @package Muhtawaa
- * @version 2.0
- * @since 1.0.0
- */
-
-// منع الوصول المباشر للملف
-if (!defined('ABSPATH')) {
-    exit('لا يُسمح بالوصول المباشر لهذا الملف');
-}
-
-/**
- * فئة تحسين, 'index.php?muhtawaa_sitemap=1', 'top');
-        add_rewrite_rule('^sitemap-posts\.xml<?php
-/**
- * تحسين محركات البحث المتقدم - قالب محتوى
- * Advanced SEO Optimization
- * 
- * @package Muhtawaa
- * @version 2.0
- * @since 1.0.0
- */
-
-// منع الوصول المباشر للملف
-if (!defined('ABSPATH')) {
-    exit('لا يُسمح بالوصول المباشر لهذا الملف');
-}
-
-/**
- * فئة تحسين, 'index.php?muhtawaa_sitemap=posts', 'top');
-        add_rewrite_rule('^sitemap-pages\.xml<?php
-/**
- * تحسين محركات البحث المتقدم - قالب محتوى
- * Advanced SEO Optimization
- * 
- * @package Muhtawaa
- * @version 2.0
- * @since 1.0.0
- */
-
-// منع الوصول المباشر للملف
-if (!defined('ABSPATH')) {
-    exit('لا يُسمح بالوصول المباشر لهذا الملف');
-}
-
-/**
- * فئة تحسين, 'index.php?muhtawaa_sitemap=pages', 'top');
-        add_rewrite_rule('^sitemap-categories\.xml<?php
-/**
- * تحسين محركات البحث المتقدم - قالب محتوى
- * Advanced SEO Optimization
- * 
- * @package Muhtawaa
- * @version 2.0
- * @since 1.0.0
- */
-
-// منع الوصول المباشر للملف
-if (!defined('ABSPATH')) {
-    exit('لا يُسمح بالوصول المباشر لهذا الملف');
-}
-
-/**
- * فئة تحسين, 'index.php?muhtawaa_sitemap=categories', 'top');
+        add_rewrite_rule('^sitemap\.xml$', 'index.php?muhtawaa_sitemap=1', 'top');
+        add_rewrite_rule('^sitemap-posts\.xml$', 'index.php?muhtawaa_sitemap=posts', 'top');
+        add_rewrite_rule('^sitemap-pages\.xml$', 'index.php?muhtawaa_sitemap=pages', 'top');
+        add_rewrite_rule('^sitemap-categories\.xml$', 'index.php?muhtawaa_sitemap=categories', 'top');
     }
     
     /**
@@ -1234,6 +1170,14 @@ if (!defined('ABSPATH')) {
             update_post_meta($post_id, '_muhtawaa_og_image', $og_image);
         }
     }
+    
+    /**
+     * إضافة ترميز Schema (لمنع الخطأ)
+     */
+    public static function add_schema_markup() {
+        // يمكنك هنا إضافة ترميز schema.org حسب الحاجة
+        // مثال: إضافة بيانات منظمة للمقال أو الصفحة
+    }
 }
 
 // تهيئة فئة SEO
@@ -1244,4 +1188,4 @@ add_action('add_meta_boxes', array('MuhtawaaSEO', 'add_seo_meta_box'));
 add_action('save_post', array('MuhtawaaSEO', 'save_seo_meta_box'));
 
 // إضافة أنماط breadcrumbs
-add_action('wp_head', array('MuhtawaaSEO', 'breadcrumbs_styles'));<?php
+add_action('wp_head', array('MuhtawaaSEO', 'breadcrumbs_styles'));
