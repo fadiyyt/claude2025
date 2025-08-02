@@ -518,15 +518,14 @@ add_action('muhtawaa_performance_report', array('MuhtawaaPerformance', 'generate
 // مراقبة الاستعلامات البطيئة في وضع التطوير
 if (muhtawaa_is_development()) {
     add_action('shutdown', array('MuhtawaaPerformance', 'monitor_slow_queries'));
-}ة المسافات الزائدة والتعليقات
+} // المسافات الزائدة والتعليقات
         $html = preg_replace('/<!--(?!<!)[^\[>].*?-->/', '', $html);
         $html = preg_replace('/\s+/', ' ', $html);
-        $html = preg_replace('/>\s+</', '><', $html);
         
         return trim($html);
     }
     
-    /**
+} // المسافات الزائدة والتعليقات
      * تحسين جودة الصور
      */
     public static function optimize_image_quality($editors) {
@@ -731,4 +730,4 @@ if (muhtawaa_is_development()) {
         // إزالة المسافات الزائدة
         $css = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css);
         
-        // إزال
+        // إزال}
