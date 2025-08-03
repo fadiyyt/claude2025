@@ -60,98 +60,78 @@ class MuhtawaaWidgets {
             'description'   => __('تظهر أعلى الهيدر', 'muhtawaa'),
             'before_widget' => '<div id="%1$s" class="header-widget %2$s">',
             'after_widget'  => '</div>',
-            'before_title'  => '<span class="header-widget-title">',
+            'before_title'  => '<span class="widget-title">',
             'after_title'   => '</span>',
         ));
         
-        // منطقة قبل المحتوى
+        // منطقة أسفل المحتوى
         register_sidebar(array(
-            'name'          => __('قبل المحتوى', 'muhtawaa'),
-            'id'            => 'before-content',
-            'description'   => __('تظهر قبل محتوى الصفحة الرئيسية', 'muhtawaa'),
-            'before_widget' => '<div id="%1$s" class="before-content-widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h2 class="section-title">',
-            'after_title'   => '</h2>',
-        ));
-        
-        // منطقة بعد المحتوى
-        register_sidebar(array(
-            'name'          => __('بعد المحتوى', 'muhtawaa'),
+            'name'          => __('أسفل المحتوى', 'muhtawaa'),
             'id'            => 'after-content',
-            'description'   => __('تظهر بعد محتوى الصفحة الرئيسية', 'muhtawaa'),
+            'description'   => __('تظهر بعد المحتوى الرئيسي', 'muhtawaa'),
             'before_widget' => '<div id="%1$s" class="after-content-widget %2$s">',
             'after_widget'  => '</div>',
-            'before_title'  => '<h2 class="section-title">',
-            'after_title'   => '</h2>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
         ));
         
         // مناطق التذييل (4 أعمدة)
         for ($i = 1; $i <= 4; $i++) {
             register_sidebar(array(
                 'name'          => sprintf(__('تذييل الموقع %d', 'muhtawaa'), $i),
-                'id'            => "footer-{$i}",
+                'id'            => 'footer-' . $i,
                 'description'   => sprintf(__('العمود %d في تذييل الموقع', 'muhtawaa'), $i),
                 'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
                 'after_widget'  => '</div>',
-                'before_title'  => '<h4 class="footer-widget-title">',
+                'before_title'  => '<h4 class="widget-title">',
                 'after_title'   => '</h4>',
             ));
         }
         
-        // منطقة التذييل السفلية
+        // منطقة المتجر (WooCommerce)
+        if (class_exists('WooCommerce')) {
+            register_sidebar(array(
+                'name'          => __('شريط المتجر الجانبي', 'muhtawaa'),
+                'id'            => 'shop-sidebar',
+                'description'   => __('يظهر في صفحات المتجر', 'muhtawaa'),
+                'before_widget' => '<div id="%1$s" class="widget shop-widget %2$s">',
+                'after_widget'  => '</div>',
+                'before_title'  => '<h3 class="widget-title">',
+                'after_title'   => '</h3>',
+            ));
+        }
+        
+        // منطقة قبل المقال
         register_sidebar(array(
-            'name'          => __('التذييل السفلي', 'muhtawaa'),
-            'id'            => 'footer-bottom',
-            'description'   => __('تظهر في أسفل التذييل', 'muhtawaa'),
-            'before_widget' => '<div id="%1$s" class="footer-bottom-widget %2$s">',
+            'name'          => __('قبل المقال', 'muhtawaa'),
+            'id'            => 'before-post',
+            'description'   => __('تظهر قبل محتوى المقال', 'muhtawaa'),
+            'before_widget' => '<div id="%1$s" class="before-post-widget %2$s">',
             'after_widget'  => '</div>',
-            'before_title'  => '<h5 class="footer-bottom-title">',
-            'after_title'   => '</h5>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
+        ));
+        
+        // منطقة بعد المقال
+        register_sidebar(array(
+            'name'          => __('بعد المقال', 'muhtawaa'),
+            'id'            => 'after-post',
+            'description'   => __('تظهر بعد محتوى المقال', 'muhtawaa'),
+            'before_widget' => '<div id="%1$s" class="after-post-widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
         ));
         
         // منطقة للإعلانات
         register_sidebar(array(
             'name'          => __('منطقة الإعلانات', 'muhtawaa'),
             'id'            => 'ads-area',
-            'description'   => __('لعرض الإعلانات في مواقع مختلفة', 'muhtawaa'),
+            'description'   => __('لعرض الإعلانات', 'muhtawaa'),
             'before_widget' => '<div id="%1$s" class="ads-widget %2$s">',
             'after_widget'  => '</div>',
-            'before_title'  => '<span class="ads-title">',
-            'after_title'   => '</span>',
-        ));
-        
-        // منطقة مخصصة للصفحة الرئيسية
-        register_sidebar(array(
-            'name'          => __('الصفحة الرئيسية - منطقة البطل', 'muhtawaa'),
-            'id'            => 'homepage-hero',
-            'description'   => __('تظهر في أعلى الصفحة الرئيسية', 'muhtawaa'),
-            'before_widget' => '<div id="%1$s" class="hero-widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h1 class="hero-title">',
-            'after_title'   => '</h1>',
-        ));
-        
-        // منطقة للحلول المميزة
-        register_sidebar(array(
-            'name'          => __('الحلول المميزة', 'muhtawaa'),
-            'id'            => 'featured-solutions',
-            'description'   => __('لعرض الحلول المميزة', 'muhtawaa'),
-            'before_widget' => '<div id="%1$s" class="featured-widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h2 class="featured-title">',
-            'after_title'   => '</h2>',
-        ));
-        
-        // منطقة للفئات الشائعة
-        register_sidebar(array(
-            'name'          => __('الفئات الشائعة', 'muhtawaa'),
-            'id'            => 'popular-categories',
-            'description'   => __('لعرض الفئات الأكثر شعبية', 'muhtawaa'),
-            'before_widget' => '<div id="%1$s" class="categories-widget %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h2 class="categories-title">',
-            'after_title'   => '</h2>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
         ));
         
         // منطقة للنشرة الإخبارية
@@ -213,7 +193,12 @@ class MuhtawaaWidgets {
     /**
      * إضافة حقل فئة CSS مخصصة لنموذج الويدجت
      */
-    public static function widget_form_extend($instance, $widget) {
+    public static function widget_form_extend($widget, $return, $instance) {
+        // التحقق من أن $instance مصفوفة
+        if (!is_array($instance)) {
+            $instance = array();
+        }
+        
         $custom_class = isset($instance['custom_class']) ? $instance['custom_class'] : '';
         ?>
         <p>
@@ -228,13 +213,17 @@ class MuhtawaaWidgets {
             <small><?php _e('أضف فئات CSS مخصصة للويدجت (اختياري)', 'muhtawaa'); ?></small>
         </p>
         <?php
+        
+        return null;
     }
     
     /**
      * حفظ فئة CSS المخصصة
      */
-    public static function widget_update_extend($instance, $new_instance) {
-        $instance['custom_class'] = sanitize_text_field($new_instance['custom_class']);
+    public static function widget_update_extend($instance, $new_instance, $old_instance, $widget) {
+        if (isset($new_instance['custom_class'])) {
+            $instance['custom_class'] = sanitize_text_field($new_instance['custom_class']);
+        }
         return $instance;
     }
     
@@ -284,7 +273,12 @@ class MuhtawaaWidgets {
     /**
      * إضافة خيارات عرض للويدجت
      */
-    public static function add_widget_display_options($instance, $widget) {
+    public static function add_widget_display_options($widget, $return, $instance) {
+        // التحقق من أن $instance مصفوفة
+        if (!is_array($instance)) {
+            $instance = array();
+        }
+        
         $hide_on_mobile = isset($instance['hide_on_mobile']) ? $instance['hide_on_mobile'] : false;
         $hide_on_desktop = isset($instance['hide_on_desktop']) ? $instance['hide_on_desktop'] : false;
         $show_only_logged_in = isset($instance['show_only_logged_in']) ? $instance['show_only_logged_in'] : false;
@@ -318,6 +312,8 @@ class MuhtawaaWidgets {
             </label>
         </p>
         <?php
+        
+        return null;
     }
     
     /**
@@ -326,12 +322,32 @@ class MuhtawaaWidgets {
     public static function widget_display_callback($params) {
         global $wp_registered_widgets;
         
+        if (!isset($params[0]['widget_id'])) {
+            return $params;
+        }
+        
         $widget_id = $params[0]['widget_id'];
+        
+        if (!isset($wp_registered_widgets[$widget_id])) {
+            return $params;
+        }
+        
         $widget_obj = $wp_registered_widgets[$widget_id];
+        
+        // التحقق من وجود callback و option_name
+        if (!isset($widget_obj['callback'][0]) || !is_object($widget_obj['callback'][0]) || !isset($widget_obj['callback'][0]->option_name)) {
+            return $params;
+        }
+        
         $widget_opt = get_option($widget_obj['callback'][0]->option_name);
+        
+        if (!isset($widget_obj['params'][0]['number'])) {
+            return $params;
+        }
+        
         $widget_num = $widget_obj['params'][0]['number'];
         
-        if (isset($widget_opt[$widget_num])) {
+        if (isset($widget_opt[$widget_num]) && is_array($widget_opt[$widget_num])) {
             $instance = $widget_opt[$widget_num];
             
             // إخفاء على الجوال
@@ -356,8 +372,8 @@ class MuhtawaaWidgets {
 
 // تفعيل الخطافات
 add_filter('dynamic_sidebar_params', array('MuhtawaaWidgets', 'widget_custom_classes'));
-add_action('in_widget_form', array('MuhtawaaWidgets', 'widget_form_extend'), 10, 2);
-add_filter('widget_update_callback', array('MuhtawaaWidgets', 'widget_update_extend'), 10, 2);
+add_action('in_widget_form', array('MuhtawaaWidgets', 'widget_form_extend'), 10, 3);
+add_filter('widget_update_callback', array('MuhtawaaWidgets', 'widget_update_extend'), 10, 4);
 add_action('admin_head-widgets.php', array('MuhtawaaWidgets', 'add_widget_icons'));
-add_action('in_widget_form', array('MuhtawaaWidgets', 'add_widget_display_options'), 10, 2);
+add_action('in_widget_form', array('MuhtawaaWidgets', 'add_widget_display_options'), 10, 3);
 add_filter('dynamic_sidebar_params', array('MuhtawaaWidgets', 'widget_display_callback'));
