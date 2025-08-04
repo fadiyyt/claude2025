@@ -1291,7 +1291,19 @@ class MuhtawaaMaintenance {
         global $wpdb;
         
         $table_name = $wpdb->prefix . 'muhtawaa_maintenance_log';
-        
+
+        $table_exists = $wpdb->get_var(
+            $wpdb->prepare(
+                "SHOW TABLES LIKE %s",
+                $table_name
+            )
+        );
+
+        if ($table_exists !== $table_name) {
+            echo '<p>' . esc_html__('لا توجد بيانات صيانة متاحة بعد.', 'muhtawaa') . '</p>';
+            return;
+        }
+
         // آخر مهمة صيانة
         $last_task = $wpdb->get_row(
             "SELECT * FROM $table_name ORDER BY start_time DESC LIMIT 1"

@@ -151,20 +151,15 @@ if (!defined('ABSPATH')) {
         <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php _e('القائمة الرئيسية', 'muhtawaa'); ?>">
             <div class="container">
                 <?php
-                $nav_args = array(
+                wp_nav_menu(array(
                     'theme_location' => 'primary',
                     'menu_id'        => 'primary-menu',
                     'menu_class'     => 'primary-menu',
                     'container'      => false,
                     'depth'          => 3,
                     'fallback_cb'    => 'muhtawaa_primary_menu_fallback',
-                );
-
-                if (class_exists('Muhtawaa_Walker_Nav_Menu')) {
-                    $nav_args['walker'] = new Muhtawaa_Walker_Nav_Menu();
-                }
-
-                wp_nav_menu($nav_args);
+                    'walker'         => new Muhtawaa_Walker_Nav_Menu(),
+                ));
                 ?>
             </div>
         </nav>
