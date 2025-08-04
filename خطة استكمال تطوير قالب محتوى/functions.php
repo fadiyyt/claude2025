@@ -357,6 +357,30 @@ if (!function_exists('muhtawaa_log')) {
             error_log("[Muhtawaa {$type}] " . $message);
         }
     }
+}if (!function_exists('muhtawaa_get_read_time')) {
+    /**
+     * حساب وقت القراءة التقريبي للمقال بالدقائق
+     *
+     * @param int|null $post_id معرف المقال المطلوب حسابه
+     * @param int $words_per_minute عدد الكلمات في الدقيقة
+     * @return int عدد الدقائق التقديري
+     */
+    function muhtawaa_get_read_time($post_id = null, $words_per_minute = 200) {
+        $post_id = $post_id ? $post_id : get_the_ID();
+        $content = get_post_field('post_content', $post_id);
+
+        // إزالة الوسوم وحساب الكلمات
+        $content = wp_strip_all_tags($content);
+        $word_count = str_word_count($content);
+        if (!$word_count) {
+            $word_count = count(preg_split('/\s+/u', $content, -1, PREG_SPLIT_NO_EMPTY));
+        }
+
+        $minutes = ceil($word_count / $words_per_minute);
+        return max(1, $minutes);
+    }
 }
+
+
 
 // نهاية الملف

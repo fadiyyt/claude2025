@@ -55,7 +55,7 @@ get_header(); ?>
                                         <div class="stat-label">تعليق</div>
                                     </div>
                                     <div class="stat-item">
-                                        <div class="stat-number counter" data-target="<?php echo count(get_categories(['hide_empty' => true])); ?>">0</div>
+                                        <div class="stat-number counter" data-target="<?php echo wp_count_terms('category', array('hide_empty' => true)); ?>">0</div>
                                         <div class="stat-label">فئة</div>
                                     </div>
                                 </div>
