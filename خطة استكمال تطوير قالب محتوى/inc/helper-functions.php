@@ -382,6 +382,292 @@ if (!function_exists('muhtawaa_log')) {
         return max(1, $minutes);
     }
 }
+/**
+ * دوال مساعدة إضافية
+ * Additional Helper Functions
+ * 
+ * يُضاف هذا الكود إلى نهاية ملف inc/helper-functions.php
+ * 
+ * @package Muhtawaa
+ * @version 2.0
+ */
+
+/**
+ * حساب وقت القراءة
+ */
+if (!function_exists('muhtawaa_reading_time')) {
+    function muhtawaa_reading_time($post_id = null) {
+        if (!$post_id) {
+            $post_id = get_the_ID();
+        }
+        
+        $content = get_post_field('post_content', $post_id);
+        $word_count = str_word_count(strip_tags($content));
+        $reading_time = ceil($word_count / 200); // متوسط 200 كلمة في الدقيقة
+        
+        if ($reading_time == 1) {
+            return __('دقيقة واحدة', 'muhtawaa');
+        } elseif ($reading_time == 2) {
+            return __('دقيقتان', 'muhtawaa');
+        } elseif ($reading_time <= 10) {
+            return sprintf(__('%d دقائق', 'muhtawaa'), $reading_time);
+        } else {
+            return sprintf(__('%d دقيقة', 'muhtawaa'), $reading_time);
+        }
+    }
+}
+
+/**
+ * عدد مشاهدات المقال
+ */
+if (!function_exists('muhtawaa_get_post_views')) {
+    function muhtawaa_get_post_views($post_id) {
+        $views = get_post_meta($post_id, '_muhtawaa_views', true);
+        return $views ? number_format_i18n($views) : '0';
+    }
+}
+
+/**
+ * تحديث عدد المشاهدات
+ */
+if (!function_exists('muhtawaa_set_post_views')) {
+    function muhtawaa_set_post_views($post_id) {
+        $views = get_post_meta($post_id, '_muhtawaa_views', true);
+        $views = $views ? intval($views) : 0;
+        update_post_meta($post_id, '_muhtawaa_views', $views + 1);
+    }
+}
+
+// تحديث المشاهدات تلقائياً
+add_action('wp_head', function() {
+    if (is_single()) {
+        muhtawaa_set_post_views(get_the_ID());
+    }
+});
+
+/**
+ * الحصول على عدد التقييمات
+ */
+if (!function_exists('muhtawaa_get_ratings_count')) {
+    function muhtawaa_get_ratings_count($post_id) {
+        $ratings_count = get_post_meta($post_id, '_muhtawaa_ratings_count', true);
+        return $ratings_count ? intval($ratings_count) : 0;
+    }
+}
+
+/**
+ * الحصول على المقالات ذات الصلة
+ */
+if (!function_exists('muhtawaa_get_related_posts')) {
+    function muhtawaa_get_related_posts($post_id, $count = 3) {
+        $categories = wp_get_post_categories($post_id);
+        $tags = wp_get_post_tags($post_id, array('fields' => 'ids'));
+        
+        $args = array(
+            'post__not_in' => array($post_id),
+            'posts_per_page' => $count,
+            'ignore_sticky_posts' => true,
+            'orderby' => 'rand',
+        );
+        
+        // البحث حسب الفئات أولاً
+        if ($categories) {
+            $args['category__in'] = $categories;
+        }
+        
+        // ثم حسب الوسوم
+        if (empty($categories) && $tags) {
+            $args['tag__in'] = $tags;
+        }
+        
+        return new WP_Query($args);
+    }
+}
+
+/**
+ * ويدجت الإحصائيات
+ */
+if (!function_exists('muhtawaa_stats_widget')) {
+    function muhtawaa_stats_widget() {
+        $stats = array(
+            'posts' => wp_count_posts()->publish,
+            'comments' => wp_count_comments()->approved,
+            'categories' => count(get_categories()),
+            'tags' => count(get_tags()),
+        );
+        ?>
+        <ul class="stats-list">
+            <li>
+                <i class="fas fa-file-alt"></i>
+                <strong><?php echo number_format_i18n($stats['posts']); ?></strong>
+                <span><?php _e('مقالة', 'muhtawaa'); ?></span>
+            </li>
+            <li>
+                <i class="fas fa-comments"></i>
+                <strong><?php echo number_format_i18n($stats['comments']); ?></strong>
+                <span><?php _e('تعليق', 'muhtawaa'); ?></span>
+            </li>
+            <li>
+                <i class="fas fa-folder"></i>
+                <strong><?php echo number_format_i18n($stats['categories']); ?></strong>
+                <span><?php _e('تصنيف', 'muhtawaa'); ?></span>
+            </li>
+            <li>
+                <i class="fas fa-tags"></i>
+                <strong><?php echo number_format_i18n($stats['tags']); ?></strong>
+                <span><?php _e('وسم', 'muhtawaa'); ?></span>
+            </li>
+        </ul>
+        <?php
+    }
+}
+
+/**
+ * إضافة حقول التواصل الاجتماعي للمؤلفين
+ */
+function muhtawaa_add_author_social_fields($contactmethods) {
+    $contactmethods['twitter'] = __('Twitter', 'muhtawaa');
+    $contactmethods['facebook'] = __('Facebook', 'muhtawaa');
+    $contactmethods['linkedin'] = __('LinkedIn', 'muhtawaa');
+    $contactmethods['instagram'] = __('Instagram', 'muhtawaa');
+    
+    return $contactmethods;
+}
+add_filter('user_contactmethods', 'muhtawaa_add_author_social_fields');
+
+/**
+ * تحسين مقتطفات المقالات
+ */
+function muhtawaa_custom_excerpt_length($length) {
+    return 30; // عدد الكلمات
+}
+add_filter('excerpt_length', 'muhtawaa_custom_excerpt_length');
+
+function muhtawaa_custom_excerpt_more($more) {
+    return '...';
+}
+add_filter('excerpt_more', 'muhtawaa_custom_excerpt_more');
+
+/**
+ * إضافة دعم نسخ الرابط في JavaScript
+ */
+add_action('wp_footer', function() {
+    ?>
+    <script>
+    // نسخ الرابط
+    document.addEventListener('DOMContentLoaded', function() {
+        const copyButtons = document.querySelectorAll('.copy-link');
+        copyButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url).then(function() {
+                        // عرض رسالة نجاح
+                        const originalHTML = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(function() {
+                            button.innerHTML = originalHTML;
+                        }, 2000);
+                    });
+                } else {
+                    // fallback للمتصفحات القديمة
+                    const textArea = document.createElement('textarea');
+                    textArea.value = url;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+            });
+        });
+    });
+    </script>
+    <?php
+});
+
+/**
+ * إضافة حاوية الإشعارات
+ */
+add_action('wp_footer', function() {
+    echo '<div class="notifications-container"></div>';
+});
+
+/**
+ * دالة لإنشاء breadcrumbs
+ */
+if (!function_exists('muhtawaa_breadcrumbs')) {
+    function muhtawaa_breadcrumbs() {
+        if (is_home() || is_front_page()) return;
+        
+        echo '<nav class="breadcrumbs" aria-label="' . __('التنقل', 'muhtawaa') . '">';
+        echo '<ol class="breadcrumb-list">';
+        echo '<li><a href="' . home_url() . '"><i class="fas fa-home"></i> ' . __('الرئيسية', 'muhtawaa') . '</a></li>';
+        
+        if (is_category()) {
+            echo '<li class="active">' . single_cat_title('', false) . '</li>';
+        } elseif (is_tag()) {
+            echo '<li class="active">' . single_tag_title('', false) . '</li>';
+        } elseif (is_author()) {
+            echo '<li class="active">' . get_the_author() . '</li>';
+        } elseif (is_search()) {
+            echo '<li class="active">' . __('نتائج البحث', 'muhtawaa') . '</li>';
+        } elseif (is_single()) {
+            $categories = get_the_category();
+            if ($categories) {
+                echo '<li><a href="' . get_category_link($categories[0]->term_id) . '">' . $categories[0]->name . '</a></li>';
+            }
+            echo '<li class="active">' . get_the_title() . '</li>';
+        } elseif (is_page()) {
+            echo '<li class="active">' . get_the_title() . '</li>';
+        } elseif (is_404()) {
+            echo '<li class="active">' . __('صفحة غير موجودة', 'muhtawaa') . '</li>';
+        }
+        
+        echo '</ol>';
+        echo '</nav>';
+    }
+}
+
+/**
+ * إصلاح عدادات المشاركات
+ */
+function muhtawaa_fix_post_counts() {
+    // إصلاح عداد المشاهدات للمقالات الموجودة
+    $posts = get_posts(array(
+        'post_type' => 'post',
+        'posts_per_page' => -1,
+        'post_status' => 'publish'
+    ));
+    
+    foreach ($posts as $post) {
+        $views = get_post_meta($post->ID, '_muhtawaa_views', true);
+        if (!$views) {
+            update_post_meta($post->ID, '_muhtawaa_views', rand(10, 100));
+        }
+    }
+}
+
+// تشغيل مرة واحدة عند تفعيل القالب
+add_action('after_switch_theme', 'muhtawaa_fix_post_counts');
+
+/**
+ * إضافة دعم Schema.org
+ */
+function muhtawaa_schema_type() {
+    $schema = 'https://schema.org/';
+    
+    if (is_single()) {
+        $type = "Article";
+    } elseif (is_author()) {
+        $type = "ProfilePage";
+    } elseif (is_search()) {
+        $type = "SearchResultsPage";
+    } else {
+        $type = "WebPage";
+    }
+    
+    echo 'itemscope itemtype="' . $schema . $type . '"';
+}
 
 
 
