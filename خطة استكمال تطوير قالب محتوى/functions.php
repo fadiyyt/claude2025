@@ -1,12 +1,10 @@
 <?php
 /**
  * Theme Name: محتوى - الحلول اليومية المطور
- * Functions and definitions - النسخة المُنظمة والمحسنة
+ * Functions and definitions - النسخة المُحدثة مع الإصلاحات
  * 
  * @package Muhtawaa
- * @version 2.0
- * @author فريق محتوى
- * @since 1.0.0
+ * @version 2.0.2
  */
 
 // منع الوصول المباشر للملفات
@@ -14,373 +12,400 @@ if (!defined('ABSPATH')) {
     exit('لا يُسمح بالوصول المباشر لهذا الملف');
 }
 
-// ثوابت القالب الأساسية
-define('THEME_VERSION', '2.0.1');
-define('THEME_PATH', get_template_directory());
-define('THEME_URL', get_template_directory_uri());
-define('THEME_ASSETS_URL', THEME_URL . '/assets');
-define('THEME_INC_PATH', THEME_PATH . '/inc');
-define('THEME_LANGUAGES_PATH', THEME_PATH . '/languages');
-define('THEME_MIN_WP_VERSION', '5.0');
-define('THEME_MIN_PHP_VERSION', '7.4');
+// ========================================
+// 1. تعريف الثوابت الأساسية أولاً
+// ========================================
+if (!defined('THEME_VERSION'))         define('THEME_VERSION', '2.0.2');
+if (!defined('THEME_PATH'))            define('THEME_PATH', get_template_directory());
+if (!defined('THEME_URL'))             define('THEME_URL', get_template_directory_uri());
+if (!defined('THEME_ASSETS_URL'))      define('THEME_ASSETS_URL', THEME_URL . '/assets');
+if (!defined('THEME_INC_PATH'))        define('THEME_INC_PATH', THEME_PATH . '/inc');
+if (!defined('THEME_LANGUAGES_PATH'))  define('THEME_LANGUAGES_PATH', THEME_PATH . '/languages');
+if (!defined('THEME_MIN_WP_VERSION'))  define('THEME_MIN_WP_VERSION', '5.0');
+if (!defined('THEME_MIN_PHP_VERSION')) define('THEME_MIN_PHP_VERSION', '7.0');
 
-/**
- * فئة إدارة القالب الرئيسية
- * تتولى تنسيق وإدارة جميع مكونات القالب
- */
-class MuhtawaaTheme {
+// ========================================
+// 2. تحميل ملف التشخيص والإصلاحات
+// ========================================
+$diagnostic_file = THEME_PATH . '/diagnostic-fixes.php';
+if (file_exists($diagnostic_file)) {
+    require_once $diagnostic_file;
+}
+
+// ========================================
+// 3. إعداد القالب الأساسي
+// ========================================
+function muhtawaa_theme_setup() {
+    // دعم المزايا الأساسية
+    add_theme_support('post-thumbnails');
+    add_theme_support('title-tag');
+    add_theme_support('automatic-feed-links');
+    add_theme_support('custom-logo');
+    add_theme_support('custom-background');
+    add_theme_support('custom-header');
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script',
+    ));
     
-    /**
-     * مثيل واحد من الفئة (Singleton Pattern)
-     */
-    private static $instance = null;
+    // تسجيل القوائم
+    register_nav_menus(array(
+        'primary' => __('القائمة الرئيسية', 'muhtawaa'),
+        'footer' => __('قائمة التذييل', 'muhtawaa'),
+        'mobile' => __('قائمة الموبايل', 'muhtawaa'),
+    ));
     
-    /**
-     * الحصول على المثيل الوحيد من الفئة
-     */
-    public static function getInstance() {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+    // تحميل ملفات اللغة
+    load_theme_textdomain('muhtawaa', THEME_LANGUAGES_PATH);
+}
+add_action('after_setup_theme', 'muhtawaa_theme_setup');
+
+// ========================================
+// 4. تحميل ملفات CSS و JavaScript (مُبسط)
+// ========================================
+function muhtawaa_enqueue_assets() {
+    // إزالة جميع الأنماط والسكريبتات السابقة أولاً
+    // wp_dequeue_style('muhtawaa-style');
+    // wp_dequeue_style('muhtawaa-main');
+    
+    // Google Fonts
+    wp_enqueue_style(
+        'google-fonts',
+        'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap',
+        array(),
+        null
+    );
+    
+    // Font Awesome
+    wp_enqueue_style(
+        'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        array(),
+        '6.4.0'
+    );
+    
+    // الملف الأساسي
+    wp_enqueue_style(
+        'muhtawaa-style',
+        get_stylesheet_uri(),
+        array(),
+        THEME_VERSION . '.' . time() // إضافة timestamp للتطوير
+    );
+    
+    // ملف CSS الرئيسي
+    $main_css = THEME_PATH . '/assets/css/main.css';
+    if (file_exists($main_css)) {
+        wp_enqueue_style(
+            'muhtawaa-main',
+            THEME_ASSETS_URL . '/css/main.css',
+            array('muhtawaa-style'),
+            THEME_VERSION . '.' . time()
+        );
     }
     
-    /**
-     * منشئ الفئة - إعداد الخطافات الأساسية
-     */
-    private function __construct() {
-        // التحقق من متطلبات النظام
-        add_action('admin_init', array($this, 'check_requirements'));
-        
-        // تحميل ملفات النظام
-        $this->load_required_files();
-        
-        // إعداد الخطافات الأساسية
-        add_action('after_setup_theme', array($this, 'theme_setup'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-        add_action('widgets_init', array($this, 'widgets_init'));
-        add_action('init', array($this, 'init'));
-        
-        // خطافات التحسين والأمان
-        add_action('wp_head', array($this, 'add_meta_tags'));
-        add_action('wp_head', array($this, 'add_schema_markup'));
-        
-        // إزالة الميزات غير المطلوبة
-        add_action('init', array($this, 'cleanup_wordpress'));
+    // ملف CSS التجاوب
+    $responsive_css = THEME_PATH . '/assets/css/responsive.css';
+    if (file_exists($responsive_css)) {
+        wp_enqueue_style(
+            'muhtawaa-responsive',
+            THEME_ASSETS_URL . '/css/responsive.css',
+            array('muhtawaa-main'),
+            THEME_VERSION . '.' . time()
+        );
     }
     
-    /**
-     * التحقق من متطلبات النظام
-     */
-    public function check_requirements() {
-        global $wp_version;
-        
-        // التحقق من إصدار ووردبريس
-        if (version_compare($wp_version, THEME_MIN_WP_VERSION, '<')) {
-            add_action('admin_notices', function() {
-                printf(
-                    '<div class="notice notice-error"><p>%s <strong>%s</strong> %s <strong>%s</strong></p></div>',
-                    __('قالب محتوى يتطلب ووردبريس إصدار', 'muhtawaa'),
-                    THEME_MIN_WP_VERSION,
-                    __('أو أحدث. إصدارك الحالي:', 'muhtawaa'),
-                    $GLOBALS['wp_version']
-                );
-            });
-        }
-        
-        // التحقق من إصدار PHP
-        if (version_compare(PHP_VERSION, THEME_MIN_PHP_VERSION, '<')) {
-            add_action('admin_notices', function() {
-                printf(
-                    '<div class="notice notice-error"><p>%s <strong>%s</strong> %s <strong>%s</strong></p></div>',
-                    __('قالب محتوى يتطلب PHP إصدار', 'muhtawaa'),
-                    THEME_MIN_PHP_VERSION,
-                    __('أو أحدث. إصدارك الحالي:', 'muhtawaa'),
-                    PHP_VERSION
-                );
-            });
-        }
-    }
+    // jQuery
+    wp_enqueue_script('jquery');
     
-    /**
-     * تحميل جميع الملفات المطلوبة
-     */
-    private function load_required_files() {
-        $required_files = array(
-            'theme-setup.php',          // إعدادات القالب الأساسية
-            'enqueue-scripts.php',      // تحميل CSS و JS
-            'widgets.php',              // إعدادات الويدجت
-            'customizer.php',           // إعدادات التخصيص
-            'ajax-functions.php',       // وظائف AJAX
-            'security.php',             // الحماية والأمان
-            'performance.php',          // تحسين الأداء
-            'seo.php',                  // تحسين محركات البحث
-            'notifications.php',        // نظام الإشعارات
-            'maintenance.php',          // الصيانة التلقائية
-            'import-export.php',        // الاستيراد والتصدير
-            'smart-recommendations.php', // التوصيات الذكية
-            'advanced-search.php',      // البحث المتقدم
-            'comments-rating.php',      // التعليقات والتقييم
-            'custom-widgets.php',       // الويدجت المخصصة
-            'admin-dashboard.php',      // لوحة الإدارة
-            'helper-functions.php',     // الوظائف المساعدة
+    // ملف JavaScript الرئيسي
+    $main_js = THEME_PATH . '/assets/js/main.js';
+    if (file_exists($main_js)) {
+        wp_enqueue_script(
+            'muhtawaa-main',
+            THEME_ASSETS_URL . '/js/main.js',
+            array('jquery'),
+            THEME_VERSION . '.' . time(),
+            true
         );
         
-        foreach ($required_files as $file) {
-            $file_path = THEME_INC_PATH . '/' . $file;
-            
-            if (file_exists($file_path)) {
-                require_once $file_path;
-            } else {
-                // تسجيل خطأ إذا لم يتم العثور على الملف
-                error_log("Muhtawaa Theme: Missing required file - {$file}");
-                
-                // إظهار تنبيه في لوحة الإدارة
-                if (is_admin()) {
-                    add_action('admin_notices', function() use ($file) {
-                        printf(
-                            '<div class="notice notice-warning"><p>%s: <code>%s</code></p></div>',
-                            __('ملف مطلوب مفقود في قالب محتوى', 'muhtawaa'),
-                            $file
-                        );
-                    });
-                }
-            }
-        }
+        // بيانات JavaScript
+        wp_localize_script('muhtawaa-main', 'muhtawaa_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('muhtawaa_ajax_nonce'),
+            'site_url' => home_url(),
+            'theme_url' => THEME_URL,
+        ));
     }
     
-    /**
-     * إعداد القالب الأساسي
-     */
-    public function theme_setup() {
-        // تحميل ملف اللغة
-        load_theme_textdomain('muhtawaa', THEME_LANGUAGES_PATH);
-        
-        // إعداد الميزات الأساسية في ملف منفصل
-        if (class_exists('MuhtawaaThemeSetup')) {
-            MuhtawaaThemeSetup::setup_theme_features();
-        }
+    // تعليقات
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
     }
+}
+add_action('wp_enqueue_scripts', 'muhtawaa_enqueue_assets', 999);
+
+// ========================================
+// 5. تحميل الملفات المطلوبة
+// ========================================
+function muhtawaa_load_includes() {
+    $includes = array(
+        'enqueue-scripts.php',
+        'theme-setup.php',
+        'widgets.php',
+        'customizer.php',
+        'helper-functions.php',
+        'admin-dashboard.php',
+        'security.php',
+        'performance.php',
+        'seo.php',
+        'notifications.php',
+        'maintenance.php',
+        'import-export.php',
+        'smart-recommendations.php',
+        'advanced-search.php',
+        'comments-rating.php',
+        'custom-widgets.php',
+        'ajax-functions.php',
+    );
     
-    /**
-     * تحميل ملفات CSS و JavaScript
-     */
-    public function enqueue_scripts() {
-        // تحميل الملفات في ملف منفصل
-        if (class_exists('MuhtawaaEnqueueScripts')) {
-            MuhtawaaEnqueueScripts::enqueue_styles();
-            MuhtawaaEnqueueScripts::enqueue_scripts();
-        }
-    }
-    
-    /**
-     * تسجيل مناطق الويدجت
-     */
-    public function widgets_init() {
-        // تسجيل الويدجت في ملف منفصل
-        if (class_exists('MuhtawaaWidgets')) {
-            MuhtawaaWidgets::register_sidebars();
-        }
-    }
-    
-    /**
-     * التهيئة الأولية
-     */
-    public function init() {
-        // إعدادات إضافية عند التهيئة
-        if (class_exists('MuhtawaaSecurity')) {
-            MuhtawaaSecurity::init_security_features();
-        }
-        
-        if (class_exists('MuhtawaaPerformance')) {
-            MuhtawaaPerformance::init_performance_optimizations();
-        }
-    }
-    
-    /**
-     * إضافة علامات Meta للـ SEO
-     */
-    public function add_meta_tags() {
-        if (class_exists('MuhtawaaSEO')) {
-            MuhtawaaSEO::add_meta_tags();
-        }
-    }
-    
-    /**
-     * إضافة Schema Markup
-     */
-    public function add_schema_markup() {
-        if (class_exists('MuhtawaaSEO')) {
-            MuhtawaaSEO::add_schema_markup();
-        }
-    }
-    
-    /**
-     * تنظيف ووردبريس من الميزات غير المطلوبة
-     */
-    public function cleanup_wordpress() {
-        if (class_exists('MuhtawaaPerformance')) {
-            MuhtawaaPerformance::cleanup_wordpress();
-        }
-    }
-    
-    /**
-     * تفعيل القالب
-     */
-    public static function activate() {
-        // إنشاء الجداول المطلوبة
-        self::create_custom_tables();
-        
-        // إعداد الخيارات الافتراضية
-        self::set_default_options();
-        
-        // مسح التخزين المؤقت
-        wp_cache_flush();
-        
-        // تحديث قواعد الرابط
-        flush_rewrite_rules();
-    }
-    
-    /**
-     * إلغاء تفعيل القالب
-     */
-    public static function deactivate() {
-        // تنظيف التخزين المؤقت
-        wp_cache_flush();
-        
-        // إعادة تعيين قواعد الرابط
-        flush_rewrite_rules();
-    }
-    
-    /**
-     * إنشاء الجداول المخصصة
-     */
-    private static function create_custom_tables() {
-        global $wpdb;
-        
-        $charset_collate = $wpdb->get_charset_collate();
-        
-        // جدول إحصائيات الحلول
-        $table_name = $wpdb->prefix . 'muhtawaa_stats';
-        
-        $sql = "CREATE TABLE $table_name (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            post_id bigint(20) NOT NULL,
-            views int(11) DEFAULT 0,
-            likes int(11) DEFAULT 0,
-            shares int(11) DEFAULT 0,
-            rating decimal(3,2) DEFAULT 0.00,
-            last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            UNIQUE KEY post_id (post_id)
-        ) $charset_collate;";
-        
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-        
-        // جدول التوصيات
-        $recommendations_table = $wpdb->prefix . 'muhtawaa_recommendations';
-        
-        $sql2 = "CREATE TABLE $recommendations_table (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            user_id bigint(20) NOT NULL,
-            post_id bigint(20) NOT NULL,
-            recommended_post_id bigint(20) NOT NULL,
-            score decimal(5,2) DEFAULT 0.00,
-            created_at datetime DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            KEY user_id (user_id),
-            KEY post_id (post_id)
-        ) $charset_collate;";
-        
-        dbDelta($sql2);
-    }
-    
-    /**
-     * تعيين الخيارات الافتراضية
-     */
-    private static function set_default_options() {
-        $default_options = array(
-            'muhtawaa_enable_notifications' => 1,
-            'muhtawaa_enable_recommendations' => 1,
-            'muhtawaa_enable_advanced_search' => 1,
-            'muhtawaa_enable_maintenance' => 1,
-            'muhtawaa_theme_version' => THEME_VERSION,
-        );
-        
-        foreach ($default_options as $option => $value) {
-            if (get_option($option) === false) {
-                add_option($option, $value);
+    foreach ($includes as $file) {
+        $filepath = THEME_INC_PATH . '/' . $file;
+        if (file_exists($filepath)) {
+            require_once $filepath;
+        } else {
+            // سجل خطأ إذا كان الملف مفقود
+            if (WP_DEBUG) {
+                error_log('ملف مفقود في قالب محتوى: ' . $filepath);
             }
         }
     }
 }
+add_action('after_setup_theme', 'muhtawaa_load_includes', 5);
 
-// تهيئة القالب
-add_action('after_setup_theme', function() {
-    MuhtawaaTheme::getInstance();
+// ========================================
+// 6. تسجيل مناطق الويدجت (مُبسط)
+// ========================================
+function muhtawaa_widgets_init() {
+    // الشريط الجانبي الرئيسي
+    register_sidebar(array(
+        'name'          => __('الشريط الجانبي الرئيسي', 'muhtawaa'),
+        'id'            => 'main-sidebar',
+        'description'   => __('يظهر في معظم صفحات الموقع', 'muhtawaa'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    
+    // مناطق التذييل
+    for ($i = 1; $i <= 4; $i++) {
+        register_sidebar(array(
+            'name'          => sprintf(__('تذييل الموقع %d', 'muhtawaa'), $i),
+            'id'            => 'footer-' . $i,
+            'description'   => sprintf(__('العمود %d في تذييل الموقع', 'muhtawaa'), $i),
+            'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
+            'after_widget'  => '</div>',
+            'before_title'  => '<h4 class="widget-title">',
+            'after_title'   => '</h4>',
+        ));
+    }
+}
+add_action('widgets_init', 'muhtawaa_widgets_init');
+
+// ========================================
+// 7. دوال مساعدة أساسية
+// ========================================
+
+// وقت القراءة
+if (!function_exists('muhtawaa_reading_time')) {
+    function muhtawaa_reading_time($post_id = null) {
+        if (!$post_id) {
+            $post_id = get_the_ID();
+        }
+        
+        $content = get_post_field('post_content', $post_id);
+        $word_count = str_word_count(strip_tags($content));
+        $reading_time = ceil($word_count / 200);
+        
+        if ($reading_time == 1) {
+            return __('دقيقة واحدة', 'muhtawaa');
+        } elseif ($reading_time == 2) {
+            return __('دقيقتان', 'muhtawaa');
+        } elseif ($reading_time <= 10) {
+            return sprintf(__('%d دقائق', 'muhtawaa'), $reading_time);
+        } else {
+            return sprintf(__('%d دقيقة', 'muhtawaa'), $reading_time);
+        }
+    }
+}
+
+// عدد المشاهدات
+if (!function_exists('muhtawaa_get_post_views')) {
+    function muhtawaa_get_post_views($post_id) {
+        $views = get_post_meta($post_id, '_muhtawaa_views', true);
+        return $views ? number_format_i18n($views) : '0';
+    }
+}
+
+// المقالات ذات الصلة
+if (!function_exists('muhtawaa_get_related_posts')) {
+    function muhtawaa_get_related_posts($post_id, $count = 3) {
+        $categories = wp_get_post_categories($post_id);
+        
+        $args = array(
+            'post__not_in' => array($post_id),
+            'posts_per_page' => $count,
+            'category__in' => $categories,
+            'orderby' => 'rand',
+        );
+        
+        return new WP_Query($args);
+    }
+}
+
+// ========================================
+// 8. إصلاحات سريعة
+// ========================================
+
+// إصلاح مشكلة عدم ظهور القوائم
+add_filter('wp_nav_menu_args', function($args) {
+    if (empty($args['fallback_cb'])) {
+        $args['fallback_cb'] = function() {
+            echo '<ul class="main-menu">';
+            wp_list_pages(array(
+                'title_li' => '',
+                'depth' => 1,
+                'number' => 5,
+            ));
+            echo '</ul>';
+        };
+    }
+    return $args;
 });
 
-// خطافات التفعيل وإلغاء التفعيل
-add_action('after_switch_theme', array('MuhtawaaTheme', 'activate'));
-add_action('switch_theme', array('MuhtawaaTheme', 'deactivate'));
+// إضافة CSS إضافي للإصلاحات السريعة
+add_action('wp_head', function() {
+    ?>
+    <style id="muhtawaa-quick-fixes">
+        /* إصلاحات سريعة */
+        body { margin: 0; padding: 0; }
+        .site-header { position: relative; z-index: 100; }
+        .site-content { position: relative; z-index: 1; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        img { max-width: 100%; height: auto; }
+        
+        /* إصلاح القائمة */
+        .main-navigation ul { list-style: none; padding: 0; margin: 0; }
+        .main-navigation li { display: inline-block; margin: 0 10px; }
+        .main-navigation a { text-decoration: none; color: inherit; }
+        
+        /* إصلاح التخطيط */
+        .content-area { display: flex; flex-wrap: wrap; gap: 30px; }
+        .content-area.full-width { display: block; }
+        .site-main { flex: 1; min-width: 0; }
+        .widget-area { flex: 0 0 300px; }
+        
+        /* إصلاح الويدجت */
+        .widget { margin-bottom: 30px; }
+        .widget ul { list-style: none; padding: 0; }
+        .widget li { padding: 5px 0; }
+        
+        /* إصلاح الصور البارزة */
+        .post-thumbnail img { width: 100%; height: auto; display: block; }
+        
+        /* التجاوب الأساسي */
+        @media (max-width: 768px) {
+            .content-area { flex-direction: column; }
+            .widget-area { flex: 1 1 100%; }
+            .main-navigation li { display: block; margin: 5px 0; }
+        }
+    </style>
+    <?php
+}, 999);
 
-/**
- * وظائف مساعدة عامة
- */
-
-// التحقق من وجود الوظائف لتجنب التعارض
-if (!function_exists('muhtawaa_get_theme_version')) {
-    /**
-     * الحصول على إصدار القالب
-     */
-    function muhtawaa_get_theme_version() {
-        return THEME_VERSION;
-    }
+// ========================================
+// 9. رسائل التنبيه للمطور
+// ========================================
+if (WP_DEBUG && current_user_can('manage_options')) {
+    add_action('admin_notices', function() {
+        $missing_files = array();
+        
+        // فحص الملفات المهمة
+        $check_files = array(
+            'assets/css/main.css',
+            'assets/js/main.js',
+            'single.php',
+            'page.php',
+            'sidebar.php',
+            'comments.php',
+        );
+        
+        foreach ($check_files as $file) {
+            if (!file_exists(THEME_PATH . '/' . $file)) {
+                $missing_files[] = $file;
+            }
+        }
+        
+        if (!empty($missing_files)) {
+            echo '<div class="notice notice-warning">';
+            echo '<p><strong>قالب محتوى:</strong> الملفات التالية مفقودة:</p>';
+            echo '<ul>';
+            foreach ($missing_files as $file) {
+                echo '<li><code>' . $file . '</code></li>';
+            }
+            echo '</ul>';
+            echo '<p><a href="' . admin_url('themes.php?page=muhtawaa-diagnostics') . '" class="button">تشغيل أداة التشخيص</a></p>';
+            echo '</div>';
+        }
+    });
 }
 
-if (!function_exists('muhtawaa_is_development')) {
-    /**
-     * التحقق من وضع التطوير
-     */
-    function muhtawaa_is_development() {
-        return defined('WP_DEBUG') && WP_DEBUG;
-    }
-}
-
-if (!function_exists('muhtawaa_log')) {
-    /**
-     * تسجيل الأحداث والأخطاء
-     */
-    function muhtawaa_log($message, $type = 'info') {
-        if (muhtawaa_is_development()) {
-            error_log("[Muhtawaa {$type}] " . $message);
+// ========================================
+// 10. تفعيل القالب - إعدادات أولية
+// ========================================
+add_action('after_switch_theme', function() {
+    // إنشاء الصفحات الأساسية
+    $pages = array(
+        'من نحن' => 'about',
+        'اتصل بنا' => 'contact',
+        'سياسة الخصوصية' => 'privacy',
+        'شروط الاستخدام' => 'terms',
+    );
+    
+    foreach ($pages as $title => $slug) {
+        if (!get_page_by_path($slug)) {
+            wp_insert_post(array(
+                'post_title' => $title,
+                'post_name' => $slug,
+                'post_type' => 'page',
+                'post_status' => 'publish',
+                'post_content' => 'محتوى الصفحة هنا...',
+            ));
         }
     }
-}if (!function_exists('muhtawaa_get_read_time')) {
-    /**
-     * حساب وقت القراءة التقريبي للمقال بالدقائق
-     *
-     * @param int|null $post_id معرف المقال المطلوب حسابه
-     * @param int $words_per_minute عدد الكلمات في الدقيقة
-     * @return int عدد الدقائق التقديري
-     */
-    function muhtawaa_get_read_time($post_id = null, $words_per_minute = 200) {
-        $post_id = $post_id ? $post_id : get_the_ID();
-        $content = get_post_field('post_content', $post_id);
-
-        // إزالة الوسوم وحساب الكلمات
-        $content = wp_strip_all_tags($content);
-        $word_count = str_word_count($content);
-        if (!$word_count) {
-            $word_count = count(preg_split('/\s+/u', $content, -1, PREG_SPLIT_NO_EMPTY));
-        }
-
-        $minutes = ceil($word_count / $words_per_minute);
-        return max(1, $minutes);
+    
+    // إعداد الصفحة الرئيسية
+    $homepage = get_page_by_path('home');
+    if (!$homepage) {
+        $homepage_id = wp_insert_post(array(
+            'post_title' => 'الرئيسية',
+            'post_name' => 'home',
+            'post_type' => 'page',
+            'post_status' => 'publish',
+            'post_content' => '',
+        ));
+        
+        update_option('page_on_front', $homepage_id);
+        update_option('show_on_front', 'page');
     }
-}
-
-
-
-// نهاية الملف
+    
+    // حفظ الروابط الدائمة
+    global $wp_rewrite;
+    $wp_rewrite->set_permalink_structure('/%postname%/');
+    $wp_rewrite->flush_rules();
+});
