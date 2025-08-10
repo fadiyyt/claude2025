@@ -1,0 +1,514 @@
+/*
+Theme Name: Practical Solutions - الحلول العملية
+Theme URI: https://your-website.com/themes/practical-solutions
+Description: قالب ووردبريس عصري يركز على تقديم الحلول العملية للمشاكل اليومية بتجربة مستخدم سلسة ومبتكرة. يدعم تقنية Full Site Editing والبحث الصوتي المتقدم.
+Author: Your Name
+Author URI: https://your-website.com
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.5
+Requires PHP: 8.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: practical-solutions
+Domain Path: /languages
+Tags: block-theme, full-site-editing, rtl-language-support, blog, featured-images, threaded-comments, translation-ready, wide-blocks
+
+Practical Solutions WordPress Theme, Copyright 2025
+Practical Solutions is distributed under the terms of the GNU GPL.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+*/
+
+/* 
+=================================================================
+   قالب الحلول العملية - Practical Solutions Theme
+   نسخة 1.0.0
+   
+   فهرس الأنماط:
+   1. إعادة تعيين الأنماط الأساسية
+   2. المتغيرات العامة 
+   3. الطباعة والخطوط
+   4. التخطيط العام
+   5. مكونات الواجهة
+   6. البحث المتقدم
+   7. الاستجابة للأجهزة
+   8. إمكانية الوصول
+   9. الطباعة
+=================================================================
+*/
+
+/* 1. إعادة تعيين الأنماط الأساسية */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--wp--preset--font-family--noto-arabic, 'Segoe UI', Tahoma, Arial, sans-serif);
+  background-color: var(--wp--preset--color--background, #ffffff);
+  color: var(--wp--preset--color--foreground, #2c3e50);
+  direction: rtl;
+  text-align: right;
+}
+
+/* 2. المتغيرات العامة */
+:root {
+  /* الألوان الأساسية */
+  --ps-primary: #007cba;
+  --ps-secondary: #f0f4f8;
+  --ps-accent: #e74c3c;
+  --ps-success: #27ae60;
+  --ps-warning: #f39c12;
+  --ps-dark: #2c3e50;
+  --ps-light: #ecf0f1;
+  --ps-white: #ffffff;
+  
+  /* الظلال */
+  --ps-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --ps-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --ps-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --ps-shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.18);
+  
+  /* التباعد */
+  --ps-spacing-xs: 0.5rem;
+  --ps-spacing-sm: 1rem;
+  --ps-spacing-md: 1.5rem;
+  --ps-spacing-lg: 2rem;
+  --ps-spacing-xl: 3rem;
+  --ps-spacing-2xl: 4rem;
+  
+  /* نصف الأقطار */
+  --ps-radius-sm: 4px;
+  --ps-radius-md: 8px;
+  --ps-radius-lg: 12px;
+  --ps-radius-xl: 20px;
+  --ps-radius-full: 50px;
+  
+  /* الانتقالات */
+  --ps-transition-fast: 0.15s ease;
+  --ps-transition-normal: 0.3s ease;
+  --ps-transition-slow: 0.5s ease;
+}
+
+/* 3. الطباعة والخطوط */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: var(--ps-spacing-md);
+  color: var(--ps-dark);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h5 { font-size: clamp(1.125rem, 2vw, 1.5rem); }
+h6 { font-size: clamp(1rem, 1.5vw, 1.25rem); }
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--ps-spacing-md);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--ps-primary);
+  text-decoration: none;
+  transition: color var(--ps-transition-fast);
+}
+
+a:hover,
+a:focus {
+  color: var(--ps-accent);
+  text-decoration: underline;
+}
+
+/* 4. التخطيط العام */
+.wp-site-blocks {
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.wp-block-group {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.has-global-padding {
+  padding-left: var(--wp--style--root--padding-left);
+  padding-right: var(--wp--style--root--padding-right);
+}
+
+/* حاوي المحتوى المحدود */
+.wp-block-group.alignfull > .wp-block-group__inner-container,
+.wp-block-cover.alignfull > .wp-block-cover__inner-container {
+  max-width: var(--wp--style--global--content-size, 800px);
+  margin: 0 auto;
+  padding-left: var(--ps-spacing-md);
+  padding-right: var(--ps-spacing-md);
+}
+
+/* 5. مكونات الواجهة */
+
+/* الأزرار */
+.wp-block-button__link,
+.wp-element-button {
+  background-color: var(--ps-primary);
+  color: var(--ps-white);
+  border: none;
+  padding: var(--ps-spacing-sm) var(--ps-spacing-lg);
+  border-radius: var(--ps-radius-md);
+  font-weight: 600;
+  transition: all var(--ps-transition-normal);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ps-spacing-xs);
+  text-decoration: none;
+}
+
+.wp-block-button__link:hover,
+.wp-element-button:hover {
+  background-color: var(--ps-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--ps-shadow-md);
+  color: var(--ps-white);
+}
+
+/* البطاقات */
+.wp-block-group.is-style-card {
+  background: var(--ps-white);
+  border-radius: var(--ps-radius-lg);
+  box-shadow: var(--ps-shadow-sm);
+  padding: var(--ps-spacing-lg);
+  transition: all var(--ps-transition-normal);
+}
+
+.wp-block-group.is-style-card:hover {
+  box-shadow: var(--ps-shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* الصور */
+.wp-block-image img {
+  border-radius: var(--ps-radius-md);
+  transition: transform var(--ps-transition-normal);
+}
+
+.wp-block-image:hover img {
+  transform: scale(1.02);
+}
+
+/* 6. البحث المتقدم */
+.advanced-search-form {
+  margin: var(--ps-spacing-lg) 0;
+}
+
+.search-form {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--ps-white);
+  border-radius: var(--ps-radius-full);
+  box-shadow: var(--ps-shadow-md);
+  overflow: hidden;
+  transition: box-shadow var(--ps-transition-normal);
+  border: 2px solid transparent;
+}
+
+.search-input-wrapper:focus-within {
+  box-shadow: var(--ps-shadow-xl);
+  border-color: var(--ps-primary);
+}
+
+.search-field {
+  flex: 1;
+  border: none;
+  padding: var(--ps-spacing-md) var(--ps-spacing-lg);
+  font-size: 1rem;
+  background: transparent;
+  color: var(--ps-dark);
+  font-family: inherit;
+}
+
+.search-field:focus {
+  outline: none;
+}
+
+.search-field::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.voice-search-btn,
+.search-submit {
+  border: none;
+  background: transparent;
+  padding: var(--ps-spacing-md);
+  cursor: pointer;
+  transition: background-color var(--ps-transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voice-search-btn:hover,
+.search-submit:hover {
+  background-color: rgba(0, 124, 186, 0.1);
+}
+
+.voice-search-btn svg,
+.search-submit svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--ps-primary);
+  transition: fill var(--ps-transition-fast);
+}
+
+.voice-search-btn.recording {
+  animation: pulse 1s infinite;
+}
+
+.voice-search-btn.recording svg {
+  fill: var(--ps-accent);
+}
+
+/* اقتراحات البحث */
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--ps-white);
+  border-radius: var(--ps-radius-lg);
+  box-shadow: var(--ps-shadow-xl);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all var(--ps-transition-normal);
+  pointer-events: none;
+  margin-top: var(--ps-spacing-xs);
+}
+
+.search-suggestions.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.suggestions-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--ps-spacing-sm) 0;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ps-spacing-sm) var(--ps-spacing-lg);
+  cursor: pointer;
+  transition: background-color var(--ps-transition-fast);
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background-color: var(--ps-secondary);
+}
+
+.suggestion-title {
+  font-weight: 500;
+  color: var(--ps-dark);
+}
+
+.suggestion-type {
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  background: var(--ps-light);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--ps-radius-full);
+}
+
+/* 7. الاستجابة للأجهزة */
+@media (max-width: 768px) {
+  :root {
+    --ps-spacing-sm: 0.75rem;
+    --ps-spacing-md: 1rem;
+    --ps-spacing-lg: 1.5rem;
+    --ps-spacing-xl: 2rem;
+    --ps-spacing-2xl: 2.5rem;
+  }
+  
+  .has-global-padding {
+    padding-left: var(--ps-spacing-md);
+    padding-right: var(--ps-spacing-md);
+  }
+  
+  .search-input-wrapper {
+    flex-direction: column;
+    border-radius: var(--ps-radius-lg);
+  }
+  
+  .search-field {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .voice-search-btn,
+  .search-submit {
+    padding: var(--ps-spacing-sm) var(--ps-spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .suggestion-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ps-spacing-xs);
+  }
+  
+  .suggestion-type {
+    align-self: flex-end;
+  }
+}
+
+/* 8. إمكانية الوصول */
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.screen-reader-text:focus {
+  background-color: var(--ps-white);
+  clip: auto !important;
+  color: var(--ps-dark);
+  display: block;
+  font-size: 1rem;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+}
+
+/* تحسينات للوحة المفاتيح */
+*:focus {
+  outline: 2px solid var(--ps-primary);
+  outline-offset: 2px;
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--ps-primary);
+  outline-offset: 2px;
+}
+
+/* 9. الطباعة */
+@media print {
+  .search-form,
+  .voice-search-btn,
+  .wp-block-navigation,
+  .wp-block-social-links {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+  }
+  
+  .wp-block-image img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* الرسوم المتحركة */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--ps-transition-slow) ease-out;
+}
+
+/* تحسينات الأداء */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  loading: lazy;
+}
+
+/* تحسين خطوط الويب */
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansArabic-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/NotoSansArabic-Bold.woff2') format('woff2');
+}
