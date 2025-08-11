@@ -1,6 +1,6 @@
 /**
  * Practical Solutions Theme - Navigation System
- * نظام التنقل والقوائم
+ * نظام التنقل المتقدم
  * 
  * @package Practical_Solutions
  * @version 1.0.0
@@ -10,37 +10,39 @@
 'use strict';
 
 /**
- * كلاس نظام التنقل
- * @class NavigationSystem
+ * نظام التنقل المتقدم
+ * @namespace PracticalSolutionsNavigation
  */
-window.NavigationSystem = (function() {
+window.PracticalSolutionsNavigation = (function() {
     
     // المتغيرات الخاصة
     let instance = null;
-    let mobileMenuToggle = null;
-    let mobileMenuOverlay = null;
-    let primaryNavigation = null;
-    let header = null;
-    let backToTopButton = null;
+    let isInitialized = false;
     let isMobileMenuOpen = false;
-    let isScrolled = false;
+    let isScrolling = false;
     let lastScrollTop = 0;
-    let headerHeight = 0;
-    let scrollThreshold = 100;
-    let currentSubMenu = null;
-
+    let scrollTimer = null;
+    
+    // عناصر DOM
+    let header = null;
+    let mobileMenuToggle = null;
+    let mobileMenu = null;
+    let navigationLinks = null;
+    let backToTopBtn = null;
+    let searchToggle = null;
+    
     // إعدادات افتراضية
     const defaults = {
         enableStickyHeader: true,
         enableBackToTop: true,
         enableSmoothScroll: true,
-        enableKeyboardNavigation: true,
         mobileBreakpoint: 768,
         scrollThreshold: 100,
-        autoCloseDelay: 300,
+        autoCloseMobileMenu: true,
+        enableKeyboardNavigation: true,
         animationDuration: 300
     };
-
+    
     let settings = {};
 
     /**
@@ -49,46 +51,61 @@ window.NavigationSystem = (function() {
      */
     function init(options = {}) {
         if (instance) {
-            PracticalSolutionsUtils.log('نظام التنقل مهيأ مسبقاً', 'warn');
+            console.warn('نظام التنقل مهيأ مسبقاً');
             return instance;
         }
 
         settings = Object.assign({}, defaults, options);
         
-        // البحث عن العناصر المطلوبة
+        // البحث عن العناصر
         findElements();
         
-        // إعداد التنقل
-        setupNavigation();
+        if (!header) {
+            console.warn('رأس الصفحة غير موجود');
+            return null;
+        }
         
-        // ربط الأحداث
-        bindEvents();
+        // إعداد الأحداث
+        setupEvents();
         
-        // إعداد العودة لأعلى
+        // إعداد الميزات
+        if (settings.enableStickyHeader) {
+            setupStickyHeader();
+        }
+        
         if (settings.enableBackToTop) {
             setupBackToTop();
         }
         
-        // إعداد التمرير السلس
         if (settings.enableSmoothScroll) {
             setupSmoothScroll();
         }
         
-        // إضافة أنماط CSS
-        addNavigationStyles();
+        if (settings.enableKeyboardNavigation) {
+            setupKeyboardNavigation();
+        }
         
-        PracticalSolutionsUtils.log('تم تهيئة نظام التنقل بنجاح');
+        // إعداد القائمة المحمولة
+        setupMobileMenu();
+        
+        // إعداد البحث في الرأس
+        setupHeaderSearch();
+        
+        isInitialized = true;
+        console.log('تم تهيئة نظام التنقل بنجاح');
         
         instance = {
-            openMobileMenu: openMobileMenu,
-            closeMobileMenu: closeMobileMenu,
             toggleMobileMenu: toggleMobileMenu,
+            closeMobileMenu: closeMobileMenu,
+            openMobileMenu: openMobileMenu,
             scrollToTop: scrollToTop,
             scrollToElement: scrollToElement,
-            isMobileMenuOpen: () => isMobileMenuOpen,
+            showBackToTop: showBackToTop,
+            hideBackToTop: hideBackToTop,
+            isInitialized: () => isInitialized,
             destroy: destroy
         };
-
+        
         return instance;
     }
 
@@ -96,153 +113,110 @@ window.NavigationSystem = (function() {
      * البحث عن العناصر في الصفحة
      */
     function findElements() {
-        mobileMenuToggle = PracticalSolutionsUtils.getElement('.mobile-menu-toggle') ||
-                          PracticalSolutionsUtils.getElement('.menu-toggle');
+        header = document.querySelector('.site-header, header, .main-header');
+        mobileMenuToggle = document.querySelector('.mobile-menu-toggle, .menu-toggle, .hamburger');
+        mobileMenu = document.querySelector('.mobile-menu, .responsive-menu, .wp-block-navigation__responsive-container');
+        navigationLinks = document.querySelectorAll('.wp-block-navigation a, .menu a, nav a');
+        backToTopBtn = document.querySelector('#back-to-top, .back-to-top, .scroll-to-top');
+        searchToggle = document.querySelector('.search-toggle, .header-search-toggle');
         
-        mobileMenuOverlay = PracticalSolutionsUtils.getElement('.mobile-menu-overlay') ||
-                           PracticalSolutionsUtils.getElement('.mobile-menu');
-        
-        primaryNavigation = PracticalSolutionsUtils.getElement('.primary-navigation') ||
-                           PracticalSolutionsUtils.getElement('.main-navigation');
-        
-        header = PracticalSolutionsUtils.getElement('.site-header') ||
-                PracticalSolutionsUtils.getElement('header');
-
-        // إنشاء زر العودة لأعلى إذا لم يكن موجود
-        createBackToTopButton();
+        // إنشاء عناصر مفقودة إذا لم توجد
+        createMissingElements();
     }
 
     /**
-     * إعداد التنقل
+     * إنشاء عناصر مفقودة
      */
-    function setupNavigation() {
-        // حساب ارتفاع الرأس
-        if (header) {
-            headerHeight = header.offsetHeight;
-        }
-
-        // إعداد القائمة المحمولة
-        setupMobileMenu();
-        
-        // إعداد القوائم الفرعية
-        setupSubMenus();
-        
-        // إعداد إمكانية الوصول
-        setupAccessibility();
-        
-        // إعداد الرأس الثابت
-        if (settings.enableStickyHeader) {
-            setupStickyHeader();
-        }
-    }
-
-    /**
-     * إعداد القائمة المحمولة
-     */
-    function setupMobileMenu() {
-        if (!mobileMenuToggle) return;
-
-        // إضافة خصائص إمكانية الوصول
-        mobileMenuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenuToggle.setAttribute('aria-controls', 'mobile-menu');
-        mobileMenuToggle.setAttribute('aria-label', getTranslation('menu_toggle'));
-
-        if (mobileMenuOverlay) {
-            mobileMenuOverlay.setAttribute('id', 'mobile-menu');
-            mobileMenuOverlay.setAttribute('aria-hidden', 'true');
-        }
-
-        // إضافة أيقونة الهامبرغر إذا لم تكن موجودة
-        if (!mobileMenuToggle.querySelector('svg') && !mobileMenuToggle.querySelector('.menu-icon')) {
+    function createMissingElements() {
+        // إنشاء زر القائمة المحمولة إذا لم يوجد
+        if (!mobileMenuToggle && header) {
+            mobileMenuToggle = document.createElement('button');
+            mobileMenuToggle.className = 'mobile-menu-toggle';
             mobileMenuToggle.innerHTML = `
-                <span class="menu-icon">
-                    <span class="menu-line"></span>
-                    <span class="menu-line"></span>
-                    <span class="menu-line"></span>
+                <span class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
                 </span>
-                <span class="sr-only">${getTranslation('menu_toggle')}</span>
+                <span class="sr-only">تبديل القائمة</span>
             `;
+            mobileMenuToggle.setAttribute('aria-label', 'تبديل القائمة');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            
+            // إدراج الزر في المكان المناسب
+            const headerContainer = header.querySelector('.main-header, .site-branding') || header;
+            headerContainer.appendChild(mobileMenuToggle);
+        }
+        
+        // إنشاء زر العودة لأعلى إذا لم يوجد
+        if (!backToTopBtn && settings.enableBackToTop) {
+            backToTopBtn = document.createElement('button');
+            backToTopBtn.id = 'back-to-top';
+            backToTopBtn.className = 'back-to-top-btn';
+            backToTopBtn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 14L12 9L17 14H7Z"/>
+                </svg>
+                <span class="sr-only">العودة لأعلى</span>
+            `;
+            backToTopBtn.setAttribute('aria-label', 'العودة لأعلى الصفحة');
+            backToTopBtn.style.cssText = `
+                position: fixed;
+                bottom: 2rem;
+                left: 2rem;
+                background: var(--wp--preset--color--primary, #007cba);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                transition: all 0.3s ease;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(20px);
+            `;
+            
+            document.body.appendChild(backToTopBtn);
         }
     }
 
     /**
-     * إعداد القوائم الفرعية
+     * إعداد الأحداث
      */
-    function setupSubMenus() {
-        if (!primaryNavigation) return;
-
-        const subMenuToggles = primaryNavigation.querySelectorAll('.wp-block-navigation-submenu');
-        
-        subMenuToggles.forEach(submenu => {
-            const toggle = submenu.querySelector('.wp-block-navigation-submenu__toggle');
-            const menu = submenu.querySelector('.wp-block-navigation-submenu__container');
-            
-            if (toggle && menu) {
-                // إضافة خصائص إمكانية الوصول
-                toggle.setAttribute('aria-expanded', 'false');
-                toggle.setAttribute('aria-haspopup', 'true');
-                
-                const menuId = `submenu-${Math.random().toString(36).substr(2, 9)}`;
-                menu.setAttribute('id', menuId);
-                toggle.setAttribute('aria-controls', menuId);
-                
-                // ربط الأحداث
-                bindSubMenuEvents(submenu, toggle, menu);
+    function setupEvents() {
+        // أحداث التمرير
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
-    }
-
-    /**
-     * ربط أحداث القائمة الفرعية
-     * @param {Element} submenu - عنصر القائمة الفرعية
-     * @param {Element} toggle - زر التبديل
-     * @param {Element} menu - القائمة
-     */
-    function bindSubMenuEvents(submenu, toggle, menu) {
-        // النقر على زر التبديل
-        toggle.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleSubMenu(submenu, toggle, menu);
-        });
-
-        // التمرير بالفأرة (للديسكتوب)
-        if (!PracticalSolutionsUtils.isMobile()) {
-            submenu.addEventListener('mouseenter', () => {
-                openSubMenu(submenu, toggle, menu);
-            });
-
-            submenu.addEventListener('mouseleave', () => {
-                closeSubMenu(submenu, toggle, menu);
-            });
+        
+        // أحداث تغيير حجم النافذة
+        window.addEventListener('resize', debounce(handleResize, 250));
+        
+        // أحداث القائمة المحمولة
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         }
-
+        
+        // أحداث زر العودة لأعلى
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', scrollToTop);
+        }
+        
+        // إغلاق القائمة المحمولة عند النقر خارجها
+        document.addEventListener('click', handleOutsideClick);
+        
         // أحداث لوحة المفاتيح
-        if (settings.enableKeyboardNavigation) {
-            toggle.addEventListener('keydown', (e) => {
-                handleSubMenuKeydown(e, submenu, toggle, menu);
-            });
-        }
-    }
-
-    /**
-     * إعداد إمكانية الوصول
-     */
-    function setupAccessibility() {
-        // تحسين التنقل بلوحة المفاتيح
-        if (settings.enableKeyboardNavigation && primaryNavigation) {
-            const focusableElements = primaryNavigation.querySelectorAll(
-                'a, button, [tabindex]:not([tabindex="-1"])'
-            );
-
-            focusableElements.forEach((element, index) => {
-                element.addEventListener('keydown', (e) => {
-                    handleNavigationKeydown(e, focusableElements, index);
-                });
-            });
-        }
-
-        // إضافة مؤشرات التركيز المرئية
-        addFocusIndicators();
+        document.addEventListener('keydown', handleKeyPress);
     }
 
     /**
@@ -250,45 +224,261 @@ window.NavigationSystem = (function() {
      */
     function setupStickyHeader() {
         if (!header) return;
-
-        // إضافة كلاس للرأس الثابت
-        PracticalSolutionsUtils.addClass(header, 'sticky-header');
+        
+        // إضافة كلاس الرأس الثابت
+        header.classList.add('sticky-header');
+        
+        // إضافة أنماط CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .sticky-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 999;
+                transition: transform 0.3s ease, background-color 0.3s ease;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+            }
+            
+            .sticky-header.header-hidden {
+                transform: translateY(-100%);
+            }
+            
+            .sticky-header.header-scrolled {
+                background: rgba(255, 255, 255, 0.98);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            body.has-sticky-header {
+                padding-top: var(--header-height, 80px);
+            }
+            
+            @media (max-width: 768px) {
+                body.has-sticky-header {
+                    padding-top: var(--header-height-mobile, 60px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // تحديد ارتفاع الرأس
+        const headerHeight = header.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
+        document.body.classList.add('has-sticky-header');
     }
 
     /**
-     * ربط الأحداث
+     * إعداد زر العودة لأعلى
      */
-    function bindEvents() {
-        // أحداث زر القائمة المحمولة
-        if (mobileMenuToggle) {
-            mobileMenuToggle.addEventListener('click', handleMobileMenuToggle);
-        }
-
-        // أحداث التمرير
-        window.addEventListener('scroll', PracticalSolutionsUtils.throttle(handleScroll, 16));
+    function setupBackToTop() {
+        if (!backToTopBtn) return;
         
-        // أحداث تغيير حجم النافذة
-        window.addEventListener('resize', PracticalSolutionsUtils.debounce(handleResize, 250));
-        
-        // أحداث لوحة المفاتيح العامة
-        document.addEventListener('keydown', handleGlobalKeydown);
-        
-        // النقر خارج القائمة المحمولة
-        document.addEventListener('click', handleDocumentClick);
-        
-        // أحداث التمرير للروابط الداخلية
-        bindInternalLinks();
+        // إضافة أنماط CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .back-to-top-btn {
+                position: fixed !important;
+                bottom: 2rem !important;
+                left: 2rem !important;
+                background: var(--wp--preset--color--primary, #007cba) !important;
+                color: white !important;
+                border: none !important;
+                border-radius: 50% !important;
+                width: 50px !important;
+                height: 50px !important;
+                cursor: pointer !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                transition: all 0.3s ease !important;
+                z-index: 1000 !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transform: translateY(20px) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .back-to-top-btn.visible {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: translateY(0) !important;
+            }
+            
+            .back-to-top-btn:hover {
+                background: var(--wp--preset--color--secondary, #f0f4f8) !important;
+                color: var(--wp--preset--color--primary, #007cba) !important;
+                transform: translateY(-3px) !important;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
+            }
+            
+            @media (max-width: 768px) {
+                .back-to-top-btn {
+                    bottom: 1rem !important;
+                    left: 1rem !important;
+                    width: 45px !important;
+                    height: 45px !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     /**
-     * معالجة النقر على زر القائمة المحمولة
-     * @param {Event} event - حدث النقر
+     * إعداد التمرير السلس
      */
-    function handleMobileMenuToggle(event) {
-        event.preventDefault();
-        event.stopPropagation();
+    function setupSmoothScroll() {
+        // إضافة تمرير سلس للروابط المحلية
+        navigationLinks.forEach(link => {
+            if (link.getAttribute('href')?.startsWith('#')) {
+                link.addEventListener('click', handleSmoothScroll);
+            }
+        });
         
-        toggleMobileMenu();
+        // إضافة CSS للتمرير السلس
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }
+
+    /**
+     * إعداد القائمة المحمولة
+     */
+    function setupMobileMenu() {
+        if (!mobileMenuToggle) return;
+        
+        // إضافة أنماط CSS للقائمة المحمولة
+        const style = document.createElement('style');
+        style.textContent = `
+            .mobile-menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0.5rem;
+                z-index: 1001;
+                position: relative;
+            }
+            
+            .hamburger-lines {
+                display: flex;
+                flex-direction: column;
+                width: 24px;
+                height: 18px;
+                justify-content: space-between;
+            }
+            
+            .hamburger-lines .line {
+                height: 2px;
+                width: 100%;
+                background: var(--wp--preset--color--foreground, #2c3e50);
+                transition: all 0.3s ease;
+                transform-origin: center;
+            }
+            
+            .mobile-menu-toggle.active .line1 {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .mobile-menu-toggle.active .line2 {
+                opacity: 0;
+            }
+            
+            .mobile-menu-toggle.active .line3 {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            @media (max-width: 768px) {
+                .mobile-menu-toggle {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .wp-block-navigation__responsive-container-open .wp-block-navigation__responsive-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(255, 255, 255, 0.98);
+                    backdrop-filter: blur(10px);
+                    z-index: 1000;
+                    padding: 2rem;
+                    overflow-y: auto;
+                }
+            }
+            
+            .sr-only {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                padding: 0 !important;
+                margin: -1px !important;
+                overflow: hidden !important;
+                clip: rect(0,0,0,0) !important;
+                white-space: nowrap !important;
+                border: 0 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    /**
+     * إعداد البحث في الرأس
+     */
+    function setupHeaderSearch() {
+        const headerSearchForm = document.querySelector('.header-search-form');
+        if (!headerSearchForm) return;
+        
+        const searchInput = headerSearchForm.querySelector('input[type="search"]');
+        if (!searchInput) return;
+        
+        // تحسين تجربة البحث في الرأس
+        searchInput.addEventListener('focus', () => {
+            headerSearchForm.classList.add('focused');
+        });
+        
+        searchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                headerSearchForm.classList.remove('focused');
+            }, 200);
+        });
+        
+        // إضافة أنماط للبحث في الرأس
+        const style = document.createElement('style');
+        style.textContent = `
+            .header-search-form.focused .search-input-container {
+                box-shadow: 0 4px 20px rgba(0, 124, 186, 0.2) !important;
+                background: white !important;
+            }
+            
+            @media (max-width: 768px) {
+                .header-search {
+                    display: none;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    /**
+     * إعداد التنقل بلوحة المفاتيح
+     */
+    function setupKeyboardNavigation() {
+        // إضافة دعم مفاتيح الأسهم للقوائم
+        navigationLinks.forEach((link, index) => {
+            link.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const nextLink = navigationLinks[index + 1] || navigationLinks[0];
+                    nextLink.focus();
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const prevLink = navigationLinks[index - 1] || navigationLinks[navigationLinks.length - 1];
+                    prevLink.focus();
+                }
+            });
+        });
     }
 
     /**
@@ -297,31 +487,30 @@ window.NavigationSystem = (function() {
     function handleScroll() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        // تحديث حالة التمرير
-        const wasScrolled = isScrolled;
-        isScrolled = scrollTop > scrollThreshold;
-        
-        if (isScrolled !== wasScrolled) {
-            updateHeaderState();
-        }
-        
-        // إخفاء/إظهار الرأس عند التمرير
+        // إدارة الرأس الثابت
         if (settings.enableStickyHeader && header) {
-            const isScrollingUp = scrollTop < lastScrollTop;
-            
-            if (scrollTop > headerHeight * 2) {
-                if (isScrollingUp) {
-                    PracticalSolutionsUtils.removeClass(header, 'header-hidden');
-                    PracticalSolutionsUtils.addClass(header, 'header-visible');
+            if (scrollTop > settings.scrollThreshold) {
+                header.classList.add('header-scrolled');
+                
+                // إخفاء الرأس عند التمرير لأسفل
+                if (scrollTop > lastScrollTop && scrollTop > settings.scrollThreshold * 2) {
+                    header.classList.add('header-hidden');
                 } else {
-                    PracticalSolutionsUtils.addClass(header, 'header-hidden');
-                    PracticalSolutionsUtils.removeClass(header, 'header-visible');
+                    header.classList.remove('header-hidden');
                 }
+            } else {
+                header.classList.remove('header-scrolled', 'header-hidden');
             }
         }
         
-        // تحديث زر العودة لأعلى
-        updateBackToTopButton();
+        // إدارة زر العودة لأعلى
+        if (settings.enableBackToTop && backToTopBtn) {
+            if (scrollTop > settings.scrollThreshold * 3) {
+                showBackToTop();
+            } else {
+                hideBackToTop();
+            }
+        }
         
         lastScrollTop = scrollTop;
     }
@@ -330,224 +519,83 @@ window.NavigationSystem = (function() {
      * معالجة تغيير حجم النافذة
      */
     function handleResize() {
-        const isMobile = window.innerWidth < settings.mobileBreakpoint;
-        
-        // إغلاق القائمة المحمولة إذا تم التبديل للديسكتوب
-        if (!isMobile && isMobileMenuOpen) {
+        // إغلاق القائمة المحمولة عند تغيير الحجم للديسكتوب
+        if (window.innerWidth > settings.mobileBreakpoint && isMobileMenuOpen) {
             closeMobileMenu();
         }
         
-        // إعادة حساب ارتفاع الرأس
-        if (header) {
-            headerHeight = header.offsetHeight;
+        // تحديث ارتفاع الرأس
+        if (header && settings.enableStickyHeader) {
+            const headerHeight = header.offsetHeight;
+            document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
         }
     }
 
     /**
-     * معالجة أحداث لوحة المفاتيح العامة
-     * @param {Event} event - حدث لوحة المفاتيح
+     * معالجة النقر خارج القائمة
      */
-    function handleGlobalKeydown(event) {
-        switch (event.key) {
-            case 'Escape':
-                if (isMobileMenuOpen) {
-                    closeMobileMenu();
-                    mobileMenuToggle?.focus();
-                }
-                // إغلاق القوائم الفرعية المفتوحة
-                closeAllSubMenus();
-                break;
-                
-            case 'Tab':
-                // إدارة التنقل بالتاب في القائمة المحمولة
-                if (isMobileMenuOpen) {
-                    handleMobileMenuTabNavigation(event);
-                }
-                break;
-        }
-    }
-
-    /**
-     * معالجة النقر على المستند
-     * @param {Event} event - حدث النقر
-     */
-    function handleDocumentClick(event) {
-        // إغلاق القائمة المحمولة إذا تم النقر خارجها
+    function handleOutsideClick(e) {
         if (isMobileMenuOpen && 
-            mobileMenuOverlay && 
-            !mobileMenuOverlay.contains(event.target) &&
-            !mobileMenuToggle?.contains(event.target)) {
+            !mobileMenu?.contains(e.target) && 
+            !mobileMenuToggle?.contains(e.target)) {
             closeMobileMenu();
         }
-        
-        // إغلاق القوائم الفرعية
-        closeAllSubMenus();
     }
 
     /**
-     * معالجة أحداث لوحة المفاتيح للتنقل
-     * @param {Event} event - حدث لوحة المفاتيح
-     * @param {NodeList} elements - العناصر القابلة للتركيز
-     * @param {number} currentIndex - الفهرس الحالي
+     * معالجة مفاتيح لوحة المفاتيح
      */
-    function handleNavigationKeydown(event, elements, currentIndex) {
-        let targetIndex = currentIndex;
-        
-        switch (event.key) {
-            case 'ArrowRight':
-                event.preventDefault();
-                targetIndex = (currentIndex + 1) % elements.length;
-                break;
-                
-            case 'ArrowLeft':
-                event.preventDefault();
-                targetIndex = currentIndex === 0 ? elements.length - 1 : currentIndex - 1;
-                break;
-                
-            case 'Home':
-                event.preventDefault();
-                targetIndex = 0;
-                break;
-                
-            case 'End':
-                event.preventDefault();
-                targetIndex = elements.length - 1;
-                break;
+    function handleKeyPress(e) {
+        // إغلاق القائمة المحمولة بمفتاح Escape
+        if (e.key === 'Escape' && isMobileMenuOpen) {
+            closeMobileMenu();
+            mobileMenuToggle?.focus();
         }
         
-        if (targetIndex !== currentIndex) {
-            elements[targetIndex].focus();
+        // التنقل بمفتاح Tab في القائمة المحمولة
+        if (e.key === 'Tab' && isMobileMenuOpen) {
+            trapFocus(e);
         }
     }
 
     /**
-     * معالجة أحداث لوحة المفاتيح للقائمة الفرعية
-     * @param {Event} event - حدث لوحة المفاتيح
-     * @param {Element} submenu - القائمة الفرعية
-     * @param {Element} toggle - زر التبديل
-     * @param {Element} menu - القائمة
+     * معالجة التمرير السلس
      */
-    function handleSubMenuKeydown(event, submenu, toggle, menu) {
-        switch (event.key) {
-            case 'Enter':
-            case ' ':
-                event.preventDefault();
-                toggleSubMenu(submenu, toggle, menu);
-                break;
-                
-            case 'ArrowDown':
-                event.preventDefault();
-                openSubMenu(submenu, toggle, menu);
-                // التركيز على أول عنصر في القائمة
-                const firstLink = menu.querySelector('a');
-                if (firstLink) firstLink.focus();
-                break;
-                
-            case 'Escape':
-                closeSubMenu(submenu, toggle, menu);
-                toggle.focus();
-                break;
-        }
-    }
-
-    /**
-     * ربط الروابط الداخلية للتمرير السلس
-     */
-    function bindInternalLinks() {
-        const internalLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+    function handleSmoothScroll(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
         
-        internalLinks.forEach(link => {
-            link.addEventListener('click', handleInternalLinkClick);
-        });
-    }
-
-    /**
-     * معالجة النقر على الروابط الداخلية
-     * @param {Event} event - حدث النقر
-     */
-    function handleInternalLinkClick(event) {
-        const href = event.currentTarget.getAttribute('href');
-        const targetId = href.substring(1);
-        const target = document.getElementById(targetId);
-        
-        if (target) {
-            event.preventDefault();
+        if (targetElement) {
+            scrollToElement(targetElement);
             
             // إغلاق القائمة المحمولة إذا كانت مفتوحة
             if (isMobileMenuOpen) {
                 closeMobileMenu();
             }
-            
-            // التمرير السلس للعنصر
-            scrollToElement(target);
-            
-            // تحديث URL
-            if (history.pushState) {
-                history.pushState(null, null, href);
-            } else {
-                location.hash = href;
-            }
         }
     }
 
     /**
-     * فتح القائمة المحمولة
+     * حبس التركيز في القائمة المحمولة
      */
-    function openMobileMenu() {
-        if (isMobileMenuOpen || !mobileMenuOverlay) return;
+    function trapFocus(e) {
+        if (!mobileMenu) return;
         
-        isMobileMenuOpen = true;
+        const focusableElements = mobileMenu.querySelectorAll(
+            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        );
         
-        // تحديث العناصر
-        PracticalSolutionsUtils.addClass(document.body, 'mobile-menu-open');
-        PracticalSolutionsUtils.addClass(mobileMenuOverlay, 'active');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
         
-        if (mobileMenuToggle) {
-            mobileMenuToggle.setAttribute('aria-expanded', 'true');
-            mobileMenuToggle.setAttribute('aria-label', getTranslation('close_menu'));
-            PracticalSolutionsUtils.addClass(mobileMenuToggle, 'active');
+        if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
         }
-        
-        mobileMenuOverlay.setAttribute('aria-hidden', 'false');
-        
-        // منع التمرير في الخلفية
-        disableBodyScroll();
-        
-        // التركيز على أول عنصر في القائمة
-        setTimeout(() => {
-            const firstFocusable = mobileMenuOverlay.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
-            if (firstFocusable) {
-                firstFocusable.focus();
-            }
-        }, settings.animationDuration);
-        
-        PracticalSolutionsUtils.log('تم فتح القائمة المحمولة');
-    }
-
-    /**
-     * إغلاق القائمة المحمولة
-     */
-    function closeMobileMenu() {
-        if (!isMobileMenuOpen || !mobileMenuOverlay) return;
-        
-        isMobileMenuOpen = false;
-        
-        // تحديث العناصر
-        PracticalSolutionsUtils.removeClass(document.body, 'mobile-menu-open');
-        PracticalSolutionsUtils.removeClass(mobileMenuOverlay, 'active');
-        
-        if (mobileMenuToggle) {
-            mobileMenuToggle.setAttribute('aria-expanded', 'false');
-            mobileMenuToggle.setAttribute('aria-label', getTranslation('menu_toggle'));
-            PracticalSolutionsUtils.removeClass(mobileMenuToggle, 'active');
-        }
-        
-        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
-        
-        // إعادة تفعيل التمرير
-        enableBodyScroll();
-        
-        PracticalSolutionsUtils.log('تم إغلاق القائمة المحمولة');
     }
 
     /**
@@ -562,484 +610,148 @@ window.NavigationSystem = (function() {
     }
 
     /**
-     * فتح قائمة فرعية
-     * @param {Element} submenu - القائمة الفرعية
-     * @param {Element} toggle - زر التبديل
-     * @param {Element} menu - القائمة
+     * فتح القائمة المحمولة
      */
-    function openSubMenu(submenu, toggle, menu) {
-        // إغلاق القوائم الفرعية الأخرى
-        closeAllSubMenus(submenu);
+    function openMobileMenu() {
+        if (!mobileMenuToggle) return;
         
-        currentSubMenu = submenu;
+        isMobileMenuOpen = true;
+        mobileMenuToggle.classList.add('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('mobile-menu-open');
         
-        PracticalSolutionsUtils.addClass(submenu, 'is-open');
-        toggle.setAttribute('aria-expanded', 'true');
-        menu.setAttribute('aria-hidden', 'false');
-    }
-
-    /**
-     * إغلاق قائمة فرعية
-     * @param {Element} submenu - القائمة الفرعية
-     * @param {Element} toggle - زر التبديل
-     * @param {Element} menu - القائمة
-     */
-    function closeSubMenu(submenu, toggle, menu) {
-        PracticalSolutionsUtils.removeClass(submenu, 'is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        menu.setAttribute('aria-hidden', 'true');
-        
-        if (currentSubMenu === submenu) {
-            currentSubMenu = null;
+        // تشغيل نظام ووردبريس للقائمة المتجاوبة
+        const navContainer = document.querySelector('.wp-block-navigation');
+        if (navContainer) {
+            navContainer.classList.add('wp-block-navigation__responsive-container-open');
         }
-    }
-
-    /**
-     * تبديل قائمة فرعية
-     * @param {Element} submenu - القائمة الفرعية
-     * @param {Element} toggle - زر التبديل
-     * @param {Element} menu - القائمة
-     */
-    function toggleSubMenu(submenu, toggle, menu) {
-        const isOpen = PracticalSolutionsUtils.hasClass(submenu, 'is-open');
         
-        if (isOpen) {
-            closeSubMenu(submenu, toggle, menu);
-        } else {
-            openSubMenu(submenu, toggle, menu);
-        }
-    }
-
-    /**
-     * إغلاق جميع القوائم الفرعية
-     * @param {Element} except - استثناء قائمة معينة
-     */
-    function closeAllSubMenus(except = null) {
-        if (!primaryNavigation) return;
-        
-        const openSubMenus = primaryNavigation.querySelectorAll('.wp-block-navigation-submenu.is-open');
-        
-        openSubMenus.forEach(submenu => {
-            if (submenu !== except) {
-                const toggle = submenu.querySelector('.wp-block-navigation-submenu__toggle');
-                const menu = submenu.querySelector('.wp-block-navigation-submenu__container');
-                
-                if (toggle && menu) {
-                    closeSubMenu(submenu, toggle, menu);
-                }
-            }
-        });
-    }
-
-    /**
-     * معالجة التنقل بالتاب في القائمة المحمولة
-     * @param {Event} event - حدث التاب
-     */
-    function handleMobileMenuTabNavigation(event) {
-        if (!mobileMenuOverlay) return;
-        
-        const focusableElements = mobileMenuOverlay.querySelectorAll(
-            'a, button, [tabindex]:not([tabindex="-1"])'
-        );
-        
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-        
-        if (event.shiftKey) {
-            // Shift + Tab
-            if (document.activeElement === firstElement) {
-                event.preventDefault();
-                lastElement.focus();
-            }
-        } else {
-            // Tab
-            if (document.activeElement === lastElement) {
-                event.preventDefault();
-                firstElement.focus();
-            }
-        }
-    }
-
-    /**
-     * تحديث حالة الرأس
-     */
-    function updateHeaderState() {
-        if (!header) return;
-        
-        if (isScrolled) {
-            PracticalSolutionsUtils.addClass(header, 'is-scrolled');
-        } else {
-            PracticalSolutionsUtils.removeClass(header, 'is-scrolled');
-        }
-    }
-
-    /**
-     * منع التمرير في الخلفية
-     */
-    function disableBodyScroll() {
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        
+        // منع التمرير في الخلفية
         document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
+        
+        // التركيز على أول رابط
+        setTimeout(() => {
+            const firstLink = mobileMenu?.querySelector('a, button');
+            firstLink?.focus();
+        }, 100);
     }
 
     /**
-     * إعادة تفعيل التمرير
+     * إغلاق القائمة المحمولة
      */
-    function enableBodyScroll() {
-        document.body.style.overflow = '';
-        document.body.style.paddingRight = '';
-    }
-
-    /**
-     * إنشاء زر العودة لأعلى
-     */
-    function createBackToTopButton() {
-        if (backToTopButton || !settings.enableBackToTop) return;
+    function closeMobileMenu() {
+        if (!mobileMenuToggle) return;
         
-        backToTopButton = PracticalSolutionsUtils.createElement('button', {
-            className: 'back-to-top',
-            'aria-label': getTranslation('back_to_top'),
-            innerHTML: `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-                </svg>
-            `
-        });
+        isMobileMenuOpen = false;
+        mobileMenuToggle.classList.remove('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('mobile-menu-open');
         
-        document.body.appendChild(backToTopButton);
-    }
-
-    /**
-     * إعداد زر العودة لأعلى
-     */
-    function setupBackToTop() {
-        if (!backToTopButton) return;
-        
-        backToTopButton.addEventListener('click', scrollToTop);
-        
-        // إخفاء الزر في البداية
-        backToTopButton.style.opacity = '0';
-        backToTopButton.style.pointerEvents = 'none';
-    }
-
-    /**
-     * تحديث زر العودة لأعلى
-     */
-    function updateBackToTopButton() {
-        if (!backToTopButton) return;
-        
-        const shouldShow = window.pageYOffset > window.innerHeight / 2;
-        
-        if (shouldShow) {
-            backToTopButton.style.opacity = '1';
-            backToTopButton.style.pointerEvents = 'auto';
-        } else {
-            backToTopButton.style.opacity = '0';
-            backToTopButton.style.pointerEvents = 'none';
+        // إيقاف نظام ووردبريس للقائمة المتجاوبة
+        const navContainer = document.querySelector('.wp-block-navigation');
+        if (navContainer) {
+            navContainer.classList.remove('wp-block-navigation__responsive-container-open');
         }
+        
+        // السماح بالتمرير مرة أخرى
+        document.body.style.overflow = '';
     }
 
     /**
-     * العودة لأعلى الصفحة
+     * التمرير لأعلى الصفحة
      */
     function scrollToTop() {
-        PracticalSolutionsUtils.smoothScrollTo(document.body, 800);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     /**
-     * التمرير لعنصر معين
-     * @param {Element} element - العنصر المستهدف
-     * @param {number} offset - الإزاحة
+     * التمرير لعنصر محدد
      */
     function scrollToElement(element, offset = 0) {
-        const finalOffset = offset || (headerHeight + 20);
-        PracticalSolutionsUtils.smoothScrollTo(element, 800, finalOffset);
-    }
-
-    /**
-     * إعداد التمرير السلس
-     */
-    function setupSmoothScroll() {
-        // إضافة behavior: smooth للمتصفحات التي تدعمه
-        if ('scrollBehavior' in document.documentElement.style) {
-            document.documentElement.style.scrollBehavior = 'smooth';
-        }
-    }
-
-    /**
-     * إضافة مؤشرات التركيز
-     */
-    function addFocusIndicators() {
-        const focusableElements = document.querySelectorAll(
-            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-        );
+        if (!element) return;
         
-        focusableElements.forEach(element => {
-            element.addEventListener('focus', () => {
-                PracticalSolutionsUtils.addClass(element, 'ps-focused');
-            });
-            
-            element.addEventListener('blur', () => {
-                PracticalSolutionsUtils.removeClass(element, 'ps-focused');
-            });
+        const headerHeight = header?.offsetHeight || 0;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight - offset;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
         });
     }
 
     /**
-     * الحصول على ترجمة نص
-     * @param {string} key - مفتاح الترجمة
-     * @returns {string}
+     * إظهار زر العودة لأعلى
      */
-    function getTranslation(key) {
-        const translations = window.practicalSolutions?.strings || {};
-        return translations[key] || key;
+    function showBackToTop() {
+        if (backToTopBtn) {
+            backToTopBtn.classList.add('visible');
+        }
     }
 
     /**
-     * إضافة أنماط CSS للتنقل
+     * إخفاء زر العودة لأعلى
      */
-    function addNavigationStyles() {
-        if (document.getElementById('ps-navigation-styles')) return;
-
-        const styles = `
-            /* أنماط القائمة المحمولة */
-            .mobile-menu-open {
-                overflow: hidden;
-            }
-
-            .mobile-menu-toggle {
-                display: none;
-                background: none;
-                border: 1px solid var(--wp--preset--color--base, #ecf0f1);
-                border-radius: 8px;
-                padding: 0.75rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                position: relative;
-                z-index: 1001;
-            }
-
-            .mobile-menu-toggle:hover {
-                background-color: var(--wp--preset--color--base, #ecf0f1);
-            }
-
-            .mobile-menu-toggle.active .menu-line:nth-child(1) {
-                transform: rotate(45deg) translate(6px, 6px);
-            }
-
-            .mobile-menu-toggle.active .menu-line:nth-child(2) {
-                opacity: 0;
-            }
-
-            .mobile-menu-toggle.active .menu-line:nth-child(3) {
-                transform: rotate(-45deg) translate(6px, -6px);
-            }
-
-            .menu-icon {
-                display: flex;
-                flex-direction: column;
-                gap: 3px;
-                width: 20px;
-                height: 14px;
-            }
-
-            .menu-line {
-                width: 100%;
-                height: 2px;
-                background-color: var(--wp--preset--color--foreground, #2c3e50);
-                transition: all 0.3s ease;
-                transform-origin: center;
-            }
-
-            .mobile-menu-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: var(--wp--preset--color--background, #ffffff);
-                z-index: 1000;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                overflow-y: auto;
-                padding: 2rem 1rem;
-            }
-
-            .mobile-menu-overlay.active {
-                transform: translateX(0);
-            }
-
-            /* أنماط الرأس الثابت */
-            .sticky-header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 999;
-                transition: transform 0.3s ease;
-            }
-
-            .sticky-header.is-scrolled {
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .sticky-header.header-hidden {
-                transform: translateY(-100%);
-            }
-
-            .sticky-header.header-visible {
-                transform: translateY(0);
-            }
-
-            /* أنماط القوائم الفرعية */
-            .wp-block-navigation-submenu.is-open .wp-block-navigation-submenu__container {
-                display: block;
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            .wp-block-navigation-submenu__container {
-                opacity: 0;
-                transform: translateY(-10px);
-                transition: all 0.3s ease;
-            }
-
-            /* زر العودة لأعلى */
-            .back-to-top {
-                position: fixed;
-                bottom: 2rem;
-                right: 2rem;
-                width: 50px;
-                height: 50px;
-                background: var(--wp--preset--color--primary, #007cba);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-                z-index: 998;
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-
-            .back-to-top:hover {
-                background: var(--wp--preset--color--accent, #e74c3c);
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            }
-
-            /* مؤشرات التركيز */
-            .ps-focused {
-                outline: 2px solid var(--wp--preset--color--primary, #007cba);
-                outline-offset: 2px;
-            }
-
-            /* الاستجابة للأجهزة المحمولة */
-            @media (max-width: 768px) {
-                .mobile-menu-toggle {
-                    display: flex;
-                }
-
-                .primary-navigation .wp-block-navigation__container {
-                    display: none;
-                }
-
-                .back-to-top {
-                    bottom: 1rem;
-                    right: 1rem;
-                    width: 45px;
-                    height: 45px;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .mobile-menu-overlay {
-                    padding: 1rem;
-                }
-            }
-
-            /* تحسينات إضافية */
-            .sr-only {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                white-space: nowrap;
-                border: 0;
-            }
-
-            /* تأثيرات انتقالية للقوائم */
-            .wp-block-navigation a {
-                transition: color 0.2s ease;
-            }
-
-            .wp-block-navigation a:hover {
-                color: var(--wp--preset--color--primary, #007cba);
-            }
-
-            /* تحسين شكل التمرير */
-            html {
-                scroll-padding-top: 100px;
-            }
-        `;
-
-        const styleSheet = PracticalSolutionsUtils.createElement('style', {
-            id: 'ps-navigation-styles'
-        }, styles);
-
-        document.head.appendChild(styleSheet);
+    function hideBackToTop() {
+        if (backToTopBtn) {
+            backToTopBtn.classList.remove('visible');
+        }
     }
 
     /**
-     * تدمير نظام التنقل
+     * تأخير تنفيذ دالة
+     */
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    /**
+     * تدمير النظام
      */
     function destroy() {
-        // إغلاق القائمة المحمولة
-        if (isMobileMenuOpen) {
-            closeMobileMenu();
-        }
-        
-        // إزالة مستمعي الأحداث
-        if (mobileMenuToggle) {
-            mobileMenuToggle.removeEventListener('click', handleMobileMenuToggle);
-        }
-
+        // إزالة الأحداث
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
-        document.removeEventListener('keydown', handleGlobalKeydown);
-        document.removeEventListener('click', handleDocumentClick);
-
-        // إزالة الروابط الداخلية
-        const internalLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
-        internalLinks.forEach(link => {
-            link.removeEventListener('click', handleInternalLinkClick);
-        });
-
-        // إزالة زر العودة لأعلى
-        if (backToTopButton && backToTopButton.parentNode) {
-            backToTopButton.parentNode.removeChild(backToTopButton);
-        }
-
-        // إعادة تفعيل التمرير
-        enableBodyScroll();
-
-        // مسح المتغيرات
-        instance = null;
+        document.removeEventListener('click', handleOutsideClick);
+        document.removeEventListener('keydown', handleKeyPress);
         
-        PracticalSolutionsUtils.log('تم تدمير نظام التنقل');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.removeEventListener('click', toggleMobileMenu);
+        }
+        
+        if (backToTopBtn) {
+            backToTopBtn.removeEventListener('click', scrollToTop);
+        }
+        
+        // إعادة تعيين المتغيرات
+        isInitialized = false;
+        instance = null;
+        isMobileMenuOpen = false;
+        
+        console.log('تم تدمير نظام التنقل');
     }
 
-    // إرجاع الوظائف العامة
+    // تصدير واجهة برمجة التطبيقات العامة
     return {
-        init: init
+        init: init,
+        toggleMobileMenu: toggleMobileMenu,
+        closeMobileMenu: closeMobileMenu,
+        openMobileMenu: openMobileMenu,
+        scrollToTop: scrollToTop,
+        scrollToElement: scrollToElement,
+        isInitialized: () => isInitialized,
+        destroy: destroy
     };
 
 })();
