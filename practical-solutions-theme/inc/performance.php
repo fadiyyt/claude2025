@@ -2,7 +2,7 @@
 /**
  * Performance Optimization
  * تحسينات الأداء والسرعة
- * 
+ *
  * @package Practical_Solutions
  * @since 1.0.0
  */
@@ -14,12 +14,12 @@ if (!defined('ABSPATH')) {
 
 /**
  * تحسين قاعدة البيانات للبحث
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_database() {
     global $wpdb;
-    
+
     // إضافة فهارس لتحسين البحث
     $indexes = array(
         "CREATE INDEX ps_post_title_idx ON {$wpdb->posts} (post_title)",
@@ -28,7 +28,7 @@ function practical_solutions_optimize_database() {
         "CREATE INDEX ps_post_status_type_idx ON {$wpdb->posts} (post_status, post_type)",
         "CREATE INDEX ps_meta_key_value_idx ON {$wpdb->postmeta} (meta_key, meta_value(50))"
     );
-    
+
     foreach ($indexes as $index) {
         $wpdb->query($index);
     }
@@ -37,7 +37,7 @@ add_action('after_switch_theme', 'practical_solutions_optimize_database');
 
 /**
  * تحسين استعلامات قاعدة البيانات
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_queries() {
@@ -61,13 +61,13 @@ add_action('init', 'practical_solutions_optimize_queries');
 
 /**
  * تحميل مسبق للتصنيفات
- * 
+ *
  * @param array $post_ids قائمة معرفات المقالات
  * @since 1.0.0
  */
 function practical_solutions_preload_post_terms($post_ids) {
     $taxonomies = array('category', 'post_tag', 'solution_category', 'tip_category', 'difficulty_level');
-    
+
     foreach ($taxonomies as $taxonomy) {
         if (taxonomy_exists($taxonomy)) {
             wp_get_object_terms($post_ids, $taxonomy);
@@ -77,7 +77,7 @@ function practical_solutions_preload_post_terms($post_ids) {
 
 /**
  * تحميل مسبق للحقول المخصصة
- * 
+ *
  * @param array $post_ids قائمة معرفات المقالات
  * @since 1.0.0
  */
@@ -90,7 +90,7 @@ function practical_solutions_preload_post_meta($post_ids) {
 
 /**
  * تحسين الصور والوسائط
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_images() {
@@ -103,7 +103,7 @@ function practical_solutions_optimize_images() {
             }
             return $attr;
         });
-        
+
         // إضافة lazy loading للصور في المحتوى
         add_filter('the_content', function($content) {
             if (!is_admin() && !is_feed()) {
@@ -116,12 +116,12 @@ function practical_solutions_optimize_images() {
             return $content;
         });
     }
-    
+
     // تحسين جودة الصور
     add_filter('wp_editor_set_quality', function($quality) {
         return 85; // جودة محسنة
     });
-    
+
     // إنشاء صور WebP تلقائياً
     add_filter('wp_generate_attachment_metadata', 'practical_solutions_create_webp_versions');
 }
@@ -129,7 +129,7 @@ add_action('init', 'practical_solutions_optimize_images');
 
 /**
  * إنشاء نسخ WebP للصور
- * 
+ *
  * @param array $metadata بيانات الصورة
  * @return array البيانات المحدثة
  * @since 1.0.0
@@ -138,14 +138,14 @@ function practical_solutions_create_webp_versions($metadata) {
     if (!isset($metadata['file'])) {
         return $metadata;
     }
-    
+
     $upload_dir = wp_upload_dir();
     $image_path = $upload_dir['basedir'] . '/' . $metadata['file'];
-    
+
     // التحقق من وجود الصورة ودعم WebP
     if (file_exists($image_path) && function_exists('imagewebp')) {
         practical_solutions_convert_to_webp($image_path);
-        
+
         // تحويل الأحجام المختلفة
         if (isset($metadata['sizes']) && is_array($metadata['sizes'])) {
             foreach ($metadata['sizes'] as $size) {
@@ -156,27 +156,27 @@ function practical_solutions_create_webp_versions($metadata) {
             }
         }
     }
-    
+
     return $metadata;
 }
 
 /**
  * تحويل الصورة لصيغة WebP
- * 
+ *
  * @param string $image_path مسار الصورة
  * @since 1.0.0
  */
 function practical_solutions_convert_to_webp($image_path) {
     $info = pathinfo($image_path);
     $webp_path = $info['dirname'] . '/' . $info['filename'] . '.webp';
-    
+
     // تجنب التحويل المتكرر
     if (file_exists($webp_path)) {
         return;
     }
-    
+
     $image = null;
-    
+
     switch (strtolower($info['extension'])) {
         case 'jpg':
         case 'jpeg':
@@ -189,7 +189,7 @@ function practical_solutions_convert_to_webp($image_path) {
             $image = imagecreatefromgif($image_path);
             break;
     }
-    
+
     if ($image !== null) {
         imagewebp($image, $webp_path, 85);
         imagedestroy($image);
@@ -198,7 +198,7 @@ function practical_solutions_convert_to_webp($image_path) {
 
 /**
  * تحسين CSS و JavaScript
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_assets() {
@@ -213,7 +213,7 @@ function practical_solutions_optimize_assets() {
             return $html;
         }, 10, 2);
     }
-    
+
     // تأجيل JavaScript غير الضروري
     add_filter('script_loader_tag', function($tag, $handle, $src) {
         // قائمة السكربتات المهمة التي لا يجب تأجيلها
@@ -223,12 +223,12 @@ function practical_solutions_optimize_assets() {
             'jquery-migrate',
             'practical-solutions-critical'
         );
-        
+
         if (!in_array($handle, $critical_scripts) && !is_admin()) {
             // إضافة defer للسكربتات غير المهمة
             $tag = str_replace(' src', ' defer src', $tag);
         }
-        
+
         return $tag;
     }, 10, 3);
 }
@@ -236,7 +236,7 @@ add_action('init', 'practical_solutions_optimize_assets');
 
 /**
  * تحسين التخزين المؤقت
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_cache_optimization() {
@@ -248,7 +248,7 @@ function practical_solutions_cache_optimization() {
                 define('PS_QUERY_CACHE', array());
             }
         });
-        
+
         // تخزين نتائج البحث الشائعة
         add_filter('posts_results', function($posts, $query) {
             if ($query->is_search() && !is_admin()) {
@@ -258,7 +258,7 @@ function practical_solutions_cache_optimization() {
             return $posts;
         }, 10, 2);
     }
-    
+
     // تحسين عمليات التنظيف
     add_action('wp_scheduled_delete', function() {
         // تنظيف التخزين المؤقت القديم
@@ -269,40 +269,40 @@ add_action('init', 'practical_solutions_cache_optimization');
 
 /**
  * تنظيف التخزين المؤقت القديم
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_cleanup_old_cache() {
     // تنظيف ملفات التخزين المؤقت القديمة
     $cache_dir = WP_CONTENT_DIR . '/cache/practical-solutions/';
-    
+
     if (is_dir($cache_dir)) {
         $files = glob($cache_dir . '*');
         $now = time();
-        
+
         foreach ($files as $file) {
             if (is_file($file) && ($now - filemtime($file)) > 86400) { // 24 ساعة
                 unlink($file);
             }
         }
     }
-    
+
     // تنظيف خيارات البحث القديمة
     $search_log = get_option('ps_search_log', array());
     $cutoff_date = date('Y-m-d', strtotime('-30 days'));
-    
+
     foreach ($search_log as $date => $queries) {
         if ($date < $cutoff_date) {
             unset($search_log[$date]);
         }
     }
-    
+
     update_option('ps_search_log', $search_log);
 }
 
 /**
  * تحسين قاعدة البيانات دورياً
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_schedule_db_optimization() {
@@ -314,40 +314,40 @@ add_action('init', 'practical_solutions_schedule_db_optimization');
 
 /**
  * تنفيذ تنظيف قاعدة البيانات
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_execute_db_cleanup() {
     global $wpdb;
-    
+
     // تنظيف المراجعات القديمة (أكثر من 30 يوم)
     $wpdb->query("
-        DELETE FROM {$wpdb->posts} 
-        WHERE post_type = 'revision' 
+        DELETE FROM {$wpdb->posts}
+        WHERE post_type = 'revision'
         AND post_date < DATE_SUB(NOW(), INTERVAL 30 DAY)
     ");
-    
+
     // تنظيف المعاينات المسودة القديمة
     $wpdb->query("
-        DELETE FROM {$wpdb->posts} 
-        WHERE post_status = 'auto-draft' 
+        DELETE FROM {$wpdb->posts}
+        WHERE post_status = 'auto-draft'
         AND post_date < DATE_SUB(NOW(), INTERVAL 7 DAY)
     ");
-    
+
     // تنظيف التعليقات المرفوضة والسبام
     $wpdb->query("
-        DELETE FROM {$wpdb->comments} 
-        WHERE comment_approved IN ('spam', 'trash') 
+        DELETE FROM {$wpdb->comments}
+        WHERE comment_approved IN ('spam', 'trash')
         AND comment_date < DATE_SUB(NOW(), INTERVAL 30 DAY)
     ");
-    
+
     // تنظيف postmeta اليتيمة
     $wpdb->query("
         DELETE pm FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON pm.post_id = p.ID
         WHERE p.ID IS NULL
     ");
-    
+
     // تحسين الجداول
     $wpdb->query("OPTIMIZE TABLE {$wpdb->posts}");
     $wpdb->query("OPTIMIZE TABLE {$wpdb->postmeta}");
@@ -358,13 +358,13 @@ add_action('practical_solutions_db_cleanup', 'practical_solutions_execute_db_cle
 
 /**
  * إضافة headers للتخزين المؤقت
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_add_cache_headers() {
     if (!is_admin()) {
         $cache_time = 3600; // ساعة واحدة
-        
+
         // تحديد مدة التخزين حسب نوع الصفحة
         if (is_front_page() || is_home()) {
             $cache_time = 1800; // 30 دقيقة للصفحة الرئيسية
@@ -373,23 +373,23 @@ function practical_solutions_add_cache_headers() {
         } elseif (is_category() || is_tag() || is_archive()) {
             $cache_time = 3600; // ساعة للأرشيف
         }
-        
+
         header('Cache-Control: public, max-age=' . $cache_time);
         header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $cache_time) . ' GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', get_lastpostmodified('GMT')) . ' GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime(get_lastpostmodified('GMT'))) . ' GMT');
     }
 }
 add_action('send_headers', 'practical_solutions_add_cache_headers');
 
 /**
  * تحسين استعلام الحلول المميزة
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_featured_query() {
     // تخزين مؤقت للحلول المميزة
     $featured_posts = wp_cache_get('ps_featured_posts', 'practical_solutions');
-    
+
     if (false === $featured_posts) {
         $featured_posts = get_posts(array(
             'post_type'      => array('post', 'solution', 'tip'),
@@ -399,16 +399,16 @@ function practical_solutions_optimize_featured_query() {
             'orderby'        => 'menu_order date',
             'order'          => 'DESC'
         ));
-        
+
         wp_cache_set('ps_featured_posts', $featured_posts, 'practical_solutions', 3600);
     }
-    
+
     return $featured_posts;
 }
 
 /**
  * تحديث التخزين المؤقت عند تحديث المقالات
- * 
+ *
  * @param int $post_id معرف المقال
  * @since 1.0.0
  */
@@ -417,7 +417,7 @@ function practical_solutions_invalidate_cache($post_id) {
     wp_cache_delete('ps_featured_posts', 'practical_solutions');
     wp_cache_delete('ps_popular_posts', 'practical_solutions');
     wp_cache_delete('ps_recent_posts', 'practical_solutions');
-    
+
     // حذف تخزين البحث المرتبط
     $cache_group = 'practical_solutions';
     wp_cache_flush_group($cache_group);
@@ -427,7 +427,7 @@ add_action('delete_post', 'practical_solutions_invalidate_cache');
 
 /**
  * تحسين تحميل الخطوط
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_fonts() {
@@ -436,7 +436,7 @@ function practical_solutions_optimize_fonts() {
         echo '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
         echo '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap"></noscript>' . "\n";
     }, 1);
-    
+
     // تحسين تحميل الخطوط المحلية
     add_filter('style_loader_tag', function($html, $handle) {
         if ($handle === 'practical-solutions-fonts') {
@@ -449,24 +449,24 @@ add_action('init', 'practical_solutions_optimize_fonts');
 
 /**
  * ضغط HTML output
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_compress_html_output() {
     if (!is_admin() && !wp_is_json_request()) {
         ob_start(function($html) {
             // إزالة التعليقات HTML
-            $html = preg_replace('/<!--.*?-->/s', '', $html);
-            
+            $html = preg_replace('//s', '', $html);
+
             // إزالة المساحات الزائدة
             $html = preg_replace('/\s+/', ' ', $html);
-            
+
             // إزالة المساحات حول العلامات
             $html = preg_replace('/>\s+</', '><', $html);
-            
+
             // إزالة المساحات في بداية ونهاية الأسطر
             $html = preg_replace('/^\s+|\s+$/m', '', $html);
-            
+
             return trim($html);
         });
     }
@@ -475,7 +475,7 @@ add_action('init', 'practical_solutions_compress_html_output');
 
 /**
  * إنهاء ضغط HTML عند إنهاء الصفحة
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_end_html_compression() {
@@ -489,7 +489,7 @@ add_action('wp_footer', 'practical_solutions_end_html_compression', 999);
 
 /**
  * تحسين RSS feeds
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_optimize_feeds() {
@@ -498,7 +498,7 @@ function practical_solutions_optimize_feeds() {
         header('Cache-Control: public, max-age=3600');
         header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT');
     }, 1);
-    
+
     // تحسين محتوى الـ feed
     add_filter('the_excerpt_rss', function($excerpt) {
         return wp_trim_words($excerpt, 50);
@@ -508,7 +508,7 @@ add_action('init', 'practical_solutions_optimize_feeds');
 
 /**
  * مراقبة الأداء وإرسال تنبيهات
- * 
+ *
  * @since 1.0.0
  */
 function practical_solutions_performance_monitoring() {
@@ -518,9 +518,9 @@ function practical_solutions_performance_monitoring() {
                 $queries = get_num_queries();
                 $load_time = timer_stop();
                 $memory = size_format(memory_get_peak_usage());
-                
-                echo "<!-- Performance: {$queries} queries, {$load_time}s, {$memory} -->";
-                
+
+                echo "";
+
                 // تنبيه إذا كان الأداء بطيء
                 if ($queries > 50 || $load_time > 2) {
                     error_log("Practical Solutions: Performance warning - {$queries} queries, {$load_time}s");

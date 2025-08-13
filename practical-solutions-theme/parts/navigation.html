@@ -1,0 +1,224 @@
+<!-- wp:navigation {"ref":1,"textColor":"foreground","overlayBackgroundColor":"white","overlayTextColor":"foreground","className":"main-navigation","style":{"typography":{"fontWeight":"500","fontSize":"1rem"},"spacing":{"blockGap":"2rem"}},"layout":{"type":"flex","justifyContent":"center"}} -->
+
+<!-- wp:navigation-link {"label":"الرئيسية","type":"custom","url":"/","kind":"custom","className":"nav-home"} /-->
+
+<!-- wp:navigation-submenu {"label":"تصنيفات الحلول","type":"custom","url":"#","kind":"custom","className":"nav-categories"} -->
+
+<!-- wp:navigation-link {"label":"🏠 البيت والمنزل","type":"category","id":1,"url":"#","kind":"taxonomy","className":"nav-home-solutions"} /-->
+
+<!-- wp:navigation-link {"label":"🍳 المطبخ والطبخ","type":"category","id":2,"url":"#","kind":"taxonomy","className":"nav-kitchen-solutions"} /-->
+
+<!-- wp:navigation-link {"label":"💡 نصائح حياتية","type":"category","id":3,"url":"#","kind":"taxonomy","className":"nav-lifestyle-solutions"} /-->
+
+<!-- wp:navigation-link {"label":"🔧 حلول تقنية","type":"category","id":4,"url":"#","kind":"taxonomy","className":"nav-tech-solutions"} /-->
+
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-submenu {"label":"أدوات مفيدة","type":"custom","url":"#","kind":"custom","className":"nav-tools"} -->
+
+<!-- wp:navigation-link {"label":"🔍 البحث المتقدم","type":"custom","url":"/search","kind":"custom","className":"nav-advanced-search"} /-->
+
+<!-- wp:navigation-link {"label":"📋 قائمة المهام","type":"custom","url":"/tools/todo","kind":"custom","className":"nav-todo-list"} /-->
+
+<!-- wp:navigation-link {"label":"⏰ منبه الذكريات","type":"custom","url":"/tools/reminders","kind":"custom","className":"nav-reminders"} /-->
+
+<!-- wp:navigation-link {"label":"🧮 حاسبات مفيدة","type":"custom","url":"/tools/calculators","kind":"custom","className":"nav-calculators"} /-->
+
+<!-- /wp:navigation-submenu -->
+
+<!-- wp:navigation-link {"label":"مقالات شائعة","type":"custom","url":"/popular","kind":"custom","className":"nav-popular"} /-->
+
+<!-- wp:navigation-submenu {"label":"حول الموقع","type":"custom","url":"#","kind":"custom","className":"nav-about"} -->
+
+<!-- wp:navigation-link {"label":"من نحن","type":"page","id":2,"url":"#","kind":"post-type","className":"nav-about-us"} /-->
+
+<!-- wp:navigation-link {"label":"فريق العمل","type":"page","id":5,"url":"#","kind":"post-type","className":"nav-team"} /-->
+
+<!-- wp:navigation-link {"label":"تواصل معنا","type":"page","id":3,"url":"#","kind":"post-type","className":"nav-contact"} /-->
+
+<!-- wp:navigation-link {"label":"انضم للفريق","type":"page","id":6,"url":"#","kind":"post-type","className":"nav-join-team"} /-->
+
+<!-- /wp:navigation-submenu -->
+
+<!-- /wp:navigation -->
+
+<!-- wp:html -->
+<style>
+/* تخصيص قائمة التنقل */
+.main-navigation {
+    font-family: var(--wp--preset--font-family--noto-arabic);
+}
+
+.main-navigation .wp-block-navigation-item {
+    position: relative;
+}
+
+.main-navigation .wp-block-navigation-item a {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--wp--preset--color--foreground);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.main-navigation .wp-block-navigation-item a:hover {
+    background: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--primary);
+    transform: translateY(-1px);
+}
+
+/* تمييز الصفحة الحالية */
+.main-navigation .wp-block-navigation-item.current-menu-item a,
+.main-navigation .wp-block-navigation-item.current_page_item a {
+    background: var(--wp--preset--color--primary);
+    color: var(--wp--preset--color--white);
+}
+
+/* تخصيص القوائم الفرعية */
+.main-navigation .wp-block-navigation__submenu-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--wp--preset--color--base);
+    padding: 0.5rem 0;
+    min-width: 250px;
+    margin-top: 0.5rem;
+}
+
+.main-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item a {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0;
+    font-size: 0.95rem;
+}
+
+.main-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item a:hover {
+    background: var(--wp--preset--color--base);
+    transform: none;
+}
+
+/* تخصيص السهم للقوائم الفرعية */
+.main-navigation .wp-block-navigation__submenu-icon {
+    color: var(--wp--preset--color--tertiary);
+    transition: transform 0.3s ease;
+}
+
+.main-navigation .wp-block-navigation-item:hover .wp-block-navigation__submenu-icon {
+    transform: rotate(180deg);
+}
+
+/* تصميم خاص لتصنيفات الحلول */
+.nav-home-solutions a::before { content: "🏠"; margin-left: 0.5rem; }
+.nav-kitchen-solutions a::before { content: "🍳"; margin-left: 0.5rem; }
+.nav-lifestyle-solutions a::before { content: "💡"; margin-left: 0.5rem; }
+.nav-tech-solutions a::before { content: "🔧"; margin-left: 0.5rem; }
+
+/* تصميم خاص للأدوات */
+.nav-advanced-search a::before { content: "🔍"; margin-left: 0.5rem; }
+.nav-todo-list a::before { content: "📋"; margin-left: 0.5rem; }
+.nav-reminders a::before { content: "⏰"; margin-left: 0.5rem; }
+.nav-calculators a::before { content: "🧮"; margin-left: 0.5rem; }
+
+/* تأثيرات بصرية للتفاعل */
+.main-navigation .wp-block-navigation-item a {
+    position: relative;
+    overflow: hidden;
+}
+
+.main-navigation .wp-block-navigation-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--wp--preset--color--primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.main-navigation .wp-block-navigation-item a:hover::after {
+    width: 80%;
+}
+
+/* استجابة للأجهزة المحمولة */
+@media (max-width: 768px) {
+    .main-navigation {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .main-navigation .wp-block-navigation-item a {
+        padding: 1rem;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .main-navigation .wp-block-navigation__submenu-container {
+        position: static;
+        box-shadow: none;
+        border: none;
+        background: var(--wp--preset--color--base);
+        border-radius: 8px;
+        margin: 0.5rem 0;
+    }
+}
+
+/* تحسينات إمكانية الوصول */
+.main-navigation .wp-block-navigation-item a:focus {
+    outline: 2px solid var(--wp--preset--color--primary);
+    outline-offset: 2px;
+}
+
+/* تحريك لطيف للقوائم الفرعية */
+.main-navigation .wp-block-navigation__submenu-container {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    visibility: hidden;
+}
+
+.main-navigation .wp-block-navigation-item:hover .wp-block-navigation__submenu-container {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* شارة "جديد" للعناصر الحديثة */
+.nav-calculators a::after {
+    content: "جديد";
+    background: var(--wp--preset--color--accent);
+    color: white;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 8px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-weight: 600;
+}
+
+/* تحسين التباعد والخطوط */
+.main-navigation .wp-block-navigation__responsive-container {
+    font-family: var(--wp--preset--font-family--noto-arabic);
+}
+
+/* تخصيص overlay للجوال */
+.main-navigation .wp-block-navigation__responsive-container-content {
+    background: white;
+    padding: 2rem;
+}
+
+.main-navigation .wp-block-navigation__responsive-close {
+    color: var(--wp--preset--color--foreground);
+}
+
+.main-navigation .wp-block-navigation__responsive-dialog {
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+</style>
+<!-- /wp:html -->

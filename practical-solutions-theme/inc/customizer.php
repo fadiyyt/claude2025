@@ -1,7 +1,7 @@
 <?php
 /**
- * Theme Customizer
- * إعدادات مخصص القالب
+ * Customizer Functions
+ * وظائف مخصص المظهر
  * 
  * @package Practical_Solutions
  * @since 1.0.0
@@ -13,291 +13,213 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * إضافة إعدادات المخصص
+ * إضافة إعدادات مخصص المظهر
  * 
  * @param WP_Customize_Manager $wp_customize مدير المخصص
  * @since 1.0.0
  */
 function practical_solutions_customize_register($wp_customize) {
     
-    // ===========================================
-    // قسم الألوان
-    // ===========================================
-    $wp_customize->add_section('practical_solutions_colors', array(
-        'title'       => esc_html__('ألوان القالب', 'practical-solutions'),
-        'description' => esc_html__('تخصيص ألوان القالب الأساسية', 'practical-solutions'),
-        'priority'    => 40,
-    ));
-
-    // اللون الأساسي
-    $wp_customize->add_setting('practical_solutions_primary_color', array(
-        'default'           => '#007cba',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'practical_solutions_primary_color', array(
-        'label'       => esc_html__('اللون الأساسي', 'practical-solutions'),
-        'description' => esc_html__('اللون الرئيسي المستخدم في الروابط والأزرار', 'practical-solutions'),
-        'section'     => 'practical_solutions_colors',
-        'settings'    => 'practical_solutions_primary_color',
-    )));
-
-    // اللون الثانوي
-    $wp_customize->add_setting('practical_solutions_secondary_color', array(
-        'default'           => '#f0f4f8',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'practical_solutions_secondary_color', array(
-        'label'       => esc_html__('اللون الثانوي', 'practical-solutions'),
-        'description' => esc_html__('لون الخلفيات الثانوية والحدود', 'practical-solutions'),
-        'section'     => 'practical_solutions_colors',
-        'settings'    => 'practical_solutions_secondary_color',
-    )));
-
-    // لون التمييز
-    $wp_customize->add_setting('practical_solutions_accent_color', array(
-        'default'           => '#e74c3c',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'practical_solutions_accent_color', array(
-        'label'       => esc_html__('لون التمييز', 'practical-solutions'),
-        'description' => esc_html__('لون للتنبيهات والعناصر المميزة', 'practical-solutions'),
-        'section'     => 'practical_solutions_colors',
-        'settings'    => 'practical_solutions_accent_color',
-    )));
-
-    // ===========================================
-    // قسم الطباعة
-    // ===========================================
-    $wp_customize->add_section('practical_solutions_typography', array(
-        'title'       => esc_html__('الطباعة والخطوط', 'practical-solutions'),
-        'description' => esc_html__('تخصيص خطوط وأحجام النصوص', 'practical-solutions'),
-        'priority'    => 45,
-    ));
-
-    // خط النص الأساسي
-    $wp_customize->add_setting('practical_solutions_body_font', array(
-        'default'           => 'Noto Sans Arabic',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_body_font', array(
-        'type'        => 'select',
-        'label'       => esc_html__('خط النص الأساسي', 'practical-solutions'),
-        'description' => esc_html__('الخط المستخدم في النصوص العادية', 'practical-solutions'),
-        'section'     => 'practical_solutions_typography',
-        'choices'     => array(
-            'Noto Sans Arabic' => 'Noto Sans Arabic',
-            'Cairo'            => 'Cairo',
-            'Amiri'            => 'Amiri',
-            'Tajawal'          => 'Tajawal',
-            'Lato'             => 'Lato',
-            'Open Sans'        => 'Open Sans',
-            'Roboto'           => 'Roboto',
-        ),
-    ));
-
-    // خط العناوين
-    $wp_customize->add_setting('practical_solutions_heading_font', array(
-        'default'           => 'Noto Sans Arabic',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_heading_font', array(
-        'type'        => 'select',
-        'label'       => esc_html__('خط العناوين', 'practical-solutions'),
-        'description' => esc_html__('الخط المستخدم في العناوين', 'practical-solutions'),
-        'section'     => 'practical_solutions_typography',
-        'choices'     => array(
-            'Noto Sans Arabic' => 'Noto Sans Arabic',
-            'Cairo'            => 'Cairo',
-            'Amiri'            => 'Amiri',
-            'Tajawal'          => 'Tajawal',
-            'Lato'             => 'Lato',
-            'Open Sans'        => 'Open Sans',
-            'Roboto'           => 'Roboto',
-        ),
-    ));
-
-    // حجم الخط الأساسي
-    $wp_customize->add_setting('practical_solutions_base_font_size', array(
-        'default'           => '16',
-        'sanitize_callback' => 'absint',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_base_font_size', array(
-        'type'        => 'range',
-        'label'       => esc_html__('حجم الخط الأساسي (px)', 'practical-solutions'),
-        'description' => esc_html__('حجم الخط الافتراضي للنصوص', 'practical-solutions'),
-        'section'     => 'practical_solutions_typography',
-        'input_attrs' => array(
-            'min'  => 12,
-            'max'  => 24,
-            'step' => 1,
-        ),
-    ));
-
-    // ===========================================
-    // قسم التخطيط
-    // ===========================================
-    $wp_customize->add_section('practical_solutions_layout', array(
-        'title'       => esc_html__('التخطيط والتصميم', 'practical-solutions'),
-        'description' => esc_html__('إعدادات تخطيط الصفحة والمحتوى', 'practical-solutions'),
-        'priority'    => 50,
-    ));
-
-    // عرض الحاوية
-    $wp_customize->add_setting('practical_solutions_container_width', array(
-        'default'           => '1200',
-        'sanitize_callback' => 'absint',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_container_width', array(
-        'type'        => 'range',
-        'label'       => esc_html__('عرض الحاوية (px)', 'practical-solutions'),
-        'description' => esc_html__('الحد الأقصى لعرض المحتوى', 'practical-solutions'),
-        'section'     => 'practical_solutions_layout',
-        'input_attrs' => array(
-            'min'  => 960,
-            'max'  => 1400,
-            'step' => 20,
-        ),
-    ));
-
-    // تفعيل الشريط الجانبي
-    $wp_customize->add_setting('practical_solutions_enable_sidebar', array(
-        'default'           => true,
-        'sanitize_callback' => 'wp_validate_boolean',
-        'transport'         => 'refresh',
-    ));
-
-    $wp_customize->add_control('practical_solutions_enable_sidebar', array(
-        'type'        => 'checkbox',
-        'label'       => esc_html__('تفعيل الشريط الجانبي', 'practical-solutions'),
-        'description' => esc_html__('إظهار الشريط الجانبي في صفحات المقالات', 'practical-solutions'),
-        'section'     => 'practical_solutions_layout',
-    ));
-
-    // نمط التخطيط
-    $wp_customize->add_setting('practical_solutions_layout_style', array(
-        'default'           => 'boxed',
-        'sanitize_callback' => 'practical_solutions_sanitize_layout_style',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_layout_style', array(
-        'type'        => 'radio',
-        'label'       => esc_html__('نمط التخطيط', 'practical-solutions'),
-        'description' => esc_html__('اختيار نمط عرض المحتوى', 'practical-solutions'),
-        'section'     => 'practical_solutions_layout',
-        'choices'     => array(
-            'boxed'     => esc_html__('محدود (Boxed)', 'practical-solutions'),
-            'full-width' => esc_html__('العرض الكامل', 'practical-solutions'),
-        ),
-    ));
-
-    // ===========================================
-    // قسم الرأس والتذييل
-    // ===========================================
-    $wp_customize->add_section('practical_solutions_header_footer', array(
-        'title'       => esc_html__('الرأس والتذييل', 'practical-solutions'),
-        'description' => esc_html__('إعدادات رأس وتذييل الصفحة', 'practical-solutions'),
-        'priority'    => 55,
-    ));
-
-    // إظهار مربع البحث في الرأس
-    $wp_customize->add_setting('practical_solutions_header_search', array(
-        'default'           => true,
-        'sanitize_callback' => 'wp_validate_boolean',
-        'transport'         => 'postMessage',
-    ));
-
-    $wp_customize->add_control('practical_solutions_header_search', array(
-        'type'        => 'checkbox',
-        'label'       => esc_html__('إظهار مربع البحث في الرأس', 'practical-solutions'),
-        'description' => esc_html__('عرض شريط البحث المتقدم في رأس الصفحة', 'practical-solutions'),
-        'section'     => 'practical_solutions_header_footer',
+    // ==============================
+    // قسم الإعدادات العامة
+    // ==============================
+    $wp_customize->add_section('practical_solutions_general', array(
+        'title'       => __('الإعدادات العامة', 'practical-solutions'),
+        'description' => __('إعدادات عامة للموقع', 'practical-solutions'),
+        'priority'    => 30,
     ));
 
     // تفعيل البحث الصوتي
     $wp_customize->add_setting('practical_solutions_voice_search', array(
         'default'           => true,
         'sanitize_callback' => 'wp_validate_boolean',
-        'transport'         => 'postMessage',
+        'transport'         => 'refresh',
     ));
 
     $wp_customize->add_control('practical_solutions_voice_search', array(
+        'label'       => __('تفعيل البحث الصوتي', 'practical-solutions'),
+        'description' => __('السماح للمستخدمين بالبحث باستخدام الصوت', 'practical-solutions'),
+        'section'     => 'practical_solutions_general',
         'type'        => 'checkbox',
-        'label'       => esc_html__('تفعيل البحث الصوتي', 'practical-solutions'),
-        'description' => esc_html__('إضافة ميزة البحث بالصوت', 'practical-solutions'),
-        'section'     => 'practical_solutions_header_footer',
     ));
 
-    // نص حقوق النشر
-    $wp_customize->add_setting('practical_solutions_copyright_text', array(
-        'default'           => '© 2025 الحلول العملية. جميع الحقوق محفوظة.',
-        'sanitize_callback' => 'wp_kses_post',
-        'transport'         => 'postMessage',
+    // تفعيل الوضع المظلم
+    $wp_customize->add_setting('practical_solutions_dark_mode', array(
+        'default'           => false,
+        'sanitize_callback' => 'wp_validate_boolean',
+        'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('practical_solutions_copyright_text', array(
+    $wp_customize->add_control('practical_solutions_dark_mode', array(
+        'label'       => __('تفعيل الوضع المظلم', 'practical-solutions'),
+        'description' => __('تفعيل خيار الوضع المظلم للمستخدمين', 'practical-solutions'),
+        'section'     => 'practical_solutions_general',
+        'type'        => 'checkbox',
+    ));
+
+    // ==============================
+    // قسم الصفحة الرئيسية
+    // ==============================
+    $wp_customize->add_section('practical_solutions_homepage', array(
+        'title'       => __('الصفحة الرئيسية', 'practical-solutions'),
+        'description' => __('إعدادات الصفحة الرئيسية', 'practical-solutions'),
+        'priority'    => 35,
+    ));
+
+    // نص الترحيب الرئيسي
+    $wp_customize->add_setting('practical_solutions_hero_title', array(
+        'default'           => __('حلول عملية لمشاكلك اليومية', 'practical-solutions'),
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control('practical_solutions_hero_title', array(
+        'label'       => __('العنوان الرئيسي', 'practical-solutions'),
+        'description' => __('النص الرئيسي في قسم البطل', 'practical-solutions'),
+        'section'     => 'practical_solutions_homepage',
+        'type'        => 'text',
+    ));
+
+    // نص الوصف
+    $wp_customize->add_setting('practical_solutions_hero_description', array(
+        'default'           => __('اكتشف نصائح وحلول ذكية لتسهيل حياتك في المنزل والمطبخ وكل مكان', 'practical-solutions'),
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control('practical_solutions_hero_description', array(
+        'label'       => __('نص الوصف', 'practical-solutions'),
+        'description' => __('النص الوصفي في قسم البطل', 'practical-solutions'),
+        'section'     => 'practical_solutions_homepage',
         'type'        => 'textarea',
-        'label'       => esc_html__('نص حقوق النشر', 'practical-solutions'),
-        'description' => esc_html__('النص المعروض في تذييل الصفحة', 'practical-solutions'),
-        'section'     => 'practical_solutions_header_footer',
     ));
 
-    // ===========================================
-    // قسم الشبكات الاجتماعية
-    // ===========================================
+    // صورة الخلفية
+    $wp_customize->add_setting('practical_solutions_hero_background', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'practical_solutions_hero_background', array(
+        'label'       => __('صورة الخلفية', 'practical-solutions'),
+        'description' => __('صورة خلفية قسم البطل الرئيسي', 'practical-solutions'),
+        'section'     => 'practical_solutions_homepage',
+    )));
+
+    // ==============================
+    // قسم وسائل التواصل الاجتماعي
+    // ==============================
     $wp_customize->add_section('practical_solutions_social', array(
-        'title'       => esc_html__('الشبكات الاجتماعية', 'practical-solutions'),
-        'description' => esc_html__('روابط وسائل التواصل الاجتماعي', 'practical-solutions'),
-        'priority'    => 60,
+        'title'       => __('وسائل التواصل الاجتماعي', 'practical-solutions'),
+        'description' => __('روابط وسائل التواصل الاجتماعي', 'practical-solutions'),
+        'priority'    => 40,
     ));
 
-    // روابط وسائل التواصل
+    // الشبكات الاجتماعية
     $social_networks = array(
-        'facebook'  => esc_html__('فيسبوك', 'practical-solutions'),
-        'twitter'   => esc_html__('تويتر', 'practical-solutions'),
-        'instagram' => esc_html__('إنستغرام', 'practical-solutions'),
-        'youtube'   => esc_html__('يوتيوب', 'practical-solutions'),
-        'linkedin'  => esc_html__('لينكد إن', 'practical-solutions'),
-        'telegram'  => esc_html__('تيليغرام', 'practical-solutions'),
-        'whatsapp'  => esc_html__('واتساب', 'practical-solutions'),
+        'facebook'  => __('فيسبوك', 'practical-solutions'),
+        'twitter'   => __('تويتر', 'practical-solutions'),
+        'instagram' => __('إنستغرام', 'practical-solutions'),
+        'youtube'   => __('يوتيوب', 'practical-solutions'),
+        'linkedin'  => __('لينكدإن', 'practical-solutions'),
+        'telegram'  => __('تليجرام', 'practical-solutions'),
+        'whatsapp'  => __('واتساب', 'practical-solutions'),
     );
 
     foreach ($social_networks as $network => $label) {
         $wp_customize->add_setting("practical_solutions_social_{$network}", array(
             'default'           => '',
             'sanitize_callback' => 'esc_url_raw',
-            'transport'         => 'postMessage',
+            'transport'         => 'refresh',
         ));
 
         $wp_customize->add_control("practical_solutions_social_{$network}", array(
-            'type'        => 'url',
-            'label'       => $label,
-            'description' => sprintf(esc_html__('رابط صفحة %s', 'practical-solutions'), $label),
-            'section'     => 'practical_solutions_social',
+            'label'   => sprintf(__('رابط %s', 'practical-solutions'), $label),
+            'section' => 'practical_solutions_social',
+            'type'    => 'url',
         ));
     }
 
-    // ===========================================
-    // قسم الأداء والتحسين
-    // ===========================================
+    // ==============================
+    // قسم التذييل
+    // ==============================
+    $wp_customize->add_section('practical_solutions_footer', array(
+        'title'       => __('التذييل', 'practical-solutions'),
+        'description' => __('إعدادات تذييل الموقع', 'practical-solutions'),
+        'priority'    => 45,
+    ));
+
+    // نص حقوق النشر
+    $wp_customize->add_setting('practical_solutions_copyright', array(
+        'default'           => sprintf(__('© %s - جميع الحقوق محفوظة', 'practical-solutions'), date('Y')),
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control('practical_solutions_copyright', array(
+        'label'       => __('نص حقوق النشر', 'practical-solutions'),
+        'description' => __('النص الذي يظهر في أسفل الموقع', 'practical-solutions'),
+        'section'     => 'practical_solutions_footer',
+        'type'        => 'textarea',
+    ));
+
+    // إظهار روابط وسائل التواصل في التذييل
+    $wp_customize->add_setting('practical_solutions_footer_social', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control('practical_solutions_footer_social', array(
+        'label'       => __('إظهار وسائل التواصل في التذييل', 'practical-solutions'),
+        'description' => __('عرض أيقونات وسائل التواصل الاجتماعي في التذييل', 'practical-solutions'),
+        'section'     => 'practical_solutions_footer',
+        'type'        => 'checkbox',
+    ));
+
+    // ==============================
+    // قسم الألوان المخصصة
+    // ==============================
+    $wp_customize->add_section('practical_solutions_colors', array(
+        'title'       => __('الألوان المخصصة', 'practical-solutions'),
+        'description' => __('تخصيص ألوان القالب', 'practical-solutions'),
+        'priority'    => 50,
+    ));
+
+    // اللون الأساسي المخصص
+    $wp_customize->add_setting('practical_solutions_primary_color', array(
+        'default'           => '#007cba',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'practical_solutions_primary_color', array(
+        'label'       => __('اللون الأساسي', 'practical-solutions'),
+        'description' => __('اللون الأساسي للموقع', 'practical-solutions'),
+        'section'     => 'practical_solutions_colors',
+    )));
+
+    // لون التمييز المخصص
+    $wp_customize->add_setting('practical_solutions_accent_color', array(
+        'default'           => '#e74c3c',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'practical_solutions_accent_color', array(
+        'label'       => __('لون التمييز', 'practical-solutions'),
+        'description' => __('لون التمييز للعناصر المهمة', 'practical-solutions'),
+        'section'     => 'practical_solutions_colors',
+    )));
+
+    // ==============================
+    // قسم الأداء
+    // ==============================
     $wp_customize->add_section('practical_solutions_performance', array(
-        'title'       => esc_html__('الأداء والتحسين', 'practical-solutions'),
-        'description' => esc_html__('إعدادات تحسين الأداء والسرعة', 'practical-solutions'),
-        'priority'    => 65,
+        'title'       => __('الأداء', 'practical-solutions'),
+        'description' => __('إعدادات تحسين الأداء', 'practical-solutions'),
+        'priority'    => 55,
     ));
 
     // تفعيل التحميل الكسول
@@ -308,53 +230,52 @@ function practical_solutions_customize_register($wp_customize) {
     ));
 
     $wp_customize->add_control('practical_solutions_lazy_loading', array(
-        'type'        => 'checkbox',
-        'label'       => esc_html__('تفعيل التحميل الكسول', 'practical-solutions'),
-        'description' => esc_html__('تحميل الصور عند الحاجة لتحسين السرعة', 'practical-solutions'),
+        'label'       => __('تفعيل التحميل الكسول', 'practical-solutions'),
+        'description' => __('تحميل الصور عند الحاجة لتحسين الأداء', 'practical-solutions'),
         'section'     => 'practical_solutions_performance',
+        'type'        => 'checkbox',
     ));
 
-    // ضغط CSS
-    $wp_customize->add_setting('practical_solutions_minify_css', array(
-        'default'           => false,
-        'sanitize_callback' => 'wp_validate_boolean',
+    // ضغط الصور
+    $wp_customize->add_setting('practical_solutions_image_compression', array(
+        'default'           => 85,
+        'sanitize_callback' => 'absint',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('practical_solutions_minify_css', array(
-        'type'        => 'checkbox',
-        'label'       => esc_html__('ضغط ملفات CSS', 'practical-solutions'),
-        'description' => esc_html__('تقليل حجم ملفات الأنماط', 'practical-solutions'),
+    $wp_customize->add_control('practical_solutions_image_compression', array(
+        'label'       => __('جودة ضغط الصور', 'practical-solutions'),
+        'description' => __('جودة ضغط الصور (1-100)', 'practical-solutions'),
         'section'     => 'practical_solutions_performance',
-    ));
-
-    // إزالة عناصر غير ضرورية
-    $wp_customize->add_setting('practical_solutions_clean_head', array(
-        'default'           => true,
-        'sanitize_callback' => 'wp_validate_boolean',
-        'transport'         => 'refresh',
-    ));
-
-    $wp_customize->add_control('practical_solutions_clean_head', array(
-        'type'        => 'checkbox',
-        'label'       => esc_html__('تنظيف رأس الصفحة', 'practical-solutions'),
-        'description' => esc_html__('إزالة عناصر غير ضرورية من head', 'practical-solutions'),
-        'section'     => 'practical_solutions_performance',
+        'type'        => 'range',
+        'input_attrs' => array(
+            'min'  => 1,
+            'max'  => 100,
+            'step' => 1,
+        ),
     ));
 }
 add_action('customize_register', 'practical_solutions_customize_register');
 
 /**
- * تنظيف وتحقق نمط التخطيط
+ * إضافة CSS مخصص للمعاينة المباشرة
  * 
- * @param string $input القيمة المدخلة
- * @return string القيمة المنظفة
  * @since 1.0.0
  */
-function practical_solutions_sanitize_layout_style($input) {
-    $valid_styles = array('boxed', 'full-width');
-    return in_array($input, $valid_styles) ? $input : 'boxed';
+function practical_solutions_customizer_css() {
+    $primary_color = get_theme_mod('practical_solutions_primary_color', '#007cba');
+    $accent_color = get_theme_mod('practical_solutions_accent_color', '#e74c3c');
+    
+    ?>
+    <style type="text/css">
+        :root {
+            --wp--preset--color--primary: <?php echo esc_html($primary_color); ?>;
+            --wp--preset--color--accent: <?php echo esc_html($accent_color); ?>;
+        }
+    </style>
+    <?php
 }
+add_action('wp_head', 'practical_solutions_customizer_css');
 
 /**
  * إضافة JavaScript للمعاينة المباشرة
@@ -363,151 +284,55 @@ function practical_solutions_sanitize_layout_style($input) {
  */
 function practical_solutions_customize_preview_js() {
     wp_enqueue_script(
-        'practical-solutions-customizer-preview',
-        get_template_directory_uri() . '/assets/js/customizer-preview.js',
-        array('customize-preview', 'jquery'),
-        wp_get_theme()->get('Version'),
+        'practical-solutions-customizer',
+        get_template_directory_uri() . '/assets/js/customizer.js',
+        array('customize-preview'),
+        PRACTICAL_SOLUTIONS_VERSION,
         true
     );
 }
 add_action('customize_preview_init', 'practical_solutions_customize_preview_js');
 
 /**
- * إضافة CSS وJS لوحة المخصص
- * 
- * @since 1.0.0
+ * وظائف مساعدة للحصول على إعدادات المخصص
  */
-function practical_solutions_customize_controls_scripts() {
-    wp_enqueue_style(
-        'practical-solutions-customizer-controls',
-        get_template_directory_uri() . '/assets/css/customizer-controls.css',
-        array(),
-        wp_get_theme()->get('Version')
-    );
-
-    wp_enqueue_script(
-        'practical-solutions-customizer-controls',
-        get_template_directory_uri() . '/assets/js/customizer-controls.js',
-        array('customize-controls', 'jquery'),
-        wp_get_theme()->get('Version'),
-        true
-    );
-}
-add_action('customize_controls_enqueue_scripts', 'practical_solutions_customize_controls_scripts');
 
 /**
- * إضافة CSS مخصص للمخصص
+ * الحصول على روابط وسائل التواصل الاجتماعي
  * 
+ * @return array روابط وسائل التواصل
  * @since 1.0.0
  */
-function practical_solutions_customizer_css() {
-    ?>
-    <style type="text/css">
-        .customize-control-description {
-            font-style: normal;
-            font-size: 12px;
-            color: #666;
-            line-height: 1.4;
-            margin-top: 5px;
+function practical_solutions_get_social_links() {
+    $social_networks = array('facebook', 'twitter', 'instagram', 'youtube', 'linkedin', 'telegram', 'whatsapp');
+    $social_links = array();
+    
+    foreach ($social_networks as $network) {
+        $link = get_theme_mod("practical_solutions_social_{$network}", '');
+        if (!empty($link)) {
+            $social_links[$network] = esc_url($link);
         }
-        
-        .customize-section-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .practical-solutions-customizer-info {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-        
-        .practical-solutions-customizer-info h4 {
-            margin: 0 0 10px 0;
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .practical-solutions-customizer-info p {
-            margin: 0;
-            font-size: 12px;
-            color: #666;
-            line-height: 1.5;
-        }
-        
-        .customize-control-range input[type="range"] {
-            width: 100%;
-            margin: 10px 0;
-        }
-        
-        .customize-control-range .range-value {
-            display: inline-block;
-            background: #007cba;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-right: 10px;
-        }
-    </style>
-    <?php
-}
-add_action('customize_controls_print_styles', 'practical_solutions_customizer_css');
-
-/**
- * إضافة كلاس مخصص لأقسام المخصص
- * 
- * @param WP_Customize_Manager $wp_customize مدير المخصص
- * @since 1.0.0
- */
-function practical_solutions_customize_sections_styling($wp_customize) {
-    // إضافة معلومات عن القالب
-    $wp_customize->add_section('practical_solutions_info', array(
-        'title'       => esc_html__('معلومات القالب', 'practical-solutions'),
-        'description' => '<div class="practical-solutions-customizer-info">
-                            <h4>' . esc_html__('قالب الحلول العملية', 'practical-solutions') . '</h4>
-                            <p>' . esc_html__('قالب ووردبريس عصري يركز على تقديم الحلول العملية للمشاكل اليومية. يدعم تقنية Full Site Editing والبحث الصوتي المتقدم.', 'practical-solutions') . '</p>
-                            <p><strong>' . esc_html__('الإصدار:', 'practical-solutions') . '</strong> ' . wp_get_theme()->get('Version') . '</p>
-                          </div>',
-        'priority'    => 35,
-    ));
-}
-add_action('customize_register', 'practical_solutions_customize_sections_styling', 15);
-
-/**
- * تطبيق الإعدادات المخصصة على الموقع
- * 
- * @since 1.0.0
- */
-function practical_solutions_apply_customizer_settings() {
-    // تطبيق إعدادات الأداء
-    if (get_theme_mod('practical_solutions_clean_head', true)) {
-        add_action('init', 'practical_solutions_cleanup_head');
     }
     
-    // تطبيق إعدادات التحميل الكسول
-    if (get_theme_mod('practical_solutions_lazy_loading', true)) {
-        add_filter('wp_get_attachment_image_attributes', 'practical_solutions_add_lazy_loading');
-    }
+    return $social_links;
 }
-add_action('init', 'practical_solutions_apply_customizer_settings');
 
 /**
- * إضافة lazy loading للصور
+ * التحقق من تفعيل البحث الصوتي
  * 
- * @param array $attr خصائص الصورة
- * @return array الخصائص المحدثة
+ * @return bool
  * @since 1.0.0
  */
-function practical_solutions_add_lazy_loading($attr) {
-    if (!is_admin() && !wp_is_json_request()) {
-        $attr['loading'] = 'lazy';
-    }
-    return $attr;
+function practical_solutions_is_voice_search_enabled() {
+    return get_theme_mod('practical_solutions_voice_search', true);
+}
+
+/**
+ * التحقق من تفعيل الوضع المظلم
+ * 
+ * @return bool
+ * @since 1.0.0
+ */
+function practical_solutions_is_dark_mode_enabled() {
+    return get_theme_mod('practical_solutions_dark_mode', false);
 }

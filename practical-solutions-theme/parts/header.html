@@ -1,0 +1,82 @@
+<!-- wp:group {"className":"site-header","style":{"spacing":{"padding":{"top":"1rem","bottom":"1rem","left":"2rem","right":"2rem"}},"border":{"bottom":{"color":"var(--wp--preset--color--base)","width":"1px","style":"solid"}}},"backgroundColor":"white","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<div class="wp-block-group site-header has-white-background-color has-background" style="border-bottom-color:var(--wp--preset--color--base);border-bottom-style:solid;border-bottom-width:1px;padding-top:1rem;padding-right:2rem;padding-bottom:1rem;padding-left:2rem">
+    
+    <!-- wp:group {"className":"site-branding","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+    <div class="wp-block-group site-branding">
+        
+        <!-- wp:site-logo {"width":50,"shouldSyncIcon":true} /-->
+        
+        <!-- wp:group {"layout":{"type":"constrained"}} -->
+        <div class="wp-block-group">
+            <!-- wp:site-title {"style":{"typography":{"fontWeight":"800","fontSize":"1.5rem"},"color":{"text":"var(--wp--preset--color--primary)"},"elements":{"link":{"color":{"text":"var(--wp--preset--color--primary)"}}}}} /-->
+            <!-- wp:site-tagline {"style":{"typography":{"fontSize":"0.875rem"},"color":{"text":"var(--wp--preset--color--tertiary)"}}} /-->
+        </div>
+        <!-- /wp:group -->
+        
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:group {"className":"header-navigation","layout":{"type":"flex","flexWrap":"wrap"}} -->
+    <div class="wp-block-group header-navigation">
+        
+        <!-- wp:navigation {"ref":4,"textColor":"foreground","overlayBackgroundColor":"white","overlayTextColor":"foreground","className":"main-navigation","style":{"typography":{"fontWeight":"500"},"spacing":{"blockGap":"2rem"}},"fontSize":"medium"} -->
+        <!-- wp:navigation-link {"label":"الرئيسية","type":"custom","url":"#","kind":"custom"} /-->
+        <!-- wp:navigation-link {"label":"البيت والمنزل","type":"category","id":1,"url":"#","kind":"taxonomy"} /-->
+        <!-- wp:navigation-link {"label":"المطبخ والطبخ","type":"category","id":2,"url":"#","kind":"taxonomy"} /-->
+        <!-- wp:navigation-link {"label":"نصائح حياتية","type":"category","id":3,"url":"#","kind":"taxonomy"} /-->
+        <!-- wp:navigation-link {"label":"حلول تقنية","type":"category","id":4,"url":"#","kind":"taxonomy"} /-->
+        <!-- wp:navigation-submenu {"label":"المزيد","type":"custom","url":"#","kind":"custom"} -->
+            <!-- wp:navigation-link {"label":"من نحن","type":"page","id":2,"url":"#","kind":"post-type"} /-->
+            <!-- wp:navigation-link {"label":"اتصل بنا","type":"page","id":3,"url":"#","kind":"post-type"} /-->
+            <!-- wp:navigation-link {"label":"سياسة الخصوصية","type":"page","id":4,"url":"#","kind":"post-type"} /-->
+        <!-- /wp:navigation-submenu -->
+        <!-- /wp:navigation -->
+        
+        <!-- wp:group {"className":"header-search","style":{"spacing":{"margin":{"right":"1rem"}}},"layout":{"type":"constrained"}} -->
+        <div class="wp-block-group header-search" style="margin-right:1rem">
+            <!-- wp:html -->
+            <button class="search-toggle-btn" aria-label="فتح البحث" style="background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--wp--preset--color--primary);">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.792 0-6.877-3.085-6.877-6.877z"/>
+                </svg>
+            </button>
+            <!-- /wp:html -->
+        </div>
+        <!-- /wp:group -->
+        
+        <!-- wp:group {"className":"dark-mode-toggle","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group dark-mode-toggle">
+            <!-- wp:html -->
+            <button class="dark-mode-btn" aria-label="تبديل الوضع المظلم" style="background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--wp--preset--color--primary);">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                </svg>
+            </button>
+            <!-- /wp:html -->
+        </div>
+        <!-- /wp:group -->
+        
+    </div>
+    <!-- /wp:group -->
+    
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"mobile-search-overlay","style":{"position":{"type":"fixed"},"dimensions":{"minHeight":"100vh"},"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"}}},"backgroundColor":"white","layout":{"type":"constrained"},"cssClassName":"mobile-search-overlay hidden"} -->
+<div class="wp-block-group mobile-search-overlay hidden has-white-background-color has-background" style="min-height:100vh;padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem;position:fixed">
+    
+    <!-- wp:group {"style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
+    <div class="wp-block-group" style="margin-bottom:2rem">
+        <!-- wp:heading {"level":3} -->
+        <h3 class="wp-block-heading">البحث في الموقع</h3>
+        <!-- /wp:heading -->
+        <!-- wp:html -->
+        <button class="search-close-btn" aria-label="إغلاق البحث" style="background: none; border: none; padding: 0.5rem; cursor: pointer; font-size: 1.5rem;">×</button>
+        <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:template-part {"slug":"search-form"} /-->
+    
+</div>
+<!-- /wp:group -->

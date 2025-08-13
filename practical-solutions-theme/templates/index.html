@@ -1,0 +1,143 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main">
+    
+    <!-- wp:group {"className":"hero-section","style":{"spacing":{"padding":{"top":"4rem","bottom":"4rem"}},"color":{"background":"var(--wp--preset--color--base)"}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group hero-section" style="background-color:var(--wp--preset--color--base);padding-top:4rem;padding-bottom:4rem">
+        
+        <!-- wp:heading {"textAlign":"center","level":1,"fontSize":"xx-large","style":{"typography":{"fontWeight":"800"}}} -->
+        <h1 class="wp-block-heading has-text-align-center has-xx-large-font-size" style="font-weight:800">حلول عملية لمشاكلك اليومية</h1>
+        <!-- /wp:heading -->
+        
+        <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.25rem"},"spacing":{"margin":{"top":"1rem","bottom":"2rem"}}}} -->
+        <p class="has-text-align-center" style="margin-top:1rem;margin-bottom:2rem;font-size:1.25rem">اكتشف نصائح وحلول ذكية لتسهيل حياتك في المنزل والمطبخ وكل مكان</p>
+        <!-- /wp:paragraph -->
+        
+        <!-- wp:template-part {"slug":"search-form"} /-->
+        
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:group {"className":"featured-categories","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group featured-categories" style="padding-top:3rem;padding-bottom:3rem">
+        
+        <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+        <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:2rem">تصفح حسب التصنيف</h2>
+        <!-- /wp:heading -->
+        
+        <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"2rem","left":"2rem"}}}} -->
+        <div class="wp-block-columns" style="gap:2rem">
+            
+            <!-- wp:column -->
+            <div class="wp-block-column">
+                <!-- wp:group {"className":"category-card","style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"1.5rem","right":"1.5rem"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group category-card has-white-background-color has-background" style="border-radius:12px;padding-top:2rem;padding-right:1.5rem;padding-bottom:2rem;padding-left:1.5rem">
+                    <!-- wp:heading {"textAlign":"center","level":3,"style":{"color":{"text":"var(--wp--preset--color--primary)"}}} -->
+                    <h3 class="wp-block-heading has-text-align-center" style="color:var(--wp--preset--color--primary)">🏠 البيت والمنزل</h3>
+                    <!-- /wp:heading -->
+                    <!-- wp:paragraph {"align":"center"} -->
+                    <p class="has-text-align-center">نصائح لتنظيف وترتيب وتحسين منزلك</p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->
+            </div>
+            <!-- /wp:column -->
+            
+            <!-- wp:column -->
+            <div class="wp-block-column">
+                <!-- wp:group {"className":"category-card","style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"1.5rem","right":"1.5rem"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group category-card has-white-background-color has-background" style="border-radius:12px;padding-top:2rem;padding-right:1.5rem;padding-bottom:2rem;padding-left:1.5rem">
+                    <!-- wp:heading {"textAlign":"center","level":3,"style":{"color":{"text":"var(--wp--preset--color--primary)"}}} -->
+                    <h3 class="wp-block-heading has-text-align-center" style="color:var(--wp--preset--color--primary)">🍳 المطبخ والطبخ</h3>
+                    <!-- /wp:heading -->
+                    <!-- wp:paragraph {"align":"center"} -->
+                    <p class="has-text-align-center">وصفات وحيل مطبخية لتوفير الوقت والجهد</p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->
+            </div>
+            <!-- /wp:column -->
+            
+            <!-- wp:column -->
+            <div class="wp-block-column">
+                <!-- wp:group {"className":"category-card","style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"1.5rem","right":"1.5rem"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group category-card has-white-background-color has-background" style="border-radius:12px;padding-top:2rem;padding-right:1.5rem;padding-bottom:2rem;padding-left:1.5rem">
+                    <!-- wp:heading {"textAlign":"center","level":3,"style":{"color":{"text":"var(--wp--preset--color--primary)"}}} -->
+                    <h3 class="wp-block-heading has-text-align-center" style="color:var(--wp--preset--color--primary)">💡 نصائح حياتية</h3>
+                    <!-- /wp:heading -->
+                    <!-- wp:paragraph {"align":"center"} -->
+                    <p class="has-text-align-center">حلول ذكية لتحسين نمط حياتك اليومي</p>
+                    <!-- /wp:paragraph -->
+                </div>
+                <!-- /wp:group -->
+            </div>
+            <!-- /wp:column -->
+            
+        </div>
+        <!-- /wp:columns -->
+        
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:group {"className":"latest-posts","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group latest-posts" style="padding-top:3rem;padding-bottom:3rem">
+        
+        <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+        <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:2rem">أحدث الحلول</h2>
+        <!-- /wp:heading -->
+        
+        <!-- wp:query {"queryId":0,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
+        <div class="wp-block-query">
+            
+            <!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"grid","columnCount":2}} -->
+            
+                <!-- wp:group {"className":"post-card","style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"0","bottom":"1.5rem","left":"0","right":"0"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group post-card has-white-background-color has-background" style="border-radius:12px;padding-top:0;padding-right:0;padding-bottom:1.5rem;padding-left:0">
+                    
+                    <!-- wp:post-featured-image {"style":{"border":{"radius":{"top":"12px","right":"12px"}}}} /-->
+                    
+                    <!-- wp:group {"style":{"spacing":{"padding":{"top":"1.5rem","bottom":"0","left":"1.5rem","right":"1.5rem"}}},"layout":{"type":"constrained"}} -->
+                    <div class="wp-block-group" style="padding-top:1.5rem;padding-right:1.5rem;padding-bottom:0;padding-left:1.5rem">
+                        
+                        <!-- wp:post-title {"level":3,"isLink":true,"style":{"typography":{"fontSize":"1.25rem","fontWeight":"600","lineHeight":"1.4"},"spacing":{"margin":{"bottom":"1rem"}}}} /-->
+                        
+                        <!-- wp:post-excerpt {"moreText":"اقرأ المزيد","style":{"spacing":{"margin":{"bottom":"1rem"}}}} /-->
+                        
+                        <!-- wp:group {"style":{"spacing":{"margin":{"top":"1rem"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+                        <div class="wp-block-group" style="margin-top:1rem">
+                            <!-- wp:post-date {"style":{"typography":{"fontSize":"0.875rem"},"color":{"text":"var(--wp--preset--color--tertiary)"}}} /-->
+                            <!-- wp:post-author {"showAvatar":false,"style":{"typography":{"fontSize":"0.875rem"},"color":{"text":"var(--wp--preset--color--tertiary)"}}} /-->
+                        </div>
+                        <!-- /wp:group -->
+                        
+                    </div>
+                    <!-- /wp:group -->
+                    
+                </div>
+                <!-- /wp:group -->
+                
+            <!-- /wp:post-template -->
+            
+            <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+                <!-- wp:query-pagination-previous /-->
+                <!-- wp:query-pagination-numbers /-->
+                <!-- wp:query-pagination-next /-->
+            <!-- /wp:query-pagination -->
+            
+            <!-- wp:query-no-results -->
+                <!-- wp:paragraph {"placeholder":"أضف نصاً أو كتل للمحتوى الذي سيتم عرضه عندما لا تكون هناك نتائج استعلام.","style":{"spacing":{"margin":{"top":"2rem"}}}} -->
+                <p style="margin-top:2rem">لا توجد مقالات للعرض حالياً.</p>
+                <!-- /wp:paragraph -->
+            <!-- /wp:query-no-results -->
+            
+        </div>
+        <!-- /wp:query -->
+        
+    </div>
+    <!-- /wp:group -->
+    
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

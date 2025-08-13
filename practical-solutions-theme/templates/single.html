@@ -1,0 +1,534 @@
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main single-post-main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main single-post-main">
+    
+    <!-- wp:group {"className":"breadcrumb-section","style":{"spacing":{"padding":{"top":"1rem","bottom":"1rem"},"margin":{"bottom":"2rem"}}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
+    <div class="wp-block-group breadcrumb-section has-base-background-color has-background" style="margin-bottom:2rem;padding-top:1rem;padding-bottom:1rem">
+        <!-- wp:html -->
+        <nav aria-label="مسار التنقل" class="breadcrumb">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="/">الرئيسية</a>
+                </li>
+                <li class="breadcrumb-separator">←</li>
+                <li class="breadcrumb-item">
+                    <span class="breadcrumb-category">تصنيف المقال</span>
+                </li>
+                <li class="breadcrumb-separator">←</li>
+                <li class="breadcrumb-item current" aria-current="page">
+                    <span>عنوان المقال الحالي</span>
+                </li>
+            </ol>
+        </nav>
+        <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:group {"className":"single-post-header","style":{"spacing":{"margin":{"bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group single-post-header" style="margin-bottom:3rem">
+        
+        <!-- wp:post-title {"level":1,"style":{"typography":{"fontSize":"2.5rem","fontWeight":"800","lineHeight":"1.2"},"spacing":{"margin":{"bottom":"1.5rem"}}},"textColor":"foreground"} /-->
+        
+        <!-- wp:group {"className":"post-meta","style":{"spacing":{"margin":{"bottom":"1.5rem"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+        <div class="wp-block-group post-meta" style="margin-bottom:1.5rem">
+            
+            <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"}} -->
+            <div class="wp-block-group">
+                <!-- wp:post-author {"showAvatar":true,"avatarSize":32,"style":{"typography":{"fontSize":"0.95rem"}}} /-->
+                <!-- wp:post-date {"style":{"typography":{"fontSize":"0.95rem"},"color":{"text":"var(--wp--preset--color--tertiary)"}}} /-->
+            </div>
+            <!-- /wp:group -->
+            
+            <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"}} -->
+            <div class="wp-block-group">
+                <!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.875rem"}}} /-->
+                <!-- wp:html -->
+                <div class="reading-time">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="margin-left: 0.25rem;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                    <span>5 دقائق للقراءة</span>
+                </div>
+                <!-- /wp:html -->
+            </div>
+            <!-- /wp:group -->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <!-- wp:post-featured-image {"style":{"border":{"radius":"12px"}},"className":"single-featured-image"} /-->
+        
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"3rem","left":"4rem"}}}} -->
+    <div class="wp-block-columns" style="gap:4rem 3rem">
+        
+        <!-- wp:column {"width":"70%","className":"main-content"} -->
+        <div class="wp-block-column main-content" style="flex-basis:70%">
+            
+            <!-- wp:post-content {"className":"single-post-content","layout":{"type":"constrained"}} /-->
+            
+            <!-- wp:group {"className":"post-footer","style":{"spacing":{"padding":{"top":"3rem","bottom":"2rem"},"margin":{"top":"3rem"}},"border":{"top":{"color":"var(--wp--preset--color--base)","width":"1px","style":"solid"}}},"layout":{"type":"constrained"}} -->
+            <div class="wp-block-group post-footer" style="border-top-color:var(--wp--preset--color--base);border-top-style:solid;border-top-width:1px;margin-top:3rem;padding-top:3rem;padding-bottom:2rem">
+                
+                <!-- wp:group {"className":"post-tags","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+                <div class="wp-block-group post-tags" style="margin-bottom:2rem">
+                    <!-- wp:heading {"level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+                    <h4 class="wp-block-heading" style="margin-bottom:1rem">الكلمات المفتاحية</h4>
+                    <!-- /wp:heading -->
+                    <!-- wp:post-terms {"term":"post_tag","style":{"elements":{"link":{"color":{"text":"var(--wp--preset--color--primary)"}}}}} /-->
+                </div>
+                <!-- /wp:group -->
+                
+                <!-- wp:group {"className":"social-sharing","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+                <div class="wp-block-group social-sharing" style="margin-bottom:2rem">
+                    <!-- wp:heading {"level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+                    <h4 class="wp-block-heading" style="margin-bottom:1rem">شارك هذا المقال</h4>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:html -->
+                    <div class="social-share-buttons">
+                        <button class="share-btn facebook" onclick="shareOnFacebook()" aria-label="مشاركة على فيسبوك">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            فيسبوك
+                        </button>
+                        
+                        <button class="share-btn twitter" onclick="shareOnTwitter()" aria-label="مشاركة على تويتر">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                            تويتر
+                        </button>
+                        
+                        <button class="share-btn whatsapp" onclick="shareOnWhatsApp()" aria-label="مشاركة على واتساب">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.520-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                            </svg>
+                            واتساب
+                        </button>
+                        
+                        <button class="share-btn copy-link" onclick="copyLink()" aria-label="نسخ الرابط">
+                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                            </svg>
+                            نسخ الرابط
+                        </button>
+                    </div>
+                    <!-- /wp:html -->
+                </div>
+                <!-- /wp:group -->
+                
+                <!-- wp:group {"className":"author-bio","style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"}},"border":{"radius":"12px"}},"backgroundColor":"base","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group author-bio has-base-background-color has-background" style="border-radius:12px;padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem">
+                    <!-- wp:heading {"level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+                    <h4 class="wp-block-heading" style="margin-bottom:1rem">عن الكاتب</h4>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+                    <div class="wp-block-group">
+                        <!-- wp:post-author-avatar {"size":64} /-->
+                        
+                        <!-- wp:group {"layout":{"type":"constrained"}} -->
+                        <div class="wp-block-group">
+                            <!-- wp:post-author-name {"style":{"typography":{"fontWeight":"600","fontSize":"1.1rem"}}} /-->
+                            <!-- wp:post-author-biography /-->
+                        </div>
+                        <!-- /wp:group -->
+                    </div>
+                    <!-- /wp:group -->
+                </div>
+                <!-- /wp:group -->
+                
+            </div>
+            <!-- /wp:group -->
+            
+        </div>
+        <!-- /wp:column -->
+        
+        <!-- wp:column {"width":"30%","className":"sidebar-content"} -->
+        <div class="wp-block-column sidebar-content" style="flex-basis:30%">
+            
+            <!-- wp:group {"className":"sticky-sidebar","style":{"position":{"type":"sticky","top":"2rem"}},"layout":{"type":"constrained"}} -->
+            <div class="wp-block-group sticky-sidebar" style="position:sticky;top:2rem">
+                
+                <!-- wp:group {"className":"table-of-contents","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"12px"}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group table-of-contents has-white-background-color has-background" style="border-radius:12px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+                    <!-- wp:heading {"level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+                    <h4 class="wp-block-heading" style="margin-bottom:1rem">فهرس المحتويات</h4>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:html -->
+                    <div id="table-of-contents">
+                        <!-- سيتم ملؤه بـ JavaScript -->
+                    </div>
+                    <!-- /wp:html -->
+                </div>
+                <!-- /wp:group -->
+                
+                <!-- wp:group {"className":"related-posts","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"},"margin":{"top":"2rem"}},"border":{"radius":"12px"}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+                <div class="wp-block-group related-posts has-white-background-color has-background" style="border-radius:12px;margin-top:2rem;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+                    <!-- wp:heading {"level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+                    <h4 class="wp-block-heading" style="margin-bottom:1rem">مقالات ذات صلة</h4>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:query {"queryId":1,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
+                    <div class="wp-block-query">
+                        <!-- wp:post-template -->
+                        
+                        <!-- wp:group {"className":"related-post-item","style":{"spacing":{"padding":{"bottom":"1rem","top":"1rem"},"margin":{"bottom":"1rem"}},"border":{"bottom":{"color":"var(--wp--preset--color--base)","width":"1px","style":"solid"}}},"layout":{"type":"constrained"}} -->
+                        <div class="wp-block-group related-post-item" style="border-bottom-color:var(--wp--preset--color--base);border-bottom-style:solid;border-bottom-width:1px;margin-bottom:1rem;padding-top:1rem;padding-bottom:1rem">
+                            <!-- wp:post-title {"level":5,"isLink":true,"style":{"typography":{"fontSize":"1rem","fontWeight":"600","lineHeight":"1.4"},"spacing":{"margin":{"bottom":"0.5rem"}}}} /-->
+                            <!-- wp:post-date {"style":{"typography":{"fontSize":"0.875rem"},"color":{"text":"var(--wp--preset--color--tertiary)"}}} /-->
+                        </div>
+                        <!-- /wp:group -->
+                        
+                        <!-- /wp:post-template -->
+                    </div>
+                    <!-- /wp:query -->
+                </div>
+                <!-- /wp:group -->
+                
+            </div>
+            <!-- /wp:group -->
+            
+        </div>
+        <!-- /wp:column -->
+        
+    </div>
+    <!-- /wp:columns -->
+    
+    <!-- wp:group {"className":"post-navigation","style":{"spacing":{"margin":{"top":"4rem","bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group post-navigation" style="margin-top:4rem;margin-bottom:2rem">
+        <!-- wp:html -->
+        <nav class="post-navigation-links" aria-label="التنقل بين المقالات">
+            <div class="nav-links">
+                <div class="nav-previous">
+                    <a href="#" class="nav-link previous">
+                        <span class="nav-direction">← المقال السابق</span>
+                        <span class="nav-title">عنوان المقال السابق</span>
+                    </a>
+                </div>
+                <div class="nav-next">
+                    <a href="#" class="nav-link next">
+                        <span class="nav-direction">المقال التالي →</span>
+                        <span class="nav-title">عنوان المقال التالي</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+    <!-- wp:comments {"className":"post-comments"} /-->
+    
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->
+
+<!-- wp:html -->
+<style>
+/* تخصيص صفحة المقال الواحد */
+.single-post-main {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.breadcrumb {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-item a {
+    color: var(--wp--preset--color--primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item.current span {
+    color: var(--wp--preset--color--tertiary);
+    font-size: 0.875rem;
+}
+
+.breadcrumb-separator {
+    color: var(--wp--preset--color--tertiary);
+    font-size: 0.875rem;
+}
+
+.single-featured-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.reading-time {
+    display: flex;
+    align-items: center;
+    color: var(--wp--preset--color--tertiary);
+    font-size: 0.875rem;
+}
+
+.single-post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.single-post-content h2,
+.single-post-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.social-share-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+    color: white;
+}
+
+.share-btn.twitter {
+    background: #1da1f2;
+    color: white;
+}
+
+.share-btn.whatsapp {
+    background: #25d366;
+    color: white;
+}
+
+.share-btn.copy-link {
+    background: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--foreground);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-navigation-links {
+    border-top: 1px solid var(--wp--preset--color--base);
+    padding-top: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: var(--wp--preset--color--base);
+    text-decoration: none;
+    color: var(--wp--preset--color--foreground);
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 45%;
+}
+
+.nav-link:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-direction {
+    font-size: 0.875rem;
+    color: var(--wp--preset--color--tertiary);
+    margin-bottom: 0.5rem;
+}
+
+.nav-title {
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.nav-previous .nav-link {
+    text-align: left;
+}
+
+.nav-next .nav-link {
+    text-align: right;
+}
+
+/* استجابة للجوال */
+@media (max-width: 768px) {
+    .single-post-main .wp-block-columns {
+        flex-direction: column;
+    }
+    
+    .sticky-sidebar {
+        position: static !important;
+        margin-top: 2rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+    }
+    
+    .nav-link {
+        max-width: 100%;
+    }
+    
+    .social-share-buttons {
+        justify-content: center;
+    }
+    
+    .single-featured-image img {
+        height: 250px;
+    }
+}
+
+/* تحسين فهرس المحتويات */
+#table-of-contents ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#table-of-contents li {
+    margin-bottom: 0.5rem;
+}
+
+#table-of-contents a {
+    color: var(--wp--preset--color--foreground);
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding: 0.25rem 0;
+    display: block;
+    border-right: 2px solid transparent;
+    padding-right: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+#table-of-contents a:hover {
+    color: var(--wp--preset--color--primary);
+    border-right-color: var(--wp--preset--color--primary);
+}
+
+#table-of-contents a.active {
+    color: var(--wp--preset--color--primary);
+    border-right-color: var(--wp--preset--color--primary);
+    font-weight: 600;
+}
+</style>
+
+<script>
+// وظائف المشاركة
+function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareOnTwitter() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title);
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+}
+
+function shareOnWhatsApp() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.title);
+    window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('تم نسخ الرابط بنجاح!');
+    });
+}
+
+// إنشاء فهرس المحتويات
+document.addEventListener('DOMContentLoaded', function() {
+    generateTableOfContents();
+});
+
+function generateTableOfContents() {
+    const headings = document.querySelectorAll('.single-post-content h2, .single-post-content h3, .single-post-content h4');
+    const tocContainer = document.getElementById('table-of-contents');
+    
+    if (headings.length === 0) {
+        tocContainer.innerHTML = '<p>لا توجد عناوين في هذا المقال</p>';
+        return;
+    }
+    
+    let tocHTML = '<ul>';
+    headings.forEach((heading, index) => {
+        const id = `heading-${index}`;
+        heading.id = id;
+        
+        const level = parseInt(heading.tagName.substring(1));
+        const indent = level > 2 ? 'style="margin-right: ' + ((level - 2) * 1) + 'rem;"' : '';
+        
+        tocHTML += `<li ${indent}><a href="#${id}">${heading.textContent}</a></li>`;
+    });
+    tocHTML += '</ul>';
+    
+    tocContainer.innerHTML = tocHTML;
+    
+    // تمييز العنوان الحالي عند التمرير
+    window.addEventListener('scroll', highlightCurrentHeading);
+}
+
+function highlightCurrentHeading() {
+    const headings = document.querySelectorAll('.single-post-content h2, .single-post-content h3, .single-post-content h4');
+    const tocLinks = document.querySelectorAll('#table-of-contents a');
+    
+    let current = '';
+    headings.forEach(heading => {
+        const rect = heading.getBoundingClientRect();
+        if (rect.top <= 100) {
+            current = heading.id;
+        }
+    });
+    
+    tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+</script>
+<!-- /wp:html -->

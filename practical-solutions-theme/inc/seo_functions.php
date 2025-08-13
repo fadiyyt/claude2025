@@ -2,8 +2,7 @@
 /**
  * SEO Functions
  * وظائف تحسين محركات البحث
- * 
- * @package Practical_Solutions
+ * * @package Practical_Solutions
  * @since 1.0.0
  */
 
@@ -14,8 +13,7 @@ if (!defined('ABSPATH')) {
 
 /**
  * إضافة البيانات المنظمة (Schema.org)
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_schema_markup() {
     if (is_singular(array('post', 'solution', 'tip'))) {
@@ -125,8 +123,7 @@ add_action('wp_head', 'practical_solutions_add_schema_markup');
 
 /**
  * إضافة schema للموقع الرئيسي
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_website_schema() {
     $schema = array(
@@ -166,8 +163,7 @@ function practical_solutions_add_website_schema() {
 
 /**
  * إضافة schema لصفحات الأرشيف
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_collection_page_schema() {
     $schema = array(
@@ -183,8 +179,7 @@ function practical_solutions_add_collection_page_schema() {
 
 /**
  * إضافة meta tags محسنة للSEO
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_seo_meta_tags() {
     // Meta Description
@@ -263,8 +258,7 @@ add_action('wp_head', 'practical_solutions_add_seo_meta_tags', 1);
 
 /**
  * الحصول على وصف meta للصفحة
- * 
- * @return string الوصف
+ * * @return string الوصف
  * @since 1.0.0
  */
 function practical_solutions_get_meta_description() {
@@ -313,8 +307,7 @@ function practical_solutions_get_meta_description() {
 
 /**
  * الحصول على وصف الأرشيف
- * 
- * @return string الوصف
+ * * @return string الوصف
  * @since 1.0.0
  */
 function practical_solutions_get_archive_description() {
@@ -345,8 +338,7 @@ function practical_solutions_get_archive_description() {
 
 /**
  * الحصول على URL الكانونيكال
- * 
- * @return string URL الكانونيكال
+ * * @return string URL الكانونيكال
  * @since 1.0.0
  */
 function practical_solutions_get_canonical_url() {
@@ -371,8 +363,7 @@ function practical_solutions_get_canonical_url() {
 
 /**
  * الحصول على robots meta
- * 
- * @return string robots meta
+ * * @return string robots meta
  * @since 1.0.0
  */
 function practical_solutions_get_robots_meta() {
@@ -407,8 +398,7 @@ function practical_solutions_get_robots_meta() {
 
 /**
  * إضافة sitemap بسيط
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_sitemap_link() {
     if (is_front_page()) {
@@ -419,8 +409,7 @@ add_action('wp_head', 'practical_solutions_add_sitemap_link');
 
 /**
  * إنشاء sitemap XML بسيط
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_generate_sitemap() {
     if (isset($_GET['sitemap']) || $_SERVER['REQUEST_URI'] === '/sitemap.xml') {
@@ -489,8 +478,7 @@ add_action('init', 'practical_solutions_generate_sitemap');
 
 /**
  * تحسين عناوين الصفحات للSEO
- * 
- * @param array $title أجزاء العنوان
+ * * @param array $title أجزاء العنوان
  * @return array العنوان المحسن
  * @since 1.0.0
  */
@@ -521,8 +509,7 @@ add_filter('document_title_parts', 'practical_solutions_custom_document_title');
 
 /**
  * إضافة مربعات meta في محرر المقالات
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_add_seo_meta_boxes() {
     $post_types = array('post', 'page', 'solution', 'tip');
@@ -542,8 +529,7 @@ add_action('add_meta_boxes', 'practical_solutions_add_seo_meta_boxes');
 
 /**
  * محتوى مربع meta للSEO
- * 
- * @param WP_Post $post المقال الحالي
+ * * @param WP_Post $post المقال الحالي
  * @since 1.0.0
  */
 function practical_solutions_seo_meta_box_callback($post) {
@@ -582,7 +568,7 @@ function practical_solutions_seo_meta_box_callback($post) {
     echo '<input type="text" id="ps_keywords" name="ps_keywords" value="' . esc_attr($keywords) . '" class="large-text" />';
     echo '<p class="description">' . __('كلمات مفتاحية مفصولة بفواصل', 'practical-solutions') . '</p>';
     echo '</td>';
-    echo '</tr>';
+    '</tr>';
     
     // خيارات إضافية
     echo '<tr>';
@@ -598,8 +584,7 @@ function practical_solutions_seo_meta_box_callback($post) {
 
 /**
  * حفظ بيانات SEO meta
- * 
- * @param int $post_id معرف المقال
+ * * @param int $post_id معرف المقال
  * @since 1.0.0
  */
 function practical_solutions_save_seo_meta($post_id) {
@@ -630,33 +615,8 @@ function practical_solutions_save_seo_meta($post_id) {
 add_action('save_post', 'practical_solutions_save_seo_meta');
 
 /**
- * الحصول على روابط التواصل الاجتماعي
- * 
- * @return array قائمة الروابط
- * @since 1.0.0
- */
-function practical_solutions_get_social_links() {
-    $social_networks = array(
-        'facebook', 'twitter', 'instagram', 'youtube', 
-        'linkedin', 'telegram', 'whatsapp'
-    );
-    
-    $links = array();
-    
-    foreach ($social_networks as $network) {
-        $link = get_theme_mod("practical_solutions_social_{$network}");
-        if ($link) {
-            $links[] = esc_url($link);
-        }
-    }
-    
-    return $links;
-}
-
-/**
  * استخراج الخطوات من محتوى الحل
- * 
- * @param string $content محتوى المقال
+ * * @param string $content محتوى المقال
  * @return array قائمة الخطوات
  * @since 1.0.0
  */
@@ -685,8 +645,7 @@ function practical_solutions_extract_steps_from_content($content) {
 
 /**
  * تحسين breadcrumbs للSEO
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_breadcrumb_schema() {
     if (is_singular() && !is_front_page()) {
@@ -736,8 +695,7 @@ add_action('wp_head', 'practical_solutions_breadcrumb_schema');
 
 /**
  * تحسين RSS للSEO
- * 
- * @since 1.0.0
+ * * @since 1.0.0
  */
 function practical_solutions_optimize_rss() {
     // إضافة معلومات إضافية للـ RSS
