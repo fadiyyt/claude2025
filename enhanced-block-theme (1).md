@@ -604,6 +604,7 @@ function practical_solutions_enqueue_assets() {
         array(),
         null
     );
+
 }
 add_action('wp_enqueue_scripts', 'practical_solutions_enqueue_assets');
 
@@ -1128,6 +1129,77 @@ function practical_solutions_editor_settings($settings) {
 }
 add_filter('block_editor_settings_all', 'practical_solutions_editor_settings');
 ```
+
+/**
+ * Block Patterns Registration and Theme Settings
+ * تسجيل الأنماط المخصصة ولوحة الإعدادات
+ */
+
+// تسجيل فئات الأنماط المخصصة
+function practical_solutions_register_pattern_categories() {
+    register_block_pattern_category('practical-solutions', array(
+        'label' => __('الحلول العملية', 'practical-solutions'),
+        'description' => __('أنماط مخصصة لقالب الحلول العملية', 'practical-solutions')
+    ));
+    
+    register_block_pattern_category('ps-heroes', array(
+        'label' => __('أقسام البطل', 'practical-solutions'),
+        'description' => __('أقسام البطل والعناوين الرئيسية', 'practical-solutions')
+    ));
+    
+    register_block_pattern_category('ps-features', array(
+        'label' => __('عرض الميزات', 'practical-solutions'),
+        'description' => __('أقسام عرض الميزات والخدمات', 'practical-solutions')
+    ));
+    
+    register_block_pattern_category('ps-content', array(
+        'label' => __('أقسام المحتوى', 'practical-solutions'),
+        'description' => __('أقسام المحتوى والمقالات', 'practical-solutions')
+    ));
+    
+    register_block_pattern_category('ps-cta', array(
+        'label' => __('دعوات العمل', 'practical-solutions'),
+        'description' => __('أقسام دعوات العمل والتحويل', 'practical-solutions')
+    ));
+}
+add_action('init', 'practical_solutions_register_pattern_categories');
+
+// تحميل ملفات الأنماط
+function practical_solutions_load_patterns() {
+    $patterns_dir = get_template_directory() . '/patterns/';
+    
+    $pattern_files = array(
+        'hero-with-search.php',
+        'hero-solutions.php',
+        'features-grid.php',
+        'features-cards.php',
+        'solutions-showcase.php',
+        'testimonials.php',
+        'faq-section.php',
+        'cta-newsletter.php',
+        'cta-contact.php',
+        'recent-posts.php',
+        'categories-grid.php',
+        'stats-counter.php',
+        'team-members.php',
+        'services-pricing.php',
+        'before-after.php'
+    );
+    
+    foreach ($pattern_files as $file) {
+        $file_path = $patterns_dir . $file;
+        if (file_exists($file_path)) {
+            include $file_path;
+        }
+    }
+}
+add_action('init', 'practical_solutions_load_patterns');
+
+// تحميل ملفات الإعدادات
+require_once get_template_directory() . '/inc/theme-settings.php';
+require_once get_template_directory() . '/inc/customizer-settings.php';
+```
+
 
 ## 🎨 **4. assets/css/main.css - الأنماط الرئيسية**
 
