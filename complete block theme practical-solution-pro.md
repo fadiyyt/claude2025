@@ -3,35 +3,34 @@
 الهيكل :
 practical-solutions-pro/
 ├── style.css
-├── theme.json ← موحد ومحسن
-├── functions.php ← منظف من التعارضات
+├── theme.json 
+├── functions.php 
 ├── screenshot.png
-├── README.md ← دليل شامل
+├── README.md 
 ├── LICENSE
 ├── manifest.json ← PWA support
 ├── sw.js ← Service Worker
 ├── .gitignore
-├── templates/ ← جميع القوالب مكتملة
-│   ├── index.html ← تم إضافته
-│   ├── front-page.html ← جديد
-│   ├── home.html ← جديد
+├── templates/ 
+│   ├── index.html 
+│   ├── front-page.html 
+│   ├── home.html 
 │   ├── single.html
 │   ├── page.html
 │   ├── archive.html
 │   ├── search.html
 │   ├── 404.html
-│   ├── author.html ← جديد
-│   ├── category.html ← جديد
-│   └── tag.html ← جديد
+│   ├── author.html 
+│   ├── category.html 
+│   └── tag.html 
 ├── parts/
 │   ├── header.html
 │   ├── footer.html
 │   └── sidebar.html
 ├── assets/
 │   ├── css/
-│   │   └── unified.css ← جميع الأنماط موحدة
+│   │   └── unified.css 
 │   │   └── enhanced-ux.css
-│   │   └── rtl.css
 │   ├── admin/
 │   │   └── admin-styles.css
 │   │   └── admin-scripts.js
@@ -39,20 +38,16 @@ practical-solutions-pro/
 │   │   └── enhanced-voice-search.js
 │   │   └── interactive-features.js
 │   │   └── unified.min.js
-│   │   └── unified.js ← جميع الوظائف موحدة
 │   ├── images/
 │   └── fonts/
 ├── inc/
-│   ├── theme-settings.php
 │   ├── customizer-settings.php
-│   ├── ai-search-suggestions.php
+│   ├── unified-search-system.php
 │   ├── rating-system.php
 │   ├── ai-openrouter-system.php
 │   ├── advanced-analytics.php
 │   ├── theme-admin-panel.php
-│   ├── 
-│   ├── 
-│   └── block-patterns.php ← منظم
+│   └── block-patterns.php 
 ├── patterns/
 │   ├── categories-grid.php
 │   ├── cta-newsletter.php
@@ -83,6 +78,367 @@ Tags: block-themes, full-site-editing, rtl-language-support, accessibility-ready
 
 /* ملف CSS نظيف - الأنماط منفصلة في ملفات مخصصة */
 ```
+
+اسم الملف: theme.json
+
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "layout": {
+      "contentSize": "800px",
+      "wideSize": "1200px"
+    },
+    "color": {
+      "duotone": [
+        {
+          "colors": ["#000000", "#007cba"],
+          "slug": "primary-duotone",
+          "name": "Primary Duotone"
+        }
+      ],
+      "gradients": [
+        {
+          "slug": "primary-gradient",
+          "gradient": "linear-gradient(135deg, #007cba 0%, #005a87 100%)",
+          "name": "Primary Gradient"
+        },
+        {
+          "slug": "accent-gradient", 
+          "gradient": "linear-gradient(135deg, #ff6b35 0%, #e74c3c 100%)",
+          "name": "Accent Gradient"
+        }
+      ],
+      "palette": [
+        {
+          "color": "#ffffff",
+          "name": "Base",
+          "slug": "base"
+        },
+        {
+          "color": "#1a1a1a", 
+          "name": "Contrast",
+          "slug": "contrast"
+        },
+        {
+          "color": "#007cba",
+          "name": "Primary",
+          "slug": "primary"
+        },
+        {
+          "color": "#005a87",
+          "name": "Secondary", 
+          "slug": "secondary"
+        },
+        {
+          "color": "#6b7280",
+          "name": "Tertiary",
+          "slug": "tertiary"
+        },
+        {
+          "color": "#ff6b35",
+          "name": "Accent",
+          "slug": "accent"
+        },
+        {
+          "color": "#10b981",
+          "name": "Success",
+          "slug": "success"
+        },
+        {
+          "color": "#f59e0b", 
+          "name": "Warning",
+          "slug": "warning"
+        },
+        {
+          "color": "#ef4444",
+          "name": "Error",
+          "slug": "error"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          "name": "Noto Sans Arabic",
+          "slug": "noto-sans-arabic"
+        },
+        {
+          "fontFamily": "'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", 
+          "name": "Cairo",
+          "slug": "cairo"
+        },
+        {
+          "fontFamily": "'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          "name": "Tajawal", 
+          "slug": "tajawal"
+        }
+      ],
+      "fontSizes": [
+        {
+          "size": "0.75rem",
+          "slug": "x-small",
+          "name": "X-Small"
+        },
+        {
+          "size": "0.875rem", 
+          "slug": "small",
+          "name": "Small"
+        },
+        {
+          "size": "1rem",
+          "slug": "medium",
+          "name": "Medium"
+        },
+        {
+          "size": "1.125rem",
+          "slug": "large", 
+          "name": "Large"
+        },
+        {
+          "size": "1.25rem",
+          "slug": "x-large",
+          "name": "X-Large"
+        },
+        {
+          "size": "1.5rem",
+          "slug": "xx-large",
+          "name": "XX-Large"
+        },
+        {
+          "size": "2rem",
+          "slug": "huge",
+          "name": "Huge"
+        }
+      ]
+    },
+    "spacing": {
+      "spacingScale": {
+        "steps": 0
+      },
+      "spacingSizes": [
+        {
+          "size": "0.5rem",
+          "slug": "xs",
+          "name": "XS"
+        },
+        {
+          "size": "1rem", 
+          "slug": "sm",
+          "name": "Small"
+        },
+        {
+          "size": "1.5rem",
+          "slug": "md",
+          "name": "Medium"
+        },
+        {
+          "size": "2rem",
+          "slug": "lg", 
+          "name": "Large"
+        },
+        {
+          "size": "3rem",
+          "slug": "xl",
+          "name": "XL"
+        },
+        {
+          "size": "4rem",
+          "slug": "xxl",
+          "name": "XXL"
+        }
+      ]
+    },
+    "custom": {
+      "spacing": {
+        "small": "max(1.25rem, 5vw)",
+        "medium": "clamp(2rem, 8vw, calc(4 * var(--wp--preset--spacing--50)))",
+        "large": "clamp(4rem, 10vw, 8rem)",
+        "outer": "var(--wp--preset--spacing--30, 1.25rem)"
+      },
+      "typography": {
+        "font-size": {
+          "huge": "clamp(2.25rem, 4vw, 2.75rem)",
+          "gigantic": "clamp(2.75rem, 6vw, 3.25rem)",
+          "colossal": "clamp(3.25rem, 8vw, 6.25rem)"
+        },
+        "line-height": {
+          "tiny": 1.15,
+          "small": 1.2,
+          "medium": 1.4,
+          "normal": 1.6
+        }
+      }
+    },
+    "blocks": {
+      "core/button": {
+        "border": {
+          "radius": true
+        },
+        "color": {
+          "background": true,
+          "text": true
+        },
+        "spacing": {
+          "padding": true
+        },
+        "typography": {
+          "fontSize": true,
+          "fontWeight": true
+        }
+      },
+      "core/heading": {
+        "color": {
+          "background": true,
+          "text": true,
+          "gradient": true
+        },
+        "typography": {
+          "fontSize": true,
+          "fontWeight": true,
+          "lineHeight": true,
+          "textTransform": true,
+          "letterSpacing": true
+        }
+      },
+      "core/paragraph": {
+        "color": {
+          "background": true,
+          "text": true
+        },
+        "typography": {
+          "fontSize": true,
+          "lineHeight": true,
+          "letterSpacing": true
+        }
+      }
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--base)",
+      "text": "var(--wp--preset--color--contrast)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--noto-sans-arabic)",
+      "fontSize": "var(--wp--preset--font-size--medium)",
+      "lineHeight": "1.6"
+    },
+    "spacing": {
+      "blockGap": "1.5rem"
+    },
+    "elements": {
+      "button": {
+        "border": {
+          "radius": "8px"
+        },
+        "color": {
+          "background": "var(--wp--preset--color--primary)",
+          "text": "var(--wp--preset--color--base)"
+        },
+        "spacing": {
+          "padding": {
+            "top": "0.75rem",
+            "right": "1.5rem", 
+            "bottom": "0.75rem",
+            "left": "1.5rem"
+          }
+        },
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--medium)",
+          "fontWeight": "600"
+        },
+        ":hover": {
+          "color": {
+            "background": "var(--wp--preset--color--secondary)"
+          }
+        }
+      },
+      "h1": {
+        "typography": {
+          "fontSize": "var(--wp--custom--typography--font-size--colossal)",
+          "lineHeight": "var(--wp--custom--typography--line-height--tiny)",
+          "fontWeight": "700"
+        },
+        "spacing": {
+          "margin": {
+            "bottom": "var(--wp--preset--spacing--md)"
+          }
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontSize": "var(--wp--custom--typography--font-size--gigantic)",
+          "lineHeight": "var(--wp--custom--typography--line-height--small)",
+          "fontWeight": "600"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontSize": "var(--wp--custom--typography--font-size--huge)",
+          "fontWeight": "600"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "var(--wp--preset--color--primary)"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--secondary)"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "core/navigation": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--medium)",
+          "fontWeight": "500"
+        }
+      },
+      "core/post-title": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--x-large)",
+          "fontWeight": "600"
+        }
+      },
+      "core/site-title": {
+        "typography": {
+          "fontSize": "var(--wp--preset--font-size--large)",
+          "fontWeight": "700"
+        }
+      }
+    }
+  },
+  "customTemplates": [
+    {
+      "name": "blank",
+      "title": "Blank",
+      "postTypes": ["page", "post"]
+    }
+  ],
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "Header", 
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    },
+    {
+      "name": "sidebar",
+      "title": "Sidebar", 
+      "area": "uncategorized"
+    }
+  ]
+}
+
+
 
 📁 اسم الملف: templates/index.html
 
@@ -851,9 +1207,10 @@ Tags: block-themes, full-site-editing, rtl-language-support, accessibility-ready
 📁 اسم الملف: functions.php
 <?php
 /**
- * Practical Solutions Pro - Enhanced Functions (Updated)
- * قالب الحلول العملية الاحترافي - الوظائف المحسنة مع الميزات الجديدة
- * المكان: /functions.php
+ * Practical Solutions Pro - Enhanced and Refactored Functions
+ * قالب الحلول العملية الاحترافي - الوظائف المحسنة والمُعاد هيكلتها
+ * المسار: /functions.php
+ * الإصدار: 2.2.1 (مُصلح)
  */
 
 // منع الوصول المباشر
@@ -861,2217 +1218,226 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// تعريف ثوابت القالب المحدثة
-define('PS_THEME_VERSION', '2.2.0');
+// =============================================================================
+// 1. تعريف الثوابت الأساسية
+// =============================================================================
+define('PS_THEME_VERSION', '2.2.1');
 define('PS_THEME_DIR', get_template_directory());
 define('PS_THEME_URI', get_template_directory_uri());
 
-/**
- * ==== إعدادات القالب الأساسية المحدثة ====
- */
-function practical_solutions_setup() {
-    // دعم ميزات WordPress الحديثة
-    add_theme_support('post-thumbnails');
-    add_theme_support('title-tag');
-    add_theme_support('html5', array(
-        'search-form', 'comment-form', 'comment-list', 
-        'gallery', 'caption', 'style', 'script'
-    ));
-    add_theme_support('responsive-embeds');
-    add_theme_support('editor-styles');
-    add_theme_support('wp-block-styles');
-    add_theme_support('align-wide');
-    
-    // دعم Block Theme المتقدم
-    add_theme_support('block-templates');
-    add_theme_support('block-template-parts');
-    add_theme_support('custom-line-height');
-    add_theme_support('custom-spacing');
-    add_theme_support('link-color');
-    add_theme_support('appearance-tools');
-    
-    // أحجام الصور المحسنة
-    add_image_size('ps-thumbnail', 400, 300, true);
-    add_image_size('ps-medium', 800, 600, true);
-    add_image_size('ps-large', 1200, 800, true);
-    add_image_size('ps-hero', 1600, 900, true);
-    add_image_size('ps-card', 350, 250, true);
-    
-    // دعم الترجمة
-    load_theme_textdomain('practical-solutions', PS_THEME_DIR . '/languages');
-    
-    // أنماط المحرر المحدثة
-    add_editor_style(array(
-        'assets/css/unified.css',
-        'assets/css/enhanced-ux.css',
-        'assets/css/rtl.css',
-        'https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap'
-    ));
-    
-    // إضافة دعم Logo مخصص
-    add_theme_support('custom-logo', array(
-        'height'      => 100,
-        'width'       => 400,
-        'flex-height' => true,
-        'flex-width'  => true,
-    ));
-    
-    // إضافة قوائم التنقل
-    register_nav_menus(array(
-        'primary' => __('القائمة الرئيسية', 'practical-solutions'),
-        'footer'  => __('قائمة التذييل', 'practical-solutions'),
-        'social'  => __('وسائل التواصل الاجتماعي', 'practical-solutions'),
-    ));
-}
-add_action('after_setup_theme', 'practical_solutions_setup');
 
-/**
- * ==== تحميل الأصول المحسنة مع الميزات الجديدة ====
- */
-function practical_solutions_enqueue_assets() {
-    // CSS الموحد الأساسي
-    wp_enqueue_style(
-        'ps-unified-styles',
-        PS_THEME_URI . '/assets/css/unified.css',
-        array(),
-        PS_THEME_VERSION
-    );
-    
-    // CSS تحسينات تجربة المستخدم
-    wp_enqueue_style(
-        'ps-enhanced-ux',
-        PS_THEME_URI . '/assets/css/enhanced-ux.css',
-        array('ps-unified-styles'),
-        PS_THEME_VERSION
-    );
-    
-    // دعم RTL المحسن
-    if (is_rtl()) {
+// =============================================================================
+// 2. تحميل ملفات النظام الأساسية (Core System Files)
+// =============================================================================
+// قائمة بالملفات الأساسية التي يحتاجها القالب ليعمل.
+$ps_core_includes = [
+    'inc/theme-admin-panel.php',      // لوحة الإعدادات الرئيسية
+    'inc/customizer-settings.php',    // إعدادات المخصص (Customizer)
+    'inc/block-patterns.php',         // **إصلاح:** تم التأكد من أن هذا الملف يربط نفسه بـ add_action
+    'inc/unified-search-system.php',  // نظام البحث الموحد
+    'inc/ai-openrouter-system.php',   // نظام الذكاء الاصطناعي
+    'inc/rating-system.php',          // نظام التقييمات
+    'inc/advanced-analytics.php',     // نظام التحليلات المتقدم
+];
+
+foreach ($ps_core_includes as $file) {
+    $filepath = PS_THEME_DIR . '/' . $file;
+    if (file_exists($filepath)) {
+        require_once $filepath;
+    }
+}
+
+
+// =============================================================================
+// 3. إعدادات القالب الأساسية (Theme Setup)
+// =============================================================================
+if (!function_exists('ps_theme_setup')) {
+    function ps_theme_setup() {
+        // دعم ميزات ووردبريس الحديثة
+        add_theme_support('title-tag');
+        add_theme_support('post-thumbnails');
+        add_theme_support('responsive-embeds');
+        add_theme_support('html5', ['search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script']);
+        add_theme_support('custom-logo', ['height' => 100, 'width' => 400, 'flex-height' => true, 'flex-width' => true]);
+        
+        // دعم ميزات قوالب الكتل (Block Theme Features)
+        add_theme_support('wp-block-styles');
+        add_theme_support('align-wide');
+        add_theme_support('editor-styles');
+        add_theme_support('custom-spacing');
+        add_theme_support('custom-line-height');
+        add_theme_support('appearance-tools');
+
+        // دعم الترجمة
+        load_theme_textdomain('practical-solutions', PS_THEME_DIR . '/languages');
+
+        // تسجيل قوائم التنقل
+        register_nav_menus([
+            'primary' => __('القائمة الرئيسية', 'practical-solutions'),
+            'footer'  => __('قائمة التذييل', 'practical-solutions'),
+            'social'  => __('وسائل التواصل الاجتماعي', 'practical-solutions'),
+        ]);
+
+        // تسجيل أحجام الصور المخصصة
+        add_image_size('ps-card', 400, 300, true);
+        add_image_size('ps-featured', 800, 600, true);
+        add_image_size('ps-hero', 1600, 900, true);
+    }
+}
+add_action('after_setup_theme', 'ps_theme_setup');
+
+
+// =============================================================================
+// 4. تحميل الأصول (CSS & JavaScript)
+// =============================================================================
+if (!function_exists('ps_enqueue_assets')) {
+    function ps_enqueue_assets() {
+        // تحميل ملف CSS الموحد والنهائي.
         wp_enqueue_style(
-            'ps-rtl-styles',
-            PS_THEME_URI . '/assets/css/rtl.css',
-            array('ps-enhanced-ux'),
+            'ps-unified-styles',
+            PS_THEME_URI . '/assets/css/unified.css',
+            [],
             PS_THEME_VERSION
         );
-    }
-    
-    // JavaScript الموحد الأساسي
-    wp_enqueue_script(
-        'ps-unified-script',
-        PS_THEME_URI . '/assets/js/unified.js',
-        array('jquery'),
-        PS_THEME_VERSION,
-        array('strategy' => 'defer', 'in_footer' => true)
-    );
-    
-    // البحث الصوتي المحسن (حسب الإعدادات)
-    $general_settings = get_option('ps_general_settings', array());
-    if ($general_settings['voice_search'] ?? true) {
+
+        // تحميل ملف JS الموحد والمصغر
         wp_enqueue_script(
-            'ps-enhanced-voice',
-            PS_THEME_URI . '/assets/js/enhanced-voice-search.js',
-            array('ps-unified-script'),
+            'ps-unified-scripts',
+            PS_THEME_URI . '/assets/js/unified.min.js',
+            ['jquery'],
             PS_THEME_VERSION,
-            array('strategy' => 'defer', 'in_footer' => true)
+            true // تحميل في التذييل
         );
-    }
-    
-    // الميزات التفاعلية (حسب الإعدادات)
-    if ($general_settings['bookmarks'] ?? true || $general_settings['rating_system'] ?? true) {
-        wp_enqueue_script(
-            'ps-interactive-features',
-            PS_THEME_URI . '/assets/js/interactive-features.js',
-            array('ps-unified-script'),
-            PS_THEME_VERSION,
-            array('strategy' => 'defer', 'in_footer' => true)
-        );
-    }
-    
-    // إعدادات JavaScript المحدثة والموسعة
-    wp_localize_script('ps-unified-script', 'psSettings', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('ps_nonce'),
-        'homeUrl' => home_url('/'),
-        'themeUri' => PS_THEME_URI,
-        'isRTL' => is_rtl(),
-        'locale' => get_locale(),
-        'searchPlaceholder' => __('ابحث عن الحلول...', 'practical-solutions'),
-        'voiceSearchText' => __('أتحدث...', 'practical-solutions'),
-        'noResultsText' => __('لا توجد نتائج', 'practical-solutions'),
-        'loadingText' => __('جاري التحميل...', 'practical-solutions'),
-        'userId' => get_current_user_id(),
-        'postId' => get_the_ID(),
-        'features' => array(
-            'voice_search' => $general_settings['voice_search'] ?? true,
-            'bookmarks' => $general_settings['bookmarks'] ?? true,
-            'share_tracking' => true,
-            'reading_progress' => $general_settings['reading_progress'] ?? true,
-            'ai_suggestions' => get_option('ps_ai_settings', array())['enabled'] ?? false,
-            'analytics' => get_option('ps_analytics_settings', array())['enabled'] ?? true,
-            'rating_system' => $general_settings['rating_system'] ?? true,
-            'auto_dark_mode' => $general_settings['auto_dark_mode'] ?? false
-        ),
-        'strings' => array(
-            'bookmarkAdded' => __('تم إضافة للمفضلة', 'practical-solutions'),
-            'bookmarkRemoved' => __('تم إزالة من المفضلة', 'practical-solutions'),
-            'ratingSubmitted' => __('تم إرسال التقييم', 'practical-solutions'),
-            'shareSuccess' => __('تم نسخ الرابط', 'practical-solutions'),
-            'voiceNotSupported' => __('البحث الصوتي غير مدعوم في هذا المتصفح', 'practical-solutions'),
-            'voiceNoPermission' => __('لم يتم منح إذن الميكروفون', 'practical-solutions')
-        )
-    ));
-}
-add_action('wp_enqueue_scripts', 'practical_solutions_enqueue_assets');
 
-/**
- * ==== تحميل الملفات المساعدة الجديدة والمحسنة ====
- */
-function practical_solutions_load_includes() {
-    $includes = array(
-        // الملفات الأساسية
-        'inc/theme-settings.php',
-        'inc/customizer-settings.php',
-        'inc/block-patterns.php',
-        
-        // الملفات الجديدة المضافة
-        'inc/theme-admin-panel.php',
-        'inc/ai-openrouter-system.php',
-        'inc/advanced-analytics.php',
-        'inc/rating-system.php',
-        
-        // ملفات إضافية محسنة
-        'inc/theme-customizer-enhancements.php',
-        'inc/search-enhancements.php',
-        'inc/performance-optimizations.php'
-    );
-    
-    foreach ($includes as $file) {
-        $file_path = PS_THEME_DIR . '/' . $file;
-        if (file_exists($file_path)) {
-            require_once $file_path;
+        // **إصلاح وتحسين:** تمرير البيانات من PHP إلى JavaScript بشكل أكثر تفصيلاً
+        $ai_settings = get_option('ps_ai_settings', []);
+        $general_settings = get_option('ps_general_settings', []);
+
+        wp_localize_script('ps-unified-scripts', 'psSettings', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('ps_ajax_nonce'), // **تحسين:** استخدام nonce مخصص للـ AJAX
+            'siteUrl' => home_url('/'),
+            'themeUri' => PS_THEME_URI,
+            'isRTL'   => is_rtl(),
+            'postId'  => is_singular() ? get_the_ID() : 0, // تمرير ID الصفحة الحالية
+            'features' => [
+                'voiceSearch'     => $general_settings['voice_search'] ?? true,
+                'aiEnabled'       => $ai_settings['enabled'] ?? false,
+                'aiSuggestions'   => $ai_settings['search_suggestions'] ?? true,
+                'bookmarks'       => $general_settings['bookmarks'] ?? true,
+                'ratingSystem'    => $general_settings['rating_system'] ?? true,
+                'readingProgress' => $general_settings['reading_progress'] ?? true,
+            ]
+        ]);
+
+        // إضافة CSS مخصص من إعدادات القالب
+        $custom_css = get_option('ps_advanced_settings', [])['custom_css'] ?? '';
+        if (!empty($custom_css)) {
+            wp_add_inline_style('ps-unified-styles', $custom_css);
         }
     }
 }
-add_action('after_setup_theme', 'practical_solutions_load_includes', 5);
+add_action('wp_enqueue_scripts', 'ps_enqueue_assets');
 
-/**
- * ==== تسجيل Block Styles المخصصة المحدثة ====
- */
-function practical_solutions_register_block_styles() {
-    // أنماط للمجموعات
-    register_block_style('core/group', array(
-        'name' => 'ps-card-style',
-        'label' => __('بطاقة', 'practical-solutions')
-    ));
-    
-    register_block_style('core/group', array(
-        'name' => 'ps-hero-section',
-        'label' => __('قسم البطل', 'practical-solutions')
-    ));
-    
-    register_block_style('core/group', array(
-        'name' => 'ps-feature-box',
-        'label' => __('صندوق ميزة', 'practical-solutions')
-    ));
-    
-    register_block_style('core/group', array(
-        'name' => 'ps-rating-container',
-        'label' => __('حاوية التقييم', 'practical-solutions')
-    ));
-    
-    register_block_style('core/group', array(
-        'name' => 'ps-search-suggestions',
-        'label' => __('اقتراحات البحث', 'practical-solutions')
-    ));
-    
-    // أنماط للأزرار
-    register_block_style('core/button', array(
-        'name' => 'ps-primary-button',
-        'label' => __('زر أساسي', 'practical-solutions')
-    ));
-    
-    register_block_style('core/button', array(
-        'name' => 'ps-outline-button',
-        'label' => __('زر مخطط', 'practical-solutions')
-    ));
-    
-    register_block_style('core/button', array(
-        'name' => 'ps-bookmark-button',
-        'label' => __('زر حفظ', 'practical-solutions')
-    ));
-    
-    register_block_style('core/button', array(
-        'name' => 'ps-voice-search-button',
-        'label' => __('زر البحث الصوتي', 'practical-solutions')
-    ));
-    
-    // أنماط للعناوين
-    register_block_style('core/heading', array(
-        'name' => 'ps-section-title',
-        'label' => __('عنوان القسم', 'practical-solutions')
-    ));
-    
-    register_block_style('core/heading', array(
-        'name' => 'ps-hero-title',
-        'label' => __('عنوان البطل', 'practical-solutions')
-    ));
-    
-    // أنماط للصور
-    register_block_style('core/image', array(
-        'name' => 'ps-rounded-image',
-        'label' => __('صورة مدورة', 'practical-solutions')
-    ));
-    
-    register_block_style('core/image', array(
-        'name' => 'ps-zoomable-image',
-        'label' => __('صورة قابلة للتكبير', 'practical-solutions')
-    ));
-    
-    register_block_style('core/image', array(
-        'name' => 'ps-lazy-image',
-        'label' => __('صورة محملة تدريجياً', 'practical-solutions')
-    ));
-}
-add_action('init', 'practical_solutions_register_block_styles');
 
-/**
- * ==== AJAX للبحث المحسن والميزات الجديدة ====
- */
-function practical_solutions_ajax_search() {
-    // التحقق من الأمان
-    if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-        wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-    }
-    
-    $search_term = sanitize_text_field($_POST['search_term']);
-    $search_type = sanitize_text_field($_POST['search_type']) ?? 'regular';
-    $user_behavior = json_decode(stripslashes($_POST['user_behavior'] ?? '{}'), true);
-    
-    if (empty($search_term)) {
-        wp_send_json_error(__('مصطلح البحث مطلوب', 'practical-solutions'));
-    }
-    
-    $results = array();
-    
-    try {
-        // البحث العادي المحسن
-        $local_results = practical_solutions_get_local_search_results($search_term);
-        
-        // اقتراحات الذكاء الاصطناعي (إذا كان مفعلاً)
-        $ai_settings = get_option('ps_ai_settings', array());
-        if ($ai_settings['enabled'] && $ai_settings['search_suggestions'] && class_exists('PS_AI_OpenRouter_System')) {
-            $ai_system = new PS_AI_OpenRouter_System();
-            $ai_results = $ai_system->get_ai_search_suggestions($search_term, 'general', $user_behavior);
-            $results = array_merge($results, $ai_results);
+// تحميل أصول لوحة الإدارة
+if (!function_exists('ps_enqueue_admin_assets')) {
+    function ps_enqueue_admin_assets($hook) {
+        if (strpos($hook, 'practical-solutions') === false && strpos($hook, 'ps-') === false) {
+            return;
         }
         
-        // دمج النتائج المحلية
-        $results = array_merge($results, $local_results);
-        
-        // ترتيب النتائج حسب الصلة
-        usort($results, function($a, $b) {
-            $relevance_a = $a['relevance'] ?? 0;
-            $relevance_b = $b['relevance'] ?? 0;
-            return $relevance_b <=> $relevance_a;
-        });
-        
-        // تحديد النتائج إلى الحد الأقصى
-        $max_results = $ai_settings['suggestions_count'] ?? 8;
-        $results = array_slice($results, 0, $max_results);
-        
-        // تتبع البحث (إذا كان مفعلاً)
-        if (get_option('ps_analytics_settings', array())['track_search_analytics'] ?? true) {
-            practical_solutions_track_search($search_term, $search_type, count($results));
-        }
-        
-        wp_send_json_success($results);
-        
-    } catch (Exception $e) {
-        error_log('Search Error: ' . $e->getMessage());
-        wp_send_json_error(__('حدث خطأ في البحث', 'practical-solutions'));
+        wp_enqueue_style('ps-admin-styles', PS_THEME_URI . '/assets/admin/admin-styles.css', [], PS_THEME_VERSION);
+        wp_enqueue_script('ps-admin-scripts', PS_THEME_URI . '/assets/admin/admin-scripts.js', ['jquery'], PS_THEME_VERSION, true);
     }
 }
-add_action('wp_ajax_ps_search_enhanced', 'practical_solutions_ajax_search');
-add_action('wp_ajax_nopriv_ps_search_enhanced', 'practical_solutions_ajax_search');
+add_action('admin_enqueue_scripts', 'ps_enqueue_admin_assets');
 
-/**
- * ==== النتائج المحلية المحسنة ====
- */
-function practical_solutions_get_local_search_results($search_term) {
-    global $wpdb;
-    
-    $posts = $wpdb->get_results($wpdb->prepare("
-        SELECT post_title, post_excerpt, ID, post_date
-        FROM {$wpdb->posts} 
-        WHERE post_status = 'publish' 
-        AND post_type = 'post'
-        AND (post_title LIKE %s OR post_content LIKE %s OR post_excerpt LIKE %s)
-        ORDER BY 
-            CASE 
-                WHEN post_title LIKE %s THEN 1
-                WHEN post_title LIKE %s THEN 2
-                WHEN post_excerpt LIKE %s THEN 3
-                ELSE 4
-            END,
-            post_date DESC
-        LIMIT 6
-    ", 
-        '%' . $search_term . '%',
-        '%' . $search_term . '%',
-        '%' . $search_term . '%',
-        $search_term . '%',
-        '%' . $search_term . '%',
-        '%' . $search_term . '%'
-    ));
-    
-    $results = array();
-    foreach ($posts as $post) {
-        $relevance = practical_solutions_calculate_relevance($post->post_title, $search_term);
-        
-        $results[] = array(
-            'title' => $post->post_title,
-            'excerpt' => wp_trim_words($post->post_excerpt ?: $post->post_title, 15),
-            'url' => get_permalink($post->ID),
-            'thumbnail' => get_the_post_thumbnail_url($post->ID, 'ps-thumbnail'),
-            'type' => 'post',
-            'source' => 'local_search',
-            'relevance' => $relevance,
-            'date' => $post->post_date
-        );
-    }
-    
-    return $results;
-}
 
-/**
- * ==== حساب مدى الصلة المحسن ====
- */
-function practical_solutions_calculate_relevance($title, $query) {
-    $title_words = array_filter(explode(' ', strtolower($title)));
-    $query_words = array_filter(explode(' ', strtolower($query)));
-    
-    if (empty($title_words) || empty($query_words)) {
-        return 0;
-    }
-    
-    $common_words = array_intersect($title_words, $query_words);
-    $relevance = count($common_words) / max(count($query_words), 1);
-    
-    // زيادة النقاط إذا كان الاستعلام موجود في بداية العنوان
-    if (stripos($title, $query) === 0) {
-        $relevance += 0.3;
-    } elseif (stripos($title, $query) !== false) {
-        $relevance += 0.2;
-    }
-    
-    return min(round($relevance * 100), 100);
-}
+// =============================================================================
+// 5. تسجيل أنماط البلوك (Block Styles)
+// =============================================================================
+if (!function_exists('ps_register_block_styles')) {
+    function ps_register_block_styles() {
+        $block_styles = [
+            'core/group' => [
+                ['name' => 'ps-card-style', 'label' => __('بطاقة', 'practical-solutions')]
+            ],
+            'core/button' => [
+                ['name' => 'ps-primary-button', 'label' => __('زر أساسي', 'practical-solutions')],
+                ['name' => 'ps-outline-button', 'label' => __('زر مخطط', 'practical-solutions')]
+            ],
+            'core/image' => [
+                ['name' => 'ps-rounded-image', 'label' => __('صورة مدورة', 'practical-solutions')]
+            ],
+            'core/heading' => [
+                ['name' => 'ps-section-title', 'label' => __('عنوان قسم', 'practical-solutions')]
+            ]
+        ];
 
-/**
- * ==== تتبع البحث المحسن ====
- */
-function practical_solutions_track_search($query, $type, $results_count) {
-    if (!class_exists('PS_Advanced_Analytics')) {
-        return;
-    }
-    
-    $analytics = new PS_Advanced_Analytics();
-    $search_data = array(
-        'search_query' => $query,
-        'search_type' => $type,
-        'results_count' => $results_count,
-        'user_id' => get_current_user_id() ?: null,
-        'session_id' => $_COOKIE['ps_session_id'] ?? wp_generate_uuid4(),
-        'search_success' => $results_count > 0,
-        'device_type' => wp_is_mobile() ? 'mobile' : 'desktop'
-    );
-    
-    $analytics->save_search_activity($search_data);
-}
-
-/**
- * ==== AJAX لإدارة المفضلة ====
- */
-function practical_solutions_ajax_bookmark() {
-    if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-        wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-    }
-    
-    $post_id = intval($_POST['post_id']);
-    $action = sanitize_text_field($_POST['bookmark_action']); // 'add' أو 'remove'
-    
-    if (!$post_id) {
-        wp_send_json_error(__('معرف المقال مطلوب', 'practical-solutions'));
-    }
-    
-    $user_bookmarks = get_user_meta(get_current_user_id(), 'ps_bookmarks', true) ?: array();
-    
-    if ($action === 'add') {
-        if (!in_array($post_id, $user_bookmarks)) {
-            $user_bookmarks[] = $post_id;
-            update_user_meta(get_current_user_id(), 'ps_bookmarks', $user_bookmarks);
-            
-            // تحديث عداد المفضلة للمقال
-            $bookmark_count = get_post_meta($post_id, '_ps_bookmark_count', true) ?: 0;
-            update_post_meta($post_id, '_ps_bookmark_count', $bookmark_count + 1);
-            
-            wp_send_json_success(array(
-                'message' => __('تم إضافة المقال للمفضلة', 'practical-solutions'),
-                'action' => 'added',
-                'count' => $bookmark_count + 1
-            ));
-        }
-    } elseif ($action === 'remove') {
-        $key = array_search($post_id, $user_bookmarks);
-        if ($key !== false) {
-            unset($user_bookmarks[$key]);
-            update_user_meta(get_current_user_id(), 'ps_bookmarks', array_values($user_bookmarks));
-            
-            // تحديث عداد المفضلة للمقال
-            $bookmark_count = get_post_meta($post_id, '_ps_bookmark_count', true) ?: 0;
-            update_post_meta($post_id, '_ps_bookmark_count', max(0, $bookmark_count - 1));
-            
-            wp_send_json_success(array(
-                'message' => __('تم إزالة المقال من المفضلة', 'practical-solutions'),
-                'action' => 'removed',
-                'count' => max(0, $bookmark_count - 1)
-            ));
-        }
-    }
-    
-    wp_send_json_error(__('إجراء غير صحيح', 'practical-solutions'));
-}
-add_action('wp_ajax_ps_bookmark_post', 'practical_solutions_ajax_bookmark');
-add_action('wp_ajax_nopriv_ps_bookmark_post', 'practical_solutions_ajax_bookmark');
-
-/**
- * ==== إضافة أنماط إضافية للمحرر ====
- */
-function practical_solutions_add_editor_styles() {
-    add_theme_support('editor-color-palette', array(
-        array(
-            'name'  => __('أساسي', 'practical-solutions'),
-            'slug'  => 'primary',
-            'color' => '#007cba',
-        ),
-        array(
-            'name'  => __('ثانوي', 'practical-solutions'),
-            'slug'  => 'secondary',
-            'color' => '#f0f4f8',
-        ),
-        array(
-            'name'  => __('نجاح', 'practical-solutions'),
-            'slug'  => 'success',
-            'color' => '#10b981',
-        ),
-        array(
-            'name'  => __('تحذير', 'practical-solutions'),
-            'slug'  => 'warning',
-            'color' => '#f59e0b',
-        ),
-        array(
-            'name'  => __('خطر', 'practical-solutions'),
-            'slug'  => 'danger',
-            'color' => '#e74c3c',
-        ),
-    ));
-    
-    add_theme_support('editor-font-sizes', array(
-        array(
-            'name' => __('صغير', 'practical-solutions'),
-            'size' => 14,
-            'slug' => 'small'
-        ),
-        array(
-            'name' => __('عادي', 'practical-solutions'),
-            'size' => 16,
-            'slug' => 'normal'
-        ),
-        array(
-            'name' => __('متوسط', 'practical-solutions'),
-            'size' => 20,
-            'slug' => 'medium'
-        ),
-        array(
-            'name' => __('كبير', 'practical-solutions'),
-            'size' => 24,
-            'slug' => 'large'
-        ),
-        array(
-            'name' => __('كبير جداً', 'practical-solutions'),
-            'size' => 32,
-            'slug' => 'extra-large'
-        ),
-    ));
-}
-add_action('after_setup_theme', 'practical_solutions_add_editor_styles');
-
-/**
- * ==== تحسينات الأداء ====
- */
-function practical_solutions_performance_optimizations() {
-    // إزالة أنماط WordPress غير المستخدمة
-    if (!is_admin()) {
-        wp_dequeue_style('wp-block-library-theme');
-        wp_dequeue_style('classic-theme-styles');
-        
-        // تأخير تحميل الخطوط
-        add_filter('style_loader_tag', function($html, $handle) {
-            if ($handle === 'ps-unified-styles') {
-                $html = str_replace('rel=\'stylesheet\'', 'rel=\'preload\' as=\'style\' onload=\'this.onload=null;this.rel="stylesheet"\'', $html);
-                $html .= '<noscript><link rel="stylesheet" href="' . PS_THEME_URI . '/assets/css/unified.css"></noscript>';
+        foreach ($block_styles as $block => $styles) {
+            foreach ($styles as $style) {
+                register_block_style($block, $style);
             }
-            return $html;
-        }, 10, 2);
-    }
-    
-    // ضغط وتنظيف HTML
-    if (!is_admin()) {
-        ob_start('practical_solutions_compress_html');
-    }
-}
-add_action('init', 'practical_solutions_performance_optimizations');
-
-/**
- * ==== ضغط HTML ====
- */
-function practical_solutions_compress_html($html) {
-    $html = preg_replace('/<!--(.|\s)*?-->/', '', $html);
-    $html = preg_replace('/\s+/', ' ', $html);
-    return trim($html);
-}
-
-/**
- * ==== إضافة Schema.org للمحتوى ====
- */
-function practical_solutions_add_schema() {
-    if (is_single()) {
-        $post = get_post();
-        $schema = array(
-            '@context' => 'https://schema.org',
-            '@type' => 'Article',
-            'headline' => get_the_title(),
-            'description' => get_the_excerpt() ?: wp_trim_words(get_the_content(), 25),
-            'author' => array(
-                '@type' => 'Person',
-                'name' => get_the_author()
-            ),
-            'publisher' => array(
-                '@type' => 'Organization',
-                'name' => get_bloginfo('name'),
-                'logo' => array(
-                    '@type' => 'ImageObject',
-                    'url' => get_site_icon_url()
-                )
-            ),
-            'datePublished' => get_the_date('c'),
-            'dateModified' => get_the_modified_date('c'),
-            'url' => get_permalink(),
-            'mainEntityOfPage' => get_permalink()
-        );
-        
-        if (has_post_thumbnail()) {
-            $schema['image'] = array(
-                '@type' => 'ImageObject',
-                'url' => get_the_post_thumbnail_url($post, 'full'),
-                'width' => 1200,
-                'height' => 800
-            );
-        }
-        
-        echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE) . '</script>';
-    }
-}
-add_action('wp_head', 'practical_solutions_add_schema');
-
-/**
- * ==== تحسينات الأمان ====
- */
-function practical_solutions_security_enhancements() {
-    // إزالة معلومات WordPress version
-    remove_action('wp_head', 'wp_generator');
-    
-    // تأمين wp-config.php
-    if (!defined('DISALLOW_FILE_EDIT')) {
-        define('DISALLOW_FILE_EDIT', true);
-    }
-    
-    // منع تصفح المجلدات
-    add_action('init', function() {
-        if (!file_exists(ABSPATH . '.htaccess')) {
-            $htaccess_content = "Options -Indexes\n";
-            $htaccess_content .= "RewriteEngine On\n";
-            $htaccess_content .= "RewriteCond %{REQUEST_FILENAME} !-f\n";
-            $htaccess_content .= "RewriteCond %{REQUEST_FILENAME} !-d\n";
-            $htaccess_content .= "RewriteRule . /index.php [L]\n";
-            
-            file_put_contents(ABSPATH . '.htaccess', $htaccess_content);
-        }
-    });
-}
-add_action('init', 'practical_solutions_security_enhancements');
-
-/**
- * ==== Widgets المخصصة ====
- */
-function practical_solutions_register_widgets() {
-    register_sidebar(array(
-        'name'          => __('الشريط الجانبي الرئيسي', 'practical-solutions'),
-        'id'            => 'primary-sidebar',
-        'description'   => __('الشريط الجانبي الذي يظهر في المقالات والصفحات', 'practical-solutions'),
-        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</aside>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-    
-    register_sidebar(array(
-        'name'          => __('تذييل القسم 1', 'practical-solutions'),
-        'id'            => 'footer-1',
-        'description'   => __('القسم الأول من تذييل الموقع', 'practical-solutions'),
-        'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="footer-widget-title">',
-        'after_title'   => '</h4>',
-    ));
-    
-    register_sidebar(array(
-        'name'          => __('تذييل القسم 2', 'practical-solutions'),
-        'id'            => 'footer-2',
-        'description'   => __('القسم الثاني من تذييل الموقع', 'practical-solutions'),
-        'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="footer-widget-title">',
-        'after_title'   => '</h4>',
-    ));
-    
-    register_sidebar(array(
-        'name'          => __('تذييل القسم 3', 'practical-solutions'),
-        'id'            => 'footer-3',
-        'description'   => __('القسم الثالث من تذييل الموقع', 'practical-solutions'),
-        'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="footer-widget-title">',
-        'after_title'   => '</h4>',
-    ));
-}
-add_action('widgets_init', 'practical_solutions_register_widgets');
-
-/**
- * ==== Shortcodes مخصصة ====
- */
-
-// Shortcode للبحث المحسن
-function practical_solutions_search_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'placeholder' => __('ابحث عن الحلول...', 'practical-solutions'),
-        'class' => 'ps-search-form',
-        'voice' => 'true'
-    ), $atts);
-    
-    $voice_button = '';
-    if ($atts['voice'] === 'true' && (get_option('ps_general_settings', array())['voice_search'] ?? true)) {
-        $voice_button = '<button type="button" class="ps-voice-search-btn" aria-label="' . __('بحث صوتي', 'practical-solutions') . '">🎤</button>';
-    }
-    
-    return sprintf(
-        '<form class="%s" role="search" method="get" action="%s">
-            <div class="ps-search-container">
-                <input type="search" class="ps-search-input" name="s" placeholder="%s" value="%s" autocomplete="off">
-                %s
-                <div class="ps-search-suggestions"></div>
-            </div>
-        </form>',
-        esc_attr($atts['class']),
-        esc_url(home_url('/')),
-        esc_attr($atts['placeholder']),
-        esc_attr(get_search_query()),
-        $voice_button
-    );
-}
-add_shortcode('ps_search', 'practical_solutions_search_shortcode');
-
-// Shortcode لعرض المقالات الشائعة
-function practical_solutions_popular_posts_shortcode($atts) {
-    $atts = shortcode_atts(array(
-        'count' => 5,
-        'show_thumbnail' => 'true',
-        'show_date' => 'true',
-        'show_excerpt' => 'false'
-    ), $atts);
-    
-    $posts = get_posts(array(
-        'numberposts' => intval($atts['count']),
-        'meta_key' => 'post_views_count',
-        'orderby' => 'meta_value_num',
-        'order' => 'DESC',
-        'post_status' => 'publish'
-    ));
-    
-    if (empty($posts)) {
-        return '<p>' . __('لا توجد مقالات شائعة حالياً', 'practical-solutions') . '</p>';
-    }
-    
-    $output = '<div class="ps-popular-posts">';
-    
-    foreach ($posts as $post) {
-        setup_postdata($post);
-        
-        $output .= '<article class="ps-popular-post-item">';
-        
-        if ($atts['show_thumbnail'] === 'true' && has_post_thumbnail($post->ID)) {
-            $output .= '<div class="ps-post-thumbnail">';
-            $output .= '<a href="' . get_permalink($post->ID) . '">';
-            $output .= get_the_post_thumbnail($post->ID, 'ps-thumbnail');
-            $output .= '</a>';
-            $output .= '</div>';
-        }
-        
-        $output .= '<div class="ps-post-content">';
-        $output .= '<h3 class="ps-post-title"><a href="' . get_permalink($post->ID) . '">' . get_the_title($post->ID) . '</a></h3>';
-        
-        if ($atts['show_date'] === 'true') {
-            $output .= '<time class="ps-post-date">' . get_the_date('', $post->ID) . '</time>';
-        }
-        
-        if ($atts['show_excerpt'] === 'true') {
-            $output .= '<div class="ps-post-excerpt">' . wp_trim_words(get_the_excerpt($post->ID), 15) . '</div>';
-        }
-        
-        $output .= '</div>';
-        $output .= '</article>';
-    }
-    
-    $output .= '</div>';
-    
-    wp_reset_postdata();
-    
-    return $output;
-}
-add_shortcode('ps_popular_posts', 'practical_solutions_popular_posts_shortcode');
-
-/**
- * ==== تسجيل Service Worker ====
- */
-function practical_solutions_register_service_worker() {
-    echo '<script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function() {
-                navigator.serviceWorker.register("' . PS_THEME_URI . '/sw.js")
-                    .then(function(registration) {
-                        console.log("Service Worker registered successfully");
-                    })
-                    .catch(function(error) {
-                        console.log("Service Worker registration failed:", error);
-                    });
-            });
-        }
-    </script>';
-}
-add_action('wp_footer', 'practical_solutions_register_service_worker');
-
-/**
- * ==== إضافة البيانات الوصفية للـ PWA ====
- */
-function practical_solutions_add_pwa_meta() {
-    echo '<link rel="manifest" href="' . PS_THEME_URI . '/manifest.json">';
-    echo '<meta name="theme-color" content="#007cba">';
-    echo '<meta name="apple-mobile-web-app-capable" content="yes">';
-    echo '<meta name="apple-mobile-web-app-status-bar-style" content="default">';
-    echo '<meta name="apple-mobile-web-app-title" content="' . get_bloginfo('name') . '">';
-    
-    if (function_exists('get_site_icon_url') && get_site_icon_url()) {
-        echo '<link rel="apple-touch-icon" href="' . get_site_icon_url(180) . '">';
-    }
-}
-add_action('wp_head', 'practical_solutions_add_pwa_meta');
-
-/**
- * ==== تشغيل تحليلات الأداء إذا كان مفعلاً ====
- */
-if (get_option('ps_analytics_settings', array())['enabled'] ?? true) {
-    // تسجيل زيارة الصفحة
-    function practical_solutions_track_page_view() {
-        if (!is_admin() && !wp_doing_ajax()) {
-            $post_id = get_the_ID();
-            if ($post_id) {
-                $views = get_post_meta($post_id, 'post_views_count', true) ?: 0;
-                update_post_meta($post_id, 'post_views_count', $views + 1);
-            }
-        }
-    }
-    add_action('wp_head', 'practical_solutions_track_page_view');
-}
-
-/**
- * ==== منع تحميل ملفات غير ضرورية على صفحات معينة ====
- */
-function practical_solutions_conditional_assets() {
-    // عدم تحميل البحث الصوتي في صفحة الإدارة
-    if (is_admin()) {
-        wp_dequeue_script('ps-enhanced-voice');
-    }
-    
-    // عدم تحميل ميزات تفاعلية في صفحات أرشيف بسيطة
-    if (is_archive() && !is_category() && !is_tag()) {
-        wp_dequeue_script('ps-interactive-features');
-    }
-}
-add_action('wp_enqueue_scripts', 'practical_solutions_conditional_assets', 20);
-
-// تأكد من تحميل الميزات الجديدة عند التفعيل
-register_activation_hook(__FILE__, function() {
-    // إنشاء جداول التحليلات إذا لم تكن موجودة
-    if (class_exists('PS_Advanced_Analytics')) {
-        $analytics = new PS_Advanced_Analytics();
-        $analytics->create_analytics_tables();
-    }
-    
-    // إعداد الإعدادات الافتراضية
-    if (!get_option('ps_general_settings')) {
-        update_option('ps_general_settings', array(
-            'voice_search' => true,
-            'bookmarks' => true,
-            'reading_progress' => true,
-            'rating_system' => true,
-            'auto_dark_mode' => false
-        ));
-    }
-    
-    if (!get_option('ps_ai_settings')) {
-        update_option('ps_ai_settings', array(
-            'enabled' => false,
-            'search_suggestions' => true,
-            'suggestions_count' => 8,
-            'cache_duration' => 3600
-        ));
-    }
-    
-    if (!get_option('ps_analytics_settings')) {
-        update_option('ps_analytics_settings', array(
-            'enabled' => true,
-            'track_user_activity' => true,
-            'track_search_analytics' => true,
-            'track_content_performance' => true,
-            'anonymize_ip' => true,
-            'data_retention_days' => 365
-        ));
-    }
-    
-    // تطبيق قواعد إعادة الكتابة
-    flush_rewrite_rules();
-});
-
-/**
- * ==== إضافة دعم للتخزين المؤقت المتقدم ====
- */
-if (!function_exists('practical_solutions_cache_helper')) {
-    function practical_solutions_cache_helper($key, $callback, $expiration = 3600) {
-        $cached_value = get_transient($key);
-        
-        if ($cached_value !== false) {
-            return $cached_value;
-        }
-        
-        $value = call_user_func($callback);
-        set_transient($key, $value, $expiration);
-        
-        return $value;
-    }
-}
-
-// إضافة مساعد للـ debugging
-if (defined('WP_DEBUG') && WP_DEBUG) {
-    function practical_solutions_debug_log($message, $data = null) {
-        if ($data) {
-            error_log('PS Theme Debug: ' . $message . ' - ' . print_r($data, true));
-        } else {
-            error_log('PS Theme Debug: ' . $message);
         }
     }
 }
+add_action('init', 'ps_register_block_styles');
 
-/**
- * ==== تنظيف عند إلغاء التفعيل ====
- */
-register_deactivation_hook(__FILE__, function() {
-    // إزالة الجدولة
-    wp_clear_scheduled_hook('ps_cleanup_analytics');
-    
-    // تنظيف التخزين المؤقت
-    global $wpdb;
-    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_ps_%' OR option_name LIKE '_transient_timeout_ps_%'");
-});
 
-📁 اسم الملف: assets/js/unified.js
-/**
- * Unified JavaScript - الملف الأساسي للوظائف
- * 
- * @package Practical_Solutions_Pro
- * @version 2.1.0
- */
+// =============================================================================
+// 6. ميزات إضافية وتحسينات
+// =============================================================================
 
-(function($) {
-    'use strict';
-    
-    // ========================================
-    // 🚀 CORE THEME FUNCTIONALITY
-    // ========================================
-    
-    class PracticalSolutionsCore {
-        constructor() {
-            this.settings = this.loadSettings();
-            this.init();
-            this.bindEvents();
-        }
-        
-        /**
-         * ==== تهيئة النظام ====
-         */
-        init() {
-            this.initializeComponents();
-            this.setupAccessibility();
-            this.optimizePerformance();
-            this.handleCompatibility();
-            
-            console.log('🚀 Practical Solutions Pro - System Initialized');
-        }
-        
-        /**
-         * ==== تهيئة المكونات الأساسية ====
-         */
-        initializeComponents() {
-            // تهيئة البحث المحسن
-            this.initEnhancedSearch();
-            
-            // تهيئة التنقل المحسن
-            this.initEnhancedNavigation();
-            
-            // تهيئة النماذج المحسنة
-            this.initEnhancedForms();
-            
-            // تهيئة المحتوى التفاعلي
-            this.initInteractiveContent();
-            
-            // تهيئة التحسينات البصرية
-            this.initVisualEnhancements();
-            
-            // تهيئة الأداء المحسن
-            this.initPerformanceOptimizations();
-        }
-        
-        /**
-         * ==== تهيئة البحث المحسن ====
-         */
-        initEnhancedSearch() {
-            const searchForms = document.querySelectorAll('.wp-block-search, .ps-search-form');
-            
-            searchForms.forEach(form => {
-                this.enhanceSearchForm(form);
-            });
-            
-            // البحث المباشر أثناء الكتابة
-            this.initLiveSearch();
-            
-            // حفظ تاريخ البحث
-            this.initSearchHistory();
-            
-            // اقتراحات البحث
-            this.initSearchSuggestions();
-        }
-        
-        /**
-         * ==== تحسين نموذج البحث ====
-         */
-        enhanceSearchForm(form) {
-            const input = form.querySelector('input[type="search"], .wp-block-search__input');
-            const button = form.querySelector('button, .wp-block-search__button');
-            
-            if (!input) return;
-            
-            // إضافة أيقونة البحث
-            this.addSearchIcon(input);
-            
-            // إضافة وظائف متقدمة
-            this.addSearchEnhancements(input, form);
-            
-            // تحسين إمكانية الوصول
-            this.improveSearchAccessibility(input, button);
-        }
-        
-        /**
-         * ==== إضافة أيقونة البحث ====
-         */
-        addSearchIcon(input) {
-            if (input.parentNode.querySelector('.ps-search-icon')) return;
-            
-            const icon = document.createElement('span');
-            icon.className = 'ps-search-icon';
-            icon.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            `;
-            
-            // إضافة الأنماط
-            const style = document.createElement('style');
-            style.textContent = `
-                .ps-search-icon {
-                    position: absolute;
-                    right: 12px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 20px;
-                    height: 20px;
-                    color: #6b7280;
-                    pointer-events: none;
-                    z-index: 1;
-                }
-                .ps-search-icon svg {
-                    width: 100%;
-                    height: 100%;
-                }
-                .ps-search-enhanced {
-                    position: relative;
-                }
-                .ps-search-enhanced input {
-                    padding-right: 45px !important;
-                }
-            `;
-            
-            if (!document.querySelector('#ps-search-styles')) {
-                style.id = 'ps-search-styles';
-                document.head.appendChild(style);
-            }
-            
-            // تطبيق التحسينات
-            input.parentNode.classList.add('ps-search-enhanced');
-            input.parentNode.appendChild(icon);
-        }
-        
-        /**
-         * ==== إضافة تحسينات البحث ====
-         */
-        addSearchEnhancements(input, form) {
-            let searchTimeout;
-            
-            // البحث أثناء الكتابة
-            input.addEventListener('input', (e) => {
-                clearTimeout(searchTimeout);
-                const query = e.target.value.trim();
-                
-                if (query.length >= 2) {
-                    searchTimeout = setTimeout(() => {
-                        this.performLiveSearch(query, input);
-                    }, 300);
-                } else {
-                    this.hideSuggestions(input);
-                }
-            });
-            
-            // اختصارات لوحة المفاتيح
-            input.addEventListener('keydown', (e) => {
-                this.handleSearchKeyboard(e, input);
-            });
-            
-            // إضافة placeholder ديناميكي
-            this.addDynamicPlaceholder(input);
-        }
-        
-        /**
-         * ==== تحسين إمكانية الوصول للبحث ====
-         */
-        improveSearchAccessibility(input, button) {
-            // تحسين ARIA labels
-            input.setAttribute('aria-label', 'البحث في الموقع');
-            input.setAttribute('aria-describedby', 'search-description');
-            
-            if (button) {
-                button.setAttribute('aria-label', 'تنفيذ البحث');
-            }
-            
-            // إضافة وصف مخفي
-            if (!document.querySelector('#search-description')) {
-                const description = document.createElement('div');
-                description.id = 'search-description';
-                description.className = 'sr-only';
-                description.textContent = 'ابحث عن المقالات والحلول في الموقع';
-                input.parentNode.appendChild(description);
-            }
-        }
-        
-        /**
-         * ==== البحث المباشر ====
-         */
-        performLiveSearch(query, input) {
-            // إنشاء قائمة الاقتراحات إذا لم تكن موجودة
-            let suggestions = input.parentNode.querySelector('.ps-search-suggestions');
-            if (!suggestions) {
-                suggestions = document.createElement('div');
-                suggestions.className = 'ps-search-suggestions';
-                input.parentNode.appendChild(suggestions);
-                
-                // إضافة الأنماط
-                this.addSuggestionsStyles();
-            }
-            
-            // البحث في المحتوى المحلي
-            const localResults = this.searchLocalContent(query);
-            
-            // عرض النتائج
-            this.displaySuggestions(localResults, suggestions, query);
-            
-            // البحث عبر AJAX إذا كان متوفراً
-            if (typeof ajaxurl !== 'undefined') {
-                this.performAjaxSearch(query, suggestions);
-            }
-        }
-        
-        /**
-         * ==== البحث في المحتوى المحلي ====
-         */
-        searchLocalContent(query) {
-            const results = [];
-            const searchableElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, .wp-block-heading');
-            
-            searchableElements.forEach(element => {
-                const text = element.textContent.toLowerCase();
-                const queryLower = query.toLowerCase();
-                
-                if (text.includes(queryLower)) {
-                    results.push({
-                        title: element.textContent,
-                        type: 'heading',
-                        element: element
-                    });
-                }
-            });
-            
-            return results.slice(0, 5); // أول 5 نتائج
-        }
-        
-        /**
-         * ==== البحث عبر AJAX ====
-         */
-        performAjaxSearch(query, suggestionsContainer) {
-            if (!window.psTheme || !window.psTheme.ajaxUrl) return;
-            
-            $.ajax({
-                url: window.psTheme.ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'ps_live_search',
-                    query: query,
-                    nonce: window.psTheme.nonce
-                },
-                success: (response) => {
-                    if (response.success && response.data) {
-                        this.displayAjaxResults(response.data, suggestionsContainer);
-                    }
-                },
-                error: (xhr, status, error) => {
-                    console.warn('فشل البحث المباشر:', error);
-                }
-            });
-        }
-        
-        /**
-         * ==== عرض الاقتراحات ====
-         */
-        displaySuggestions(results, container, query) {
-            if (results.length === 0) {
-                container.innerHTML = '<div class="ps-no-results">لا توجد نتائج</div>';
-                container.classList.add('active');
-                return;
-            }
-            
-            const html = results.map(result => `
-                <div class="ps-suggestion-item" data-type="${result.type}">
-                    <div class="ps-suggestion-icon">
-                        ${this.getSuggestionIcon(result.type)}
-                    </div>
-                    <div class="ps-suggestion-content">
-                        <div class="ps-suggestion-title">${this.highlightQuery(result.title, query)}</div>
-                        ${result.excerpt ? `<div class="ps-suggestion-excerpt">${result.excerpt}</div>` : ''}
-                    </div>
-                </div>
-            `).join('');
-            
-            container.innerHTML = html;
-            container.classList.add('active');
-            
-            // إضافة مستمعي الأحداث
-            this.bindSuggestionEvents(container);
-        }
-        
-        /**
-         * ==== إضافة أنماط الاقتراحات ====
-         */
-        addSuggestionsStyles() {
-            if (document.querySelector('#ps-suggestions-styles')) return;
-            
-            const style = document.createElement('style');
-            style.id = 'ps-suggestions-styles';
-            style.textContent = `
-                .ps-search-suggestions {
-                    position: absolute;
-                    top: 100%;
-                    left: 0;
-                    right: 0;
-                    background: white;
-                    border: 1px solid #e5e7eb;
-                    border-radius: 8px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-                    max-height: 300px;
-                    overflow-y: auto;
-                    z-index: 1000;
-                    opacity: 0;
-                    visibility: hidden;
-                    transform: translateY(-10px);
-                    transition: all 0.3s ease;
-                }
-                .ps-search-suggestions.active {
-                    opacity: 1;
-                    visibility: visible;
-                    transform: translateY(0);
-                }
-                .ps-suggestion-item {
-                    display: flex;
-                    align-items: flex-start;
-                    padding: 12px 16px;
-                    border-bottom: 1px solid #f3f4f6;
-                    cursor: pointer;
-                    transition: background-color 0.2s ease;
-                }
-                .ps-suggestion-item:hover {
-                    background-color: #f8f9fa;
-                }
-                .ps-suggestion-item:last-child {
-                    border-bottom: none;
-                }
-                .ps-suggestion-icon {
-                    margin-left: 12px;
-                    color: #6b7280;
-                    font-size: 16px;
-                    margin-top: 2px;
-                }
-                .ps-suggestion-content {
-                    flex: 1;
-                }
-                .ps-suggestion-title {
-                    font-weight: 500;
-                    color: #374151;
-                    margin-bottom: 4px;
-                }
-                .ps-suggestion-excerpt {
-                    font-size: 14px;
-                    color: #6b7280;
-                }
-                .ps-no-results {
-                    padding: 16px;
-                    text-align: center;
-                    color: #6b7280;
-                    font-style: italic;
-                }
-                .ps-highlight {
-                    background-color: #fef3c7;
-                    font-weight: 600;
-                    padding: 2px 4px;
-                    border-radius: 3px;
-                }
-            `;
-            
-            document.head.appendChild(style);
-        }
-        
-        /**
-         * ==== الحصول على أيقونة الاقتراح ====
-         */
-        getSuggestionIcon(type) {
-            const icons = {
-                'heading': '📄',
-                'post': '📝',
-                'page': '📋',
-                'category': '📁',
-                'tag': '🏷️',
-                'default': '🔍'
-            };
-            
-            return icons[type] || icons.default;
-        }
-        
-        /**
-         * ==== تمييز الاستعلام في النص ====
-         */
-        highlightQuery(text, query) {
-            if (!query) return text;
-            
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<span class="ps-highlight">$1</span>');
-        }
-        
-        /**
-         * ==== إخفاء الاقتراحات ====
-         */
-        hideSuggestions(input) {
-            const suggestions = input.parentNode.querySelector('.ps-search-suggestions');
-            if (suggestions) {
-                suggestions.classList.remove('active');
-            }
-        }
-        
-        /**
-         * ==== إضافة placeholder ديناميكي ====
-         */
-        addDynamicPlaceholder(input) {
-            const placeholders = [
-                'ابحث عن الحلول العملية...',
-                'جرب: نصائح منزلية',
-                'جرب: تطبيقات مفيدة',
-                'جرب: إدارة الوقت',
-                'جرب: نصائح تقنية'
-            ];
-            
-            let currentIndex = 0;
-            
-            const changePlaceholder = () => {
-                if (input.value === '') {
-                    input.placeholder = placeholders[currentIndex];
-                    currentIndex = (currentIndex + 1) % placeholders.length;
-                }
-            };
-            
-            // تغيير كل 3 ثوان
-            setInterval(changePlaceholder, 3000);
-        }
-        
-        /**
-         * ==== تهيئة التنقل المحسن ====
-         */
-        initEnhancedNavigation() {
-            // تحسين القوائم المنسدلة
-            this.enhanceDropdownMenus();
-            
-            // تحسين القائمة الجانبية للجوال
-            this.enhanceMobileMenu();
-            
-            // تحسين التنقل بلوحة المفاتيح
-            this.enhanceKeyboardNavigation();
-            
-            // تحسين مؤشر الصفحة الحالية
-            this.enhanceCurrentPageIndicator();
-        }
-        
-        /**
-         * ==== تحسين القوائم المنسدلة ====
-         */
-        enhanceDropdownMenus() {
-            const dropdowns = document.querySelectorAll('.wp-block-navigation .has-child, .ps-dropdown');
-            
-            dropdowns.forEach(dropdown => {
-                this.enhanceDropdown(dropdown);
-            });
-        }
-        
-        /**
-         * ==== تحسين قائمة منسدلة واحدة ====
-         */
-        enhanceDropdown(dropdown) {
-            const trigger = dropdown.querySelector('a, button');
-            const menu = dropdown.querySelector('.wp-block-navigation__submenu, .ps-dropdown-menu');
-            
-            if (!trigger || !menu) return;
-            
-            // إضافة أيقونة السهم
-            this.addDropdownArrow(trigger);
-            
-            // إضافة أحداث التفاعل
-            this.bindDropdownEvents(dropdown, trigger, menu);
-            
-            // تحسين إمكانية الوصول
-            this.improveDropdownAccessibility(trigger, menu);
-        }
-        
-        /**
-         * ==== إضافة سهم القائمة المنسدلة ====
-         */
-        addDropdownArrow(trigger) {
-            if (trigger.querySelector('.ps-dropdown-arrow')) return;
-            
-            const arrow = document.createElement('span');
-            arrow.className = 'ps-dropdown-arrow';
-            arrow.innerHTML = '▼';
-            arrow.style.cssText = `
-                margin-left: 8px;
-                font-size: 12px;
-                transition: transform 0.3s ease;
-                display: inline-block;
-            `;
-            
-            trigger.appendChild(arrow);
-        }
-        
-        /**
-         * ==== تهيئة النماذج المحسنة ====
-         */
-        initEnhancedForms() {
-            // تحسين حقول الإدخال
-            this.enhanceInputFields();
-            
-            // تحسين أزرار الإرسال
-            this.enhanceSubmitButtons();
-            
-            // إضافة التحقق المحسن
-            this.initFormValidation();
-            
-            // تحسين تجربة المستخدم
-            this.enhanceFormUX();
-        }
-        
-        /**
-         * ==== تحسين حقول الإدخال ====
-         */
-        enhanceInputFields() {
-            const inputs = document.querySelectorAll('input, textarea, select');
-            
-            inputs.forEach(input => {
-                this.enhanceInput(input);
-            });
-        }
-        
-        /**
-         * ==== تحسين حقل إدخال واحد ====
-         */
-        enhanceInput(input) {
-            // إضافة تأثيرات التركيز
-            this.addFocusEffects(input);
-            
-            // إضافة عداد الأحرف للـ textarea
-            if (input.type === 'textarea' && input.hasAttribute('maxlength')) {
-                this.addCharacterCounter(input);
-            }
-            
-            // تحسين حقول كلمة المرور
-            if (input.type === 'password') {
-                this.enhancePasswordField(input);
-            }
-            
-            // تحسين حقول البريد الإلكتروني
-            if (input.type === 'email') {
-                this.enhanceEmailField(input);
-            }
-        }
-        
-        /**
-         * ==== تهيئة المحتوى التفاعلي ====
-         */
-        initInteractiveContent() {
-            // تحسين الصور
-            this.enhanceImages();
-            
-            // تحسين الفيديوهات
-            this.enhanceVideos();
-            
-            // تحسين الجداول
-            this.enhanceTables();
-            
-            // تحسين الأكورديون
-            this.enhanceAccordions();
-            
-            // تحسين التبويبات
-            this.enhanceTabs();
-        }
-        
-        /**
-         * ==== تحسين الصور ====
-         */
-        enhanceImages() {
-            const images = document.querySelectorAll('img');
-            
-            images.forEach(img => {
-                // إضافة lazy loading
-                this.addLazyLoading(img);
-                
-                // إضافة تأثيرات hover
-                this.addImageHoverEffects(img);
-                
-                // تحسين إمكانية الوصول
-                this.improveImageAccessibility(img);
-            });
-        }
-        
-        /**
-         * ==== إضافة lazy loading للصور ====
-         */
-        addLazyLoading(img) {
-            if (img.loading === 'lazy') return;
-            
-            // تطبيق Intersection Observer للمتصفحات القديمة
-            if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const img = entry.target;
-                            img.src = img.dataset.src || img.src;
-                            img.classList.remove('ps-lazy');
-                            observer.unobserve(img);
-                        }
-                    });
-                });
-                
-                img.classList.add('ps-lazy');
-                imageObserver.observe(img);
-            } else {
-                // fallback للمتصفحات القديمة
-                img.loading = 'lazy';
-            }
-        }
-        
-        /**
-         * ==== تهيئة التحسينات البصرية ====
-         */
-        initVisualEnhancements() {
-            // تحسين الحركات
-            this.initAnimations();
-            
-            // تحسين الانتقالات
-            this.initTransitions();
-            
-            // تحسين التأثيرات البصرية
-            this.initVisualEffects();
-            
-            // تحسين المؤشرات
-            this.initCursors();
-        }
-        
-        /**
-         * ==== تهيئة الحركات ====
-         */
-        initAnimations() {
-            // Animation on scroll
-            if ('IntersectionObserver' in window) {
-                const animateObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('ps-animate');
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-                
-                // العناصر القابلة للحركة
-                const animatableElements = document.querySelectorAll(
-                    '.wp-block-group, .wp-block-columns, .wp-block-media-text, .ps-animate-on-scroll'
-                );
-                
-                animatableElements.forEach(el => {
-                    el.classList.add('ps-animation-ready');
-                    animateObserver.observe(el);
-                });
-                
-                // إضافة أنماط الحركة
-                this.addAnimationStyles();
-            }
-        }
-        
-        /**
-         * ==== إضافة أنماط الحركة ====
-         */
-        addAnimationStyles() {
-            if (document.querySelector('#ps-animation-styles')) return;
-            
-            const style = document.createElement('style');
-            style.id = 'ps-animation-styles';
-            style.textContent = `
-                .ps-animation-ready {
-                    opacity: 0;
-                    transform: translateY(30px);
-                    transition: opacity 0.6s ease, transform 0.6s ease;
-                }
-                .ps-animation-ready.ps-animate {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-                .ps-animation-ready:nth-child(2) { transition-delay: 0.1s; }
-                .ps-animation-ready:nth-child(3) { transition-delay: 0.2s; }
-                .ps-animation-ready:nth-child(4) { transition-delay: 0.3s; }
-                
-                @media (prefers-reduced-motion: reduce) {
-                    .ps-animation-ready {
-                        opacity: 1;
-                        transform: none;
-                        transition: none;
-                    }
-                }
-            `;
-            
-            document.head.appendChild(style);
-        }
-        
-        /**
-         * ==== تهيئة تحسينات الأداء ====
-         */
-        initPerformanceOptimizations() {
-            // تحسين الخطوط
-            this.optimizeFonts();
-            
-            // تحسين الصور
-            this.optimizeImages();
-            
-            // تحسين التحميل
-            this.optimizeLoading();
-            
-            // تحسين الذاكرة
-            this.optimizeMemory();
-        }
-        
-        /**
-         * ==== تحسين الخطوط ====
-         */
-        optimizeFonts() {
-            // preload الخطوط المهمة
-            const criticalFonts = [
-                'https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap'
-            ];
-            
-            criticalFonts.forEach(fontUrl => {
-                const link = document.createElement('link');
-                link.rel = 'preload';
-                link.as = 'style';
-                link.href = fontUrl;
-                document.head.appendChild(link);
-                
-                // تحميل فعلي
-                const styleLink = document.createElement('link');
-                styleLink.rel = 'stylesheet';
-                styleLink.href = fontUrl;
-                styleLink.media = 'print';
-                styleLink.onload = function() { this.media = 'all'; };
-                document.head.appendChild(styleLink);
-            });
-        }
-        
-        /**
-         * ==== ربط الأحداث ====
-         */
-        bindEvents() {
-            // أحداث النافذة
-            this.bindWindowEvents();
-            
-            // أحداث المستند
-            this.bindDocumentEvents();
-            
-            // أحداث مخصصة
-            this.bindCustomEvents();
-        }
-        
-        /**
-         * ==== ربط أحداث النافذة ====
-         */
-        bindWindowEvents() {
-            // تحسين الاستجابة
-            window.addEventListener('resize', this.debounce(() => {
-                this.handleResize();
-            }, 250));
-            
-            // تحسين التمرير
-            window.addEventListener('scroll', this.throttle(() => {
-                this.handleScroll();
-            }, 16));
-            
-            // تحسين التحميل
-            window.addEventListener('load', () => {
-                this.handlePageLoad();
-            });
-        }
-        
-        /**
-         * ==== ربط أحداث المستند ====
-         */
-        bindDocumentEvents() {
-            // النقر خارج العناصر
-            document.addEventListener('click', (e) => {
-                this.handleOutsideClick(e);
-            });
-            
-            // اختصارات لوحة المفاتيح
-            document.addEventListener('keydown', (e) => {
-                this.handleKeyboardShortcuts(e);
-            });
-            
-            // تغيير الحالة النشطة
-            document.addEventListener('visibilitychange', () => {
-                this.handleVisibilityChange();
-            });
-        }
-        
-        /**
-         * ==== التعامل مع تغيير حجم النافذة ====
-         */
-        handleResize() {
-            // إعادة حساب التخطيط
-            this.recalculateLayout();
-            
-            // تحديث القوائم المنسدلة
-            this.updateDropdownPositions();
-            
-            // تحديث العناصر المرنة
-            this.updateResponsiveElements();
-        }
-        
-        /**
-         * ==== التعامل مع التمرير ====
-         */
-        handleScroll() {
-            // إخفاء/إظهار شريط التنقل
-            this.handleNavigationScroll();
-            
-            // تحديث مؤشر التقدم
-            this.updateProgressIndicator();
-            
-            // تفعيل العناصر المرئية
-            this.activateVisibleElements();
-        }
-        
-        /**
-         * ==== التعامل مع تحميل الصفحة ====
-         */
-        handlePageLoad() {
-            // تحسين الصور
-            this.optimizeLoadedImages();
-            
-            // تفعيل المكونات المؤجلة
-            this.activateDeferredComponents();
-            
-            // تحديث الأداء
-            this.updatePerformanceMetrics();
-        }
-        
-        /**
-         * ==== وظائف مساعدة ====
-         */
-        
-        /**
-         * ==== Debounce function ====
-         */
-        debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-        
-        /**
-         * ==== Throttle function ====
-         */
-        throttle(func, limit) {
-            let inThrottle;
-            return function(...args) {
-                if (!inThrottle) {
-                    func.apply(this, args);
-                    inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
-                }
-            };
-        }
-        
-        /**
-         * ==== تحميل الإعدادات ====
-         */
-        loadSettings() {
-            try {
-                const saved = localStorage.getItem('ps_theme_settings');
-                return saved ? JSON.parse(saved) : this.getDefaultSettings();
-            } catch (error) {
-                console.warn('فشل في تحميل الإعدادات:', error);
-                return this.getDefaultSettings();
-            }
-        }
-        
-        /**
-         * ==== الإعدادات الافتراضية ====
-         */
-        getDefaultSettings() {
-            return {
-                animations: true,
-                lazyLoading: true,
-                enhancedSearch: true,
-                keyboardShortcuts: true,
-                accessibility: true,
-                performance: true
-            };
-        }
-        
-        /**
-         * ==== حفظ الإعدادات ====
-         */
-        saveSettings() {
-            try {
-                localStorage.setItem('ps_theme_settings', JSON.stringify(this.settings));
-            } catch (error) {
-                console.warn('فشل في حفظ الإعدادات:', error);
-            }
-        }
-        
-        /**
-         * ==== إعداد إمكانية الوصول ====
-         */
-        setupAccessibility() {
-            // تحسين التنقل بلوحة المفاتيح
-            this.enhanceKeyboardAccessibility();
-            
-            // تحسين قارئات الشاشة
-            this.enhanceScreenReaderSupport();
-            
-            // تحسين التباين
-            this.enhanceColorContrast();
-            
-            // تحسين التركيز
-            this.enhanceFocusManagement();
-        }
-        
-        /**
-         * ==== تحسين إمكانية الوصول للوحة المفاتيح ====
-         */
-        enhanceKeyboardAccessibility() {
-            // إضافة skip links
-            this.addSkipLinks();
-            
-            // تحسين التنقل بـ Tab
-            this.enhanceTabNavigation();
-            
-            // إضافة اختصارات مفيدة
-            this.addKeyboardShortcuts();
-        }
-        
-        /**
-         * ==== إضافة روابط التخطي ====
-         */
-        addSkipLinks() {
-            if (document.querySelector('.ps-skip-links')) return;
-            
-            const skipLinks = document.createElement('div');
-            skipLinks.className = 'ps-skip-links';
-            skipLinks.innerHTML = `
-                <a href="#main" class="ps-skip-link">تخطي إلى المحتوى الرئيسي</a>
-                <a href="#navigation" class="ps-skip-link">تخطي إلى التنقل</a>
-                <a href="#footer" class="ps-skip-link">تخطي إلى التذييل</a>
-            `;
-            
-            // إضافة الأنماط
-            const style = document.createElement('style');
-            style.textContent = `
-                .ps-skip-links {
-                    position: absolute;
-                    top: -1000px;
-                    left: 6px;
-                    z-index: 999999;
-                }
-                .ps-skip-link {
-                    position: absolute;
-                    top: 1000px;
-                    background: #000;
-                    color: #fff;
-                    padding: 8px 16px;
-                    text-decoration: none;
-                    border-radius: 4px;
-                    font-weight: 600;
-                }
-                .ps-skip-link:focus {
-                    top: 6px;
-                }
-            `;
-            
-            document.head.appendChild(style);
-            document.body.insertBefore(skipLinks, document.body.firstChild);
-        }
-        
-        /**
-         * ==== تحسين الأداء ====
-         */
-        optimizePerformance() {
-            // تقليل عدد العمليات DOM
-            this.batchDOMOperations();
-            
-            // استخدام requestAnimationFrame للحركات
-            this.optimizeAnimations();
-            
-            // تحسين event listeners
-            this.optimizeEventListeners();
-            
-            // تنظيف الذاكرة
-            this.setupMemoryCleanup();
-        }
-        
-        /**
-         * ==== التعامل مع التوافق ====
-         */
-        handleCompatibility() {
-            // دعم المتصفحات القديمة
-            this.addPolyfills();
-            
-            // إصلاح مشاكل IE
-            this.fixIEIssues();
-            
-            // تحسين Safari
-            this.enhanceSafariSupport();
-            
-            // تحسين Firefox
-            this.enhanceFirefoxSupport();
-        }
-        
-        /**
-         * ==== إضافة Polyfills ====
-         */
-        addPolyfills() {
-            // IntersectionObserver polyfill
-            if (!('IntersectionObserver' in window)) {
-                this.loadPolyfill('https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver');
-            }
-            
-            // Array.from polyfill
-            if (!Array.from) {
-                Array.from = function(arrayLike) {
-                    return Array.prototype.slice.call(arrayLike);
-                };
-            }
-            
-            // Object.assign polyfill
-            if (!Object.assign) {
-                Object.assign = function(target, ...sources) {
-                    sources.forEach(source => {
-                        Object.keys(source).forEach(key => {
-                            target[key] = source[key];
-                        });
-                    });
-                    return target;
-                };
-            }
-        }
-        
-        /**
-         * ==== تحميل polyfill ====
-         */
-        loadPolyfill(url) {
-            const script = document.createElement('script');
-            script.src = url;
-            script.async = true;
-            document.head.appendChild(script);
-        }
-        
-        /**
-         * ==== تنظيف الموارد ====
-         */
-        cleanup() {
-            // إزالة event listeners
-            this.removeEventListeners();
-            
-            // تنظيف الذاكرة
-            this.clearMemory();
-            
-            // حفظ الإعدادات
-            this.saveSettings();
-        }
+// إضافة دعم PWA
+if (!function_exists('ps_add_pwa_meta')) {
+    function ps_add_pwa_meta() {
+        echo '<link rel="manifest" href="' . esc_url(PS_THEME_URI . '/manifest.json') . '">';
+        echo '<meta name="theme-color" content="#007cba">';
     }
-    
-    // ========================================
-    // 🎯 INITIALIZATION & UTILITIES
-    // ========================================
-    
-    /**
-     * ==== تهيئة النظام عند تحميل DOM ====
-     */
-    function initializePracticalSolutions() {
-        // التحقق من تحميل jQuery
-        if (typeof $ === 'undefined') {
-            console.warn('jQuery غير متوفر، سيتم التحميل بـ vanilla JS');
-        }
-        
-        // تهيئة النظام الأساسي
-        window.psCore = new PracticalSolutionsCore();
-        
-        // تفعيل الميزات الإضافية
-        initializeEnhancements();
-        
-        // تسجيل النظام
-        console.log('✅ Practical Solutions Pro - Ready!');
-    }
-    
-    /**
-     * ==== تهيئة التحسينات الإضافية ====
-     */
-    function initializeEnhancements() {
-        // تحسين الأمان
-        enhanceSecurity();
-        
-        // تحسين SEO
-        enhanceSEO();
-        
-        // تحسين PWA
-        enhancePWA();
-        
-        // تحسين Analytics
-        enhanceAnalytics();
-    }
-    
-    /**
-     * ==== تحسين الأمان ====
-     */
-    function enhanceSecurity() {
-        // منع النسخ إذا كان مطلوباً
-        if (window.psTheme && window.psTheme.disableCopy) {
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('selectstart', e => e.preventDefault());
-        }
-        
-        // حماية من XSS
-        if (window.psTheme && window.psTheme.xssProtection) {
-            sanitizeUserInputs();
-        }
-    }
-    
-    /**
-     * ==== تحسين SEO ====
-     */
-    function enhanceSEO() {
-        // إضافة structured data
-        addStructuredData();
-        
-        // تحسين meta tags
-        optimizeMetaTags();
-        
-        // تحسين internal linking
-        enhanceInternalLinking();
-    }
-    
-    /**
-     * ==== تحسين PWA ====
-     */
-    function enhancePWA() {
-        // تسجيل Service Worker
-        if ('serviceWorker' in navigator && window.psTheme && window.psTheme.enablePWA) {
-            registerServiceWorker();
-        }
-        
-        // إضافة prompt للتثبيت
-        setupInstallPrompt();
-    }
-    
-    /**
-     * ==== تسجيل Service Worker ====
-     */
-    function registerServiceWorker() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('Service Worker مسجل بنجاح:', registration);
-            })
-            .catch(error => {
-                console.log('فشل تسجيل Service Worker:', error);
-            });
-    }
-    
-    /**
-     * ==== إعداد prompt التثبيت ====
-     */
-    function setupInstallPrompt() {
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // إظهار زر التثبيت
-            showInstallButton(deferredPrompt);
-        });
-    }
-    
-    /**
-     * ==== إظهار زر التثبيت ====
-     */
-    function showInstallButton(deferredPrompt) {
-        const installButton = document.createElement('button');
-        installButton.className = 'ps-install-button';
-        installButton.innerHTML = '📱 تثبيت التطبيق';
-        installButton.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #007cba;
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        `;
-        
-        installButton.addEventListener('click', async () => {
-            deferredPrompt.prompt();
-            const result = await deferredPrompt.userChoice;
-            
-            if (result.outcome === 'accepted') {
-                console.log('تم قبول التثبيت');
-            }
-            
-            installButton.remove();
-            deferredPrompt = null;
-        });
-        
-        document.body.appendChild(installButton);
-        
-        // إخفاء بعد 10 ثوان
-        setTimeout(() => {
-            if (installButton.parentNode) {
-                installButton.remove();
-            }
-        }, 10000);
-    }
-    
-    // ========================================
-    // 🚀 START THE ENGINE
-    // ========================================
-    
-    // تهيئة عند تحميل DOM
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializePracticalSolutions);
-    } else {
-        initializePracticalSolutions();
-    }
-    
-    // تنظيف عند إغلاق الصفحة
-    window.addEventListener('beforeunload', () => {
-        if (window.psCore) {
-            window.psCore.cleanup();
-        }
-    });
-    
-    // تصدير للاستخدام الخارجي
-    window.PracticalSolutions = {
-        Core: PracticalSolutionsCore,
-        init: initializePracticalSolutions,
-        version: '2.1.0'
-    };
+}
+add_action('wp_head', 'ps_add_pwa_meta');
 
-})(window.jQuery || window.$ || function() {
-    // jQuery fallback
-    console.warn('jQuery غير متوفر - استخدام vanilla JavaScript');
-    return {
-        ready: function(callback) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', callback);
-            } else {
-                callback();
+// تتبع مشاهدات الصفحة
+if (!function_exists('ps_track_page_view')) {
+    function ps_track_page_view() {
+        if (is_singular('post') && !is_admin()) {
+            $settings = get_option('ps_analytics_settings', []);
+            if ($settings['enabled'] ?? true) {
+                if (class_exists('PS_Advanced_Analytics')) {
+                    PS_Advanced_Analytics::track_page_view(get_the_ID());
+                }
             }
         }
-    };
-}());
+    }
+}
+add_action('wp_head', 'ps_track_page_view');
+
+// إضافة كلاسات مخصصة للـ body
+if (!function_exists('ps_body_classes')) {
+    function ps_body_classes($classes) {
+        if (is_rtl()) {
+            $classes[] = 'ps-rtl';
+        }
+        if (wp_is_mobile()) {
+            $classes[] = 'ps-mobile';
+        }
+        return $classes;
+    }
+}
+add_filter('body_class', 'ps_body_classes');
+
+// تنظيف <head>
+if (!function_exists('ps_clean_head')) {
+    function ps_clean_head() {
+        remove_action('wp_head', 'rsd_link');
+        remove_action('wp_head', 'wlwmanifest_link');
+        remove_action('wp_head', 'wp_shortlink_wp_head');
+        remove_action('wp_head', 'adjacent_posts_rel_link_wp_head');
+    }
+}
+add_action('init', 'ps_clean_head');
+
 
 
 📁 اسم الملف: assets/css/unified.css
@@ -4133,77 +2499,81 @@ html[data-theme="dark"] .ps-breadcrumbs {
 📁 اسم الملف: inc/block-patterns.php
 <?php
 /**
- * Block Patterns Registration
- * تسجيل أنماط الكتل المخصصة
+ * Block Patterns Registration - Professional & Safe Version
+ * تسجيل أنماط الكتل المخصصة - نسخة احترافية وآمنة
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-/**
- * تسجيل فئات الأنماط
- */
-function practical_solutions_register_pattern_categories() {
-    register_block_pattern_category('practical-solutions', array(
-        'label' => __('الحلول العملية', 'practical-solutions'),
-        'description' => __('أنماط مخصصة لقالب الحلول العملية', 'practical-solutions')
-    ));
-    
-    register_block_pattern_category('ps-heroes', array(
-        'label' => __('أقسام البطل', 'practical-solutions'),
-        'description' => __('أقسام البطل والعناوين الرئيسية', 'practical-solutions')
-    ));
-    
-    register_block_pattern_category('ps-features', array(
-        'label' => __('عرض الميزات', 'practical-solutions'),
-        'description' => __('أقسام عرض الميزات والخدمات', 'practical-solutions')
-    ));
-    
-    register_block_pattern_category('ps-content', array(
-        'label' => __('أقسام المحتوى', 'practical-solutions'),
-        'description' => __('أقسام المحتوى والمقالات', 'practical-solutions')
-    ));
-    
-    register_block_pattern_category('ps-cta', array(
-        'label' => __('دعوات العمل', 'practical-solutions'),
-        'description' => __('أقسام دعوات العمل والتحويل', 'practical-solutions')
-    ));
-}
-add_action('init', 'practical_solutions_register_pattern_categories');
+// نستخدم كلاس لتنظيم الكود ومنع أي تعارضات مستقبلية
+class PS_Block_Patterns_Registry {
 
-/**
- * تحميل ملفات الأنماط
- */
-function practical_solutions_load_patterns() {
-    $patterns_dir = get_template_directory() . '/patterns/';
-    
-    $pattern_files = array(
-        'hero-with-search.php',
-        'hero-solutions.php',
-        'features-grid.php',
-        'features-cards.php',
-        'solutions-showcase.php',
-        'testimonials.php',
-        'faq-section.php',
-        'cta-newsletter.php',
-        'cta-contact.php',
-        'recent-posts.php',
-        'categories-grid.php',
-        'stats-counter.php',
-        'team-members.php',
-        'services-pricing.php',
-        'before-after.php'
-    );
-    
-    foreach ($pattern_files as $file) {
-        $file_path = $patterns_dir . $file;
-        if (file_exists($file_path)) {
-            include $file_path;
+    /**
+     * ربط جميع الأحداث عند إنشاء الكائن
+     */
+    public function __construct() {
+        // **الإصلاح الرئيسي:** نستخدم 'init' hook لضمان أن ووردبريس جاهز بالكامل
+        add_action('init', [$this, 'register_categories_and_patterns']);
+    }
+
+    /**
+     * دالة واحدة لتسجيل الفئات والأنماط
+     */
+    public function register_categories_and_patterns() {
+        // أولاً: تسجيل الفئات
+        $this->register_pattern_categories();
+        
+        // ثانياً: تسجيل الأنماط الفردية
+        $this->register_all_patterns();
+    }
+
+    /**
+     * تسجيل فئات الأنماط
+     */
+    private function register_pattern_categories() {
+        // التحقق من وجود الدالة كإجراء وقائي إضافي
+        if (!function_exists('register_block_pattern_category')) {
+            return;
+        }
+
+        $categories = [
+            'practical-solutions' => __('الحلول العملية', 'practical-solutions'),
+            'ps-heroes'           => __('أقسام البطل', 'practical-solutions'),
+            'ps-features'         => __('عرض الميزات', 'practical-solutions'),
+            'ps-content'          => __('أقسام المحتوى', 'practical-solutions'),
+            'ps-cta'              => __('دعوات العمل', 'practical-solutions'),
+        ];
+
+        foreach ($categories as $slug => $label) {
+            // لا حاجة للتحقق مع get_block_pattern_category، ووردبريس يتعامل مع هذا داخلياً
+            register_block_pattern_category($slug, ['label' => $label]);
+        }
+    }
+
+    /**
+     * تحميل وتسجيل جميع ملفات الأنماط من مجلد /patterns
+     */
+    private function register_all_patterns() {
+        $patterns_dir = get_template_directory() . '/patterns/';
+        
+        if (!is_dir($patterns_dir)) {
+            return; // الخروج إذا كان المجلد غير موجود
+        }
+
+        $pattern_files = glob($patterns_dir . '*.php');
+        
+        foreach ($pattern_files as $file) {
+            // كل ملف نمط مسؤول عن تسجيل نفسه باستخدام register_block_pattern
+            require_once $file;
         }
     }
 }
-add_action('init', 'practical_solutions_load_patterns');
+
+// تشغيل النظام
+new PS_Block_Patterns_Registry();
+
 
 📁 اسم الملف: sw.js
 /**
@@ -4215,7 +2585,7 @@ const CACHE_NAME = 'practical-solutions-v2.1.0';
 const urlsToCache = [
     '/',
     '/wp-content/themes/practical-solutions-pro/assets/css/unified.css',
-    '/wp-content/themes/practical-solutions-pro/assets/js/unified.js',
+    '/wp-content/themes/practical-solutions-pro/assets/js/unified.min.js',
     'https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap'
 ];
 
@@ -5346,480 +3716,6 @@ For questions about licensing, please contact: legal@practical-solutions.com
 </div>
 <!-- /wp:group -->
 
-📁 اسم الملف:inc/ theme-settings.php
-<?php
-/**
- * Theme Settings Page - Fixed Version
- * لوحة إعدادات القالب - النسخة المُصححة
- */
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-class PracticalSolutionsSettings {
-    
-    private $settings_group = 'ps_settings_group';
-    private $settings_page = 'ps-settings';
-    
-    public function __construct() {
-        add_action('admin_menu', array($this, 'add_settings_page'));
-        add_action('admin_init', array($this, 'register_settings'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-    }
-    
-    /**
-     * إضافة صفحة الإعدادات
-     */
-    public function add_settings_page() {
-        add_theme_page(
-            __('إعدادات الحلول العملية', 'practical-solutions'),
-            __('إعدادات القالب', 'practical-solutions'),
-            'manage_options',
-            $this->settings_page,
-            array($this, 'settings_page_content')
-        );
-    }
-    
-    /**
-     * تسجيل الإعدادات
-     */
-    public function register_settings() {
-        // إعدادات عامة
-        register_setting($this->settings_group, 'ps_general_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_general_settings')
-        ));
-        
-        // إعدادات الشعار
-        register_setting($this->settings_group, 'ps_logo_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_logo_settings')
-        ));
-        
-        // إعدادات وسائل التواصل
-        register_setting($this->settings_group, 'ps_social_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_social_settings')
-        ));
-        
-        // إعدادات الاتصال
-        register_setting($this->settings_group, 'ps_contact_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_contact_settings')
-        ));
-        
-        // إعدادات البحث
-        register_setting($this->settings_group, 'ps_search_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_search_settings')
-        ));
-        
-        // إعدادات التحليلات
-        register_setting($this->settings_group, 'ps_analytics_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_analytics_settings')
-        ));
-        
-        // إعدادات الأداء
-        register_setting($this->settings_group, 'ps_performance_settings', array(
-            'sanitize_callback' => array($this, 'sanitize_performance_settings')
-        ));
-    }
-    
-    /**
-     * تحميل السكريبت في المدير
-     */
-    public function enqueue_admin_scripts($hook) {
-        if ($hook !== 'appearance_page_' . $this->settings_page) {
-            return;
-        }
-        
-        wp_enqueue_media();
-        wp_enqueue_script('ps-admin-settings', get_template_directory_uri() . '/assets/js/admin-settings.js', array('jquery'), PS_THEME_VERSION, true);
-        wp_enqueue_style('ps-admin-settings', get_template_directory_uri() . '/assets/css/admin-settings.css', array(), PS_THEME_VERSION);
-        
-        wp_localize_script('ps-admin-settings', 'psAdmin', array(
-            'nonce' => wp_create_nonce('ps_admin_nonce'),
-            'ajaxUrl' => admin_url('admin-ajax.php')
-        ));
-    }
-    
-    /**
-     * محتوى صفحة الإعدادات - المُصحح
-     */
-    public function settings_page_content() {
-        $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
-        
-        // حفظ الإعدادات
-        if (isset($_POST['submit']) && wp_verify_nonce($_POST['_wpnonce'], $this->settings_group . '-options')) {
-            $this->save_settings($_POST);
-            echo '<div class="notice notice-success is-dismissible"><p>تم حفظ الإعدادات بنجاح!</p></div>';
-        }
-        ?>
-        <div class="wrap ps-settings-page">
-            <h1><?php _e('إعدادات قالب الحلول العملية', 'practical-solutions'); ?></h1>
-            
-            <nav class="nav-tab-wrapper">
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=general" 
-                   class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('عام', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=logo" 
-                   class="nav-tab <?php echo $active_tab == 'logo' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('الشعار والهوية', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=social" 
-                   class="nav-tab <?php echo $active_tab == 'social' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('وسائل التواصل', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=contact" 
-                   class="nav-tab <?php echo $active_tab == 'contact' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('معلومات الاتصال', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=search" 
-                   class="nav-tab <?php echo $active_tab == 'search' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('إعدادات البحث', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=analytics" 
-                   class="nav-tab <?php echo $active_tab == 'analytics' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('التحليلات', 'practical-solutions'); ?>
-                </a>
-                <a href="?page=<?php echo $this->settings_page; ?>&tab=performance" 
-                   class="nav-tab <?php echo $active_tab == 'performance' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('الأداء', 'practical-solutions'); ?>
-                </a>
-            </nav>
-            
-            <form method="post" action="" id="ps-settings-form">
-                <?php wp_nonce_field($this->settings_group . '-options'); ?>
-                
-                <div class="ps-tab-content" id="ps-tab-<?php echo $active_tab; ?>">
-                    <?php
-                    switch ($active_tab) {
-                        case 'general':
-                            $this->general_settings_tab();
-                            break;
-                        case 'logo':
-                            $this->logo_settings_tab();
-                            break;
-                        case 'social':
-                            $this->social_settings_tab();
-                            break;
-                        case 'contact':
-                            $this->contact_settings_tab();
-                            break;
-                        case 'search':
-                            $this->search_settings_tab();
-                            break;
-                        case 'analytics':
-                            $this->analytics_settings_tab();
-                            break;
-                        case 'performance':
-                            $this->performance_settings_tab();
-                            break;
-                        default:
-                            $this->general_settings_tab();
-                    }
-                    ?>
-                </div>
-                
-                <?php submit_button(__('حفظ الإعدادات', 'practical-solutions')); ?>
-            </form>
-        </div>
-        <?php
-    }
-    
-    /**
-     * حفظ الإعدادات
-     */
-    private function save_settings($post_data) {
-        // حفظ الإعدادات العامة
-        if (isset($post_data['ps_general_settings'])) {
-            update_option('ps_general_settings', $this->sanitize_general_settings($post_data['ps_general_settings']));
-        }
-        
-        // حفظ إعدادات الشعار
-        if (isset($post_data['ps_logo_settings'])) {
-            update_option('ps_logo_settings', $this->sanitize_logo_settings($post_data['ps_logo_settings']));
-        }
-        
-        // حفظ إعدادات وسائل التواصل
-        if (isset($post_data['ps_social_settings'])) {
-            update_option('ps_social_settings', $this->sanitize_social_settings($post_data['ps_social_settings']));
-        }
-        
-        // حفظ إعدادات الاتصال
-        if (isset($post_data['ps_contact_settings'])) {
-            update_option('ps_contact_settings', $this->sanitize_contact_settings($post_data['ps_contact_settings']));
-        }
-        
-        // حفظ إعدادات البحث
-        if (isset($post_data['ps_search_settings'])) {
-            update_option('ps_search_settings', $this->sanitize_search_settings($post_data['ps_search_settings']));
-        }
-        
-        // حفظ إعدادات التحليلات
-        if (isset($post_data['ps_analytics_settings'])) {
-            update_option('ps_analytics_settings', $this->sanitize_analytics_settings($post_data['ps_analytics_settings']));
-        }
-        
-        // حفظ إعدادات الأداء
-        if (isset($post_data['ps_performance_settings'])) {
-            update_option('ps_performance_settings', $this->sanitize_performance_settings($post_data['ps_performance_settings']));
-        }
-    }
-    
-    // باقي الدوال كما هي...
-    private function general_settings_tab() {
-        $settings = get_option('ps_general_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('وصف الموقع المختصر', 'practical-solutions'); ?></th>
-                <td>
-                    <textarea name="ps_general_settings[site_description]" rows="3" cols="50" class="large-text"><?php echo esc_textarea($settings['site_description'] ?? ''); ?></textarea>
-                    <p class="description"><?php _e('وصف مختصر يظهر في النتائج والشبكات الاجتماعية', 'practical-solutions'); ?></p>
-                </td>
-            </tr>
-            
-            <tr>
-                <th scope="row"><?php _e('الكلمات المفتاحية', 'practical-solutions'); ?></th>
-                <td>
-                    <input type="text" name="ps_general_settings[keywords]" value="<?php echo esc_attr($settings['keywords'] ?? ''); ?>" class="large-text" />
-                    <p class="description"><?php _e('الكلمات المفتاحية مفصولة بفواصل', 'practical-solutions'); ?></p>
-                </td>
-            </tr>
-            
-            <tr>
-                <th scope="row"><?php _e('تفعيل الوضع المظلم تلقائياً', 'practical-solutions'); ?></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="ps_general_settings[auto_dark_mode]" value="1" <?php checked(1, $settings['auto_dark_mode'] ?? 0); ?> />
-                        <?php _e('تفعيل الوضع المظلم حسب تفضيل النظام', 'practical-solutions'); ?>
-                    </label>
-                </td>
-            </tr>
-            
-            <tr>
-                <th scope="row"><?php _e('عرض إحصائيات الموقع', 'practical-solutions'); ?></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="ps_general_settings[show_stats]" value="1" <?php checked(1, $settings['show_stats'] ?? 1); ?> />
-                        <?php _e('إظهار عداد المقالات والزوار في التذييل', 'practical-solutions'); ?>
-                    </label>
-                </td>
-            </tr>
-            
-            <tr>
-                <th scope="row"><?php _e('تفعيل Breadcrumbs', 'practical-solutions'); ?></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="ps_general_settings[enable_breadcrumbs]" value="1" <?php checked(1, $settings['enable_breadcrumbs'] ?? 1); ?> />
-                        <?php _e('إظهار مسار التنقل في الصفحات', 'practical-solutions'); ?>
-                    </label>
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    private function logo_settings_tab() {
-        $settings = get_option('ps_logo_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('شعار الموقع', 'practical-solutions'); ?></th>
-                <td>
-                    <div class="ps-logo-upload">
-                        <input type="hidden" name="ps_logo_settings[logo]" id="ps_logo" value="<?php echo esc_attr($settings['logo'] ?? ''); ?>" />
-                        <div class="ps-logo-preview">
-                            <?php if (!empty($settings['logo'])): ?>
-                                <img src="<?php echo esc_url($settings['logo']); ?>" style="max-width: 200px; height: auto;" />
-                            <?php endif; ?>
-                        </div>
-                        <button type="button" class="button ps-upload-logo"><?php _e('اختيار الشعار', 'practical-solutions'); ?></button>
-                        <button type="button" class="button ps-remove-logo" style="<?php echo empty($settings['logo']) ? 'display:none;' : ''; ?>"><?php _e('إزالة', 'practical-solutions'); ?></button>
-                    </div>
-                    <p class="description"><?php _e('حجم مُوصى به: 200×60 بكسل', 'practical-solutions'); ?></p>
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    private function social_settings_tab() {
-        $settings = get_option('ps_social_settings', array());
-        $social_networks = array(
-            'facebook' => 'فيسبوك',
-            'twitter' => 'تويتر', 
-            'instagram' => 'إنستجرام',
-            'youtube' => 'يوتيوب',
-            'whatsapp' => 'واتساب'
-        );
-        ?>
-        <table class="form-table">
-            <?php foreach ($social_networks as $network => $label): ?>
-            <tr>
-                <th scope="row"><?php echo esc_html($label); ?></th>
-                <td>
-                    <input type="url" name="ps_social_settings[<?php echo $network; ?>]" value="<?php echo esc_attr($settings[$network] ?? ''); ?>" class="large-text" placeholder="https://" />
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php
-    }
-    
-    private function contact_settings_tab() {
-        $settings = get_option('ps_contact_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('رقم الهاتف', 'practical-solutions'); ?></th>
-                <td>
-                    <input type="tel" name="ps_contact_settings[phone]" value="<?php echo esc_attr($settings['phone'] ?? ''); ?>" class="regular-text" />
-                </td>
-            </tr>
-            
-            <tr>
-                <th scope="row"><?php _e('بريد إلكتروني', 'practical-solutions'); ?></th>
-                <td>
-                    <input type="email" name="ps_contact_settings[email]" value="<?php echo esc_attr($settings['email'] ?? ''); ?>" class="regular-text" />
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    private function search_settings_tab() {
-        $settings = get_option('ps_search_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('تفعيل البحث الصوتي', 'practical-solutions'); ?></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="ps_search_settings[enable_voice_search]" value="1" <?php checked(1, $settings['enable_voice_search'] ?? 1); ?> />
-                        <?php _e('السماح للمستخدمين بالبحث باستخدام الصوت', 'practical-solutions'); ?>
-                    </label>
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    private function analytics_settings_tab() {
-        $settings = get_option('ps_analytics_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('كود Google Analytics', 'practical-solutions'); ?></th>
-                <td>
-                    <input type="text" name="ps_analytics_settings[google_analytics]" value="<?php echo esc_attr($settings['google_analytics'] ?? ''); ?>" class="regular-text" placeholder="G-XXXXXXXXXX" />
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    private function performance_settings_tab() {
-        $settings = get_option('ps_performance_settings', array());
-        ?>
-        <table class="form-table">
-            <tr>
-                <th scope="row"><?php _e('تفعيل التخزين المؤقت', 'practical-solutions'); ?></th>
-                <td>
-                    <label>
-                        <input type="checkbox" name="ps_performance_settings[enable_caching]" value="1" <?php checked(1, $settings['enable_caching'] ?? 1); ?> />
-                        <?php _e('تفعيل Service Worker للتخزين المؤقت', 'practical-solutions'); ?>
-                    </label>
-                </td>
-            </tr>
-        </table>
-        <?php
-    }
-    
-    // دوال التنظيف
-    public function sanitize_general_settings($input) {
-        $sanitized = array();
-        
-        if (isset($input['site_description'])) {
-            $sanitized['site_description'] = sanitize_textarea_field($input['site_description']);
-        }
-        
-        if (isset($input['keywords'])) {
-            $sanitized['keywords'] = sanitize_text_field($input['keywords']);
-        }
-        
-        $sanitized['auto_dark_mode'] = isset($input['auto_dark_mode']) ? 1 : 0;
-        $sanitized['show_stats'] = isset($input['show_stats']) ? 1 : 0;
-        $sanitized['enable_breadcrumbs'] = isset($input['enable_breadcrumbs']) ? 1 : 0;
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_logo_settings($input) {
-        $sanitized = array();
-        
-        if (isset($input['logo'])) {
-            $sanitized['logo'] = esc_url_raw($input['logo']);
-        }
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_social_settings($input) {
-        $sanitized = array();
-        
-        $social_networks = array('facebook', 'twitter', 'instagram', 'youtube', 'whatsapp');
-        
-        foreach ($social_networks as $network) {
-            if (isset($input[$network])) {
-                $sanitized[$network] = esc_url_raw($input[$network]);
-            }
-        }
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_contact_settings($input) {
-        $sanitized = array();
-        
-        if (isset($input['phone'])) {
-            $sanitized['phone'] = sanitize_text_field($input['phone']);
-        }
-        
-        if (isset($input['email'])) {
-            $sanitized['email'] = sanitize_email($input['email']);
-        }
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_search_settings($input) {
-        $sanitized = array();
-        
-        $sanitized['enable_voice_search'] = isset($input['enable_voice_search']) ? 1 : 0;
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_analytics_settings($input) {
-        $sanitized = array();
-        
-        if (isset($input['google_analytics'])) {
-            $sanitized['google_analytics'] = sanitize_text_field($input['google_analytics']);
-        }
-        
-        return $sanitized;
-    }
-    
-    public function sanitize_performance_settings($input) {
-        $sanitized = array();
-        
-        $sanitized['enable_caching'] = isset($input['enable_caching']) ? 1 : 0;
-        
-        return $sanitized;
-    }
-}
-
-// تهيئة الكلاس
-new PracticalSolutionsSettings();
 
 📁 اسم الملف:inc/customizer-settings.php
 <?php
@@ -7972,9 +5868,8 @@ register_block_pattern(
 📁 اسم الملف: rating-system.php
 <?php
 /**
- * Rating System for Practical Solutions Pro
- * نظام التقييمات للحلول العملية الاحترافية
- * المكان: /inc/rating-system.php
+ * Rating System - Nonce & Performance Fixed Version
+ * نظام التقييمات - نسخة مُصلحة للـ Nonce والأداء
  */
 
 if (!defined('ABSPATH')) {
@@ -7983,635 +5878,222 @@ if (!defined('ABSPATH')) {
 
 class PS_Rating_System {
     
-    private $table_ratings;
+    private $table_name;
     
     public function __construct() {
         global $wpdb;
-        $this->table_ratings = $wpdb->prefix . 'ps_ratings';
-        
+        $this->table_name = $wpdb->prefix . 'ps_ratings';
         add_action('init', array($this, 'init'));
     }
     
-    /**
-     * ==== التهيئة ====
-     */
     public function init() {
-        // إنشاء جدول التقييمات عند التفعيل
-        register_activation_hook(__FILE__, array($this, 'create_ratings_table'));
+        add_action('after_switch_theme', array($this, 'create_rating_table'));
         
-        // AJAX handlers
-        add_action('wp_ajax_ps_submit_rating', array($this, 'handle_submit_rating'));
-        add_action('wp_ajax_nopriv_ps_submit_rating', array($this, 'handle_submit_rating'));
+        add_action('wp_ajax_ps_set_rating', array($this, 'handle_set_rating'));
+        add_action('wp_ajax_nopriv_ps_set_rating', array($this, 'handle_set_rating'));
         
         add_action('wp_ajax_ps_get_rating', array($this, 'handle_get_rating'));
         add_action('wp_ajax_nopriv_ps_get_rating', array($this, 'handle_get_rating'));
         
-        // Shortcodes
-        add_shortcode('ps_rating', array($this, 'rating_shortcode'));
-        add_shortcode('ps_rating_display', array($this, 'rating_display_shortcode'));
-        
-        // Hook لإضافة التقييم تلقائياً للمقالات
-        add_filter('the_content', array($this, 'auto_add_rating_to_content'));
-        
-        // إضافة meta box في محرر المقالات
-        add_action('add_meta_boxes', array($this, 'add_rating_meta_box'));
-        
-        // إضافة عمود التقييمات في قائمة المقالات
-        add_filter('manage_posts_columns', array($this, 'add_rating_column'));
-        add_action('manage_posts_custom_column', array($this, 'display_rating_column'), 10, 2);
-        
-        // إضافة CSS و JS للإدارة
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
+        add_filter('the_content', array($this, 'add_rating_to_content'));
+        add_action('wp_head', array($this, 'add_rating_schema'));
     }
     
-    /**
-     * ==== إنشاء جدول التقييمات ====
-     */
-    public function create_ratings_table() {
+    public function create_rating_table() {
         global $wpdb;
-        
         $charset_collate = $wpdb->get_charset_collate();
         
-        $sql = "CREATE TABLE {$this->table_ratings} (
+        $sql = "CREATE TABLE {$this->table_name} (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             post_id bigint(20) NOT NULL,
-            user_id bigint(20) NULL,
-            user_ip varchar(45) NOT NULL,
-            rating tinyint(1) NOT NULL CHECK (rating >= 1 AND rating <= 5),
-            user_agent text NULL,
+            user_id bigint(20) DEFAULT NULL,
+            user_ip varchar(100) NOT NULL,
+            rating tinyint(1) NOT NULL,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
-            UNIQUE KEY unique_user_post (post_id, user_id, user_ip),
-            INDEX idx_post_id (post_id),
-            INDEX idx_user_id (user_id),
-            INDEX idx_rating (rating),
-            INDEX idx_created_at (created_at)
+            KEY post_id (post_id),
+            UNIQUE KEY unique_rating (post_id, user_ip, user_id)
         ) $charset_collate;";
         
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
-        
-        // إضافة الإعدادات الافتراضية
-        add_option('ps_rating_settings', array(
-            'enabled' => true,
-            'auto_display' => true,
-            'require_login' => false,
-            'allow_multiple' => false,
-            'show_average' => true,
-            'show_count' => true,
-            'rating_position' => 'after_content'
-        ));
     }
-    
-    /**
-     * ==== معالج إرسال التقييم ====
-     */
-    public function handle_submit_rating() {
-        // التحقق من الأمان
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
+
+    public function handle_set_rating() {
+        // **إصلاح:** التحقق من الـ nonce الموحد
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'ps_ajax_nonce')) {
+            wp_send_json_error(__('Nonce verification failed', 'practical-solutions'), 403);
+            return;
         }
         
-        $post_id = intval($_POST['post_id']);
-        $rating = intval($_POST['rating']);
+        $post_id = intval($_POST['post_id'] ?? 0);
+        $rating = intval($_POST['rating'] ?? 0);
+        
+        if ($post_id <= 0 || $rating < 1 || $rating > 5) {
+            wp_send_json_error(__('Invalid data', 'practical-solutions'));
+            return;
+        }
+        
         $user_id = get_current_user_id();
         $user_ip = $this->get_user_ip();
         
-        // التحقق من صحة البيانات
-        if (!$post_id || $rating < 1 || $rating > 5) {
-            wp_send_json_error(__('بيانات غير صحيحة', 'practical-solutions'));
-        }
-        
-        // التحقق من وجود المقال
-        if (!get_post($post_id)) {
-            wp_send_json_error(__('المقال غير موجود', 'practical-solutions'));
-        }
-        
-        // التحقق من الإعدادات
-        $settings = get_option('ps_rating_settings', array());
-        
-        if (!empty($settings['require_login']) && !$user_id) {
-            wp_send_json_error(__('يجب تسجيل الدخول للتقييم', 'practical-solutions'));
-        }
-        
-        try {
-            $result = $this->save_rating($post_id, $rating, $user_id, $user_ip);
-            
-            if ($result) {
-                // حساب المتوسط الجديد
-                $stats = $this->get_rating_stats($post_id);
-                
-                wp_send_json_success(array(
-                    'message' => __('تم حفظ التقييم بنجاح', 'practical-solutions'),
-                    'newAverage' => round($stats['average'], 1),
-                    'totalRatings' => $stats['count'],
-                    'userRating' => $rating
-                ));
-            } else {
-                wp_send_json_error(__('حدث خطأ في حفظ التقييم', 'practical-solutions'));
-            }
-            
-        } catch (Exception $e) {
-            error_log('Rating submission error: ' . $e->getMessage());
-            wp_send_json_error(__('حدث خطأ في النظام', 'practical-solutions'));
-        }
-    }
-    
-    /**
-     * ==== حفظ التقييم ====
-     */
-    public function save_rating($post_id, $rating, $user_id = null, $user_ip = null) {
         global $wpdb;
         
-        $user_ip = $user_ip ?: $this->get_user_ip();
-        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-        
-        // التحقق من وجود تقييم سابق
-        $existing_rating = $this->get_user_rating($post_id, $user_id, $user_ip);
-        
-        $settings = get_option('ps_rating_settings', array());
-        
-        if ($existing_rating && empty($settings['allow_multiple'])) {
-            // تحديث التقييم الموجود
-            $result = $wpdb->update(
-                $this->table_ratings,
-                array(
-                    'rating' => $rating,
-                    'updated_at' => current_time('mysql')
-                ),
-                array(
-                    'post_id' => $post_id,
-                    'user_id' => $user_id,
-                    'user_ip' => $user_ip
-                ),
-                array('%d', '%s'),
-                array('%d', '%d', '%s')
-            );
-        } else {
-            // إدراج تقييم جديد
-            $result = $wpdb->insert(
-                $this->table_ratings,
-                array(
-                    'post_id' => $post_id,
-                    'user_id' => $user_id,
-                    'user_ip' => $user_ip,
-                    'rating' => $rating,
-                    'user_agent' => $user_agent
-                ),
-                array('%d', '%d', '%s', '%d', '%s')
-            );
-        }
-        
-        if ($result !== false) {
-            // تحديث إحصائيات المقال
-            $this->update_post_rating_meta($post_id);
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * ==== الحصول على تقييم المستخدم ====
-     */
-    public function get_user_rating($post_id, $user_id = null, $user_ip = null) {
-        global $wpdb;
-        
-        $user_ip = $user_ip ?: $this->get_user_ip();
-        
-        if ($user_id) {
-            $rating = $wpdb->get_var($wpdb->prepare(
-                "SELECT rating FROM {$this->table_ratings} 
-                 WHERE post_id = %d AND user_id = %d 
-                 ORDER BY created_at DESC LIMIT 1",
-                $post_id,
-                $user_id
-            ));
-        } else {
-            $rating = $wpdb->get_var($wpdb->prepare(
-                "SELECT rating FROM {$this->table_ratings} 
-                 WHERE post_id = %d AND user_ip = %s 
-                 ORDER BY created_at DESC LIMIT 1",
-                $post_id,
-                $user_ip
-            ));
-        }
-        
-        return $rating ? intval($rating) : null;
-    }
-    
-    /**
-     * ==== الحصول على إحصائيات التقييم ====
-     */
-    public function get_rating_stats($post_id) {
-        global $wpdb;
-        
-        $stats = $wpdb->get_row($wpdb->prepare(
-            "SELECT 
-                COUNT(*) as count,
-                AVG(rating) as average,
-                MIN(rating) as min_rating,
-                MAX(rating) as max_rating
-             FROM {$this->table_ratings} 
-             WHERE post_id = %d",
-            $post_id
-        ), ARRAY_A);
-        
-        if (!$stats || $stats['count'] == 0) {
-            return array(
-                'count' => 0,
-                'average' => 0,
-                'min_rating' => 0,
-                'max_rating' => 0
-            );
-        }
-        
-        return array(
-            'count' => intval($stats['count']),
-            'average' => floatval($stats['average']),
-            'min_rating' => intval($stats['min_rating']),
-            'max_rating' => intval($stats['max_rating'])
-        );
-    }
-    
-    /**
-     * ==== تحديث meta للمقال ====
-     */
-    public function update_post_rating_meta($post_id) {
-        $stats = $this->get_rating_stats($post_id);
-        
-        update_post_meta($post_id, '_ps_rating_average', $stats['average']);
-        update_post_meta($post_id, '_ps_rating_count', $stats['count']);
-        
-        // إضافة للبحث والترتيب
-        update_post_meta($post_id, '_ps_rating_score', $stats['average'] * $stats['count']);
-    }
-    
-    /**
-     * ==== Shortcode للتقييم ====
-     */
-    public function rating_shortcode($atts) {
-        $atts = shortcode_atts(array(
-            'post_id' => get_the_ID(),
-            'show_average' => 'true',
-            'show_count' => 'true',
-            'allow_rating' => 'true',
-            'size' => 'medium',
-            'class' => ''
-        ), $atts);
-        
-        $post_id = intval($atts['post_id']);
-        if (!$post_id) return '';
-        
-        $settings = get_option('ps_rating_settings', array());
-        if (empty($settings['enabled'])) return '';
-        
-        $stats = $this->get_rating_stats($post_id);
-        $user_rating = $this->get_user_rating($post_id);
-        
-        $size_class = 'ps-rating-' . sanitize_html_class($atts['size']);
-        $custom_class = sanitize_html_class($atts['class']);
-        
-        ob_start();
-        ?>
-        <div class="ps-rating-system <?php echo $size_class; ?> <?php echo $custom_class; ?>" data-post-id="<?php echo $post_id; ?>">
-            
-            <?php if ($atts['show_average'] === 'true' || $atts['show_count'] === 'true'): ?>
-            <div class="ps-rating-info">
-                <?php if ($atts['show_average'] === 'true'): ?>
-                <span class="ps-rating-average"><?php echo number_format($stats['average'], 1); ?></span>
-                <?php endif; ?>
-                
-                <?php if ($atts['show_count'] === 'true'): ?>
-                <span class="ps-rating-count">(<?php echo $stats['count']; ?> <?php echo $stats['count'] == 1 ? 'تقييم' : 'تقييم'; ?>)</span>
-                <?php endif; ?>
-            </div>
-            <?php endif; ?>
-            
-            <?php if ($atts['allow_rating'] === 'true'): ?>
-            <div class="ps-rating-stars" data-user-rating="<?php echo $user_rating ?: 0; ?>">
-                <?php for ($i = 1; $i <= 5; $i++): ?>
-                <span class="ps-star <?php echo ($user_rating && $i <= $user_rating) ? 'active' : ''; ?>" 
-                      data-rating="<?php echo $i; ?>" 
-                      title="<?php echo $i; ?> <?php echo $i == 1 ? 'نجمة' : 'نجوم'; ?>">
-                    ★
-                </span>
-                <?php endfor; ?>
-            </div>
-            
-            <?php if (!$user_rating): ?>
-            <button type="button" class="ps-rating-submit" style="display: none;">
-                <?php _e('إرسال التقييم', 'practical-solutions'); ?>
-            </button>
-            <?php else: ?>
-            <div class="ps-rating-submitted">
-                <?php _e('شكراً لك على التقييم!', 'practical-solutions'); ?>
-            </div>
-            <?php endif; ?>
-            <?php endif; ?>
-        </div>
-        <?php
-        
-        return ob_get_clean();
-    }
-    
-    /**
-     * ==== Shortcode لعرض التقييم فقط ====
-     */
-    public function rating_display_shortcode($atts) {
-        $atts = shortcode_atts(array(
-            'post_id' => get_the_ID(),
-            'format' => 'stars', // stars, number, both
-            'size' => 'small'
-        ), $atts);
-        
-        $post_id = intval($atts['post_id']);
-        if (!$post_id) return '';
-        
-        $stats = $this->get_rating_stats($post_id);
-        
-        if ($stats['count'] == 0) return '';
-        
-        $size_class = 'ps-rating-display-' . sanitize_html_class($atts['size']);
-        
-        ob_start();
-        ?>
-        <div class="ps-rating-display <?php echo $size_class; ?>">
-            <?php if ($atts['format'] === 'stars' || $atts['format'] === 'both'): ?>
-            <div class="ps-rating-stars-display">
-                <?php 
-                $average = $stats['average'];
-                for ($i = 1; $i <= 5; $i++): 
-                    $class = '';
-                    if ($i <= $average) {
-                        $class = 'full';
-                    } elseif ($i - 0.5 <= $average) {
-                        $class = 'half';
-                    } else {
-                        $class = 'empty';
-                    }
-                ?>
-                <span class="ps-star-display <?php echo $class; ?>">★</span>
-                <?php endfor; ?>
-            </div>
-            <?php endif; ?>
-            
-            <?php if ($atts['format'] === 'number' || $atts['format'] === 'both'): ?>
-            <span class="ps-rating-number">
-                <?php echo number_format($average, 1); ?>/5 (<?php echo $stats['count']; ?>)
-            </span>
-            <?php endif; ?>
-        </div>
-        <?php
-        
-        return ob_get_clean();
-    }
-    
-    /**
-     * ==== إضافة التقييم تلقائياً للمحتوى ====
-     */
-    public function auto_add_rating_to_content($content) {
-        if (!is_single() || !is_main_query()) {
-            return $content;
-        }
-        
-        $settings = get_option('ps_rating_settings', array());
-        
-        if (empty($settings['enabled']) || empty($settings['auto_display'])) {
-            return $content;
-        }
-        
-        $rating_html = $this->rating_shortcode(array());
-        
-        if ($settings['rating_position'] === 'before_content') {
-            return $rating_html . $content;
-        } else {
-            return $content . $rating_html;
-        }
-    }
-    
-    /**
-     * ==== إضافة Meta Box ====
-     */
-    public function add_rating_meta_box() {
-        add_meta_box(
-            'ps_rating_meta_box',
-            __('إحصائيات التقييم', 'practical-solutions'),
-            array($this, 'rating_meta_box_callback'),
-            'post',
-            'side',
-            'default'
-        );
-    }
-    
-    public function rating_meta_box_callback($post) {
-        $stats = $this->get_rating_stats($post->ID);
-        $recent_ratings = $this->get_recent_ratings($post->ID, 5);
-        
-        ?>
-        <div class="ps-rating-meta-box">
-            <table class="form-table">
-                <tr>
-                    <td><strong><?php _e('متوسط التقييم:', 'practical-solutions'); ?></strong></td>
-                    <td><?php echo number_format($stats['average'], 1); ?>/5</td>
-                </tr>
-                <tr>
-                    <td><strong><?php _e('عدد التقييمات:', 'practical-solutions'); ?></strong></td>
-                    <td><?php echo $stats['count']; ?></td>
-                </tr>
-                <?php if ($stats['count'] > 0): ?>
-                <tr>
-                    <td><strong><?php _e('النطاق:', 'practical-solutions'); ?></strong></td>
-                    <td><?php echo $stats['min_rating']; ?> - <?php echo $stats['max_rating']; ?></td>
-                </tr>
-                <?php endif; ?>
-            </table>
-            
-            <?php if (!empty($recent_ratings)): ?>
-            <h4><?php _e('آخر التقييمات:', 'practical-solutions'); ?></h4>
-            <ul class="ps-recent-ratings">
-                <?php foreach ($recent_ratings as $rating): ?>
-                <li>
-                    <strong><?php echo str_repeat('★', $rating->rating); ?></strong>
-                    <?php echo date_i18n('Y/m/d H:i', strtotime($rating->created_at)); ?>
-                    <?php if ($rating->user_id): ?>
-                    - <?php echo get_userdata($rating->user_id)->display_name; ?>
-                    <?php endif; ?>
-                </li>
-                <?php endforeach; ?>
-            </ul>
-            <?php endif; ?>
-            
-            <p>
-                <button type="button" class="button" onclick="location.reload();">
-                    <?php _e('تحديث', 'practical-solutions'); ?>
-                </button>
-            </p>
-        </div>
-        
-        <style>
-        .ps-rating-meta-box .form-table {
-            margin: 0;
-        }
-        .ps-rating-meta-box .form-table td {
-            padding: 5px 0;
-        }
-        .ps-recent-ratings {
-            margin: 10px 0;
-            font-size: 12px;
-        }
-        .ps-recent-ratings li {
-            margin-bottom: 5px;
-            padding: 5px;
-            background: #f9f9f9;
-            border-radius: 3px;
-        }
-        </style>
-        <?php
-    }
-    
-    /**
-     * ==== الحصول على آخر التقييمات ====
-     */
-    public function get_recent_ratings($post_id, $limit = 10) {
-        global $wpdb;
-        
-        return $wpdb->get_results($wpdb->prepare(
-            "SELECT rating, user_id, created_at 
-             FROM {$this->table_ratings} 
-             WHERE post_id = %d 
-             ORDER BY created_at DESC 
-             LIMIT %d",
+        // استخدام REPLACE INTO لتبسيط الإدراج والتحديث
+        $wpdb->query($wpdb->prepare(
+            "REPLACE INTO {$this->table_name} (post_id, user_id, user_ip, rating, created_at) VALUES (%d, %d, %s, %d, %s)",
             $post_id,
-            $limit
+            $user_id,
+            $user_ip,
+            $rating,
+            current_time('mysql')
         ));
+        
+        // تحديث بيانات المقال المجمعة
+        $this->update_post_rating_meta($post_id);
+        
+        wp_send_json_success([
+            'message' => __('Thank you for your rating!', 'practical-solutions')
+        ]);
     }
     
-    /**
-     * ==== إضافة عمود التقييمات ====
-     */
-    public function add_rating_column($columns) {
-        $columns['ps_rating'] = __('التقييم', 'practical-solutions');
-        return $columns;
+    public function handle_get_rating() {
+        // **إصلاح:** التحقق من الـ nonce الموحد
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'ps_ajax_nonce')) {
+            wp_send_json_error(__('Nonce verification failed', 'practical-solutions'), 403);
+            return;
+        }
+        
+        $post_id = intval($_POST['post_id'] ?? 0);
+        
+        if ($post_id <= 0) {
+            wp_send_json_error(__('Invalid post ID', 'practical-solutions'));
+            return;
+        }
+        
+        $rating_data = $this->get_post_rating_data($post_id);
+        wp_send_json_success($rating_data);
     }
-    
-    public function display_rating_column($column, $post_id) {
-        if ($column === 'ps_rating') {
-            $stats = $this->get_rating_stats($post_id);
-            
-            if ($stats['count'] > 0) {
-                echo '<div class="ps-rating-column">';
-                echo '<strong>' . number_format($stats['average'], 1) . '/5</strong><br>';
-                echo '<small>(' . $stats['count'] . ' تقييم)</small>';
-                echo '</div>';
-            } else {
-                echo '<div class="ps-rating-column">';
-                echo '<span class="ps-no-rating">لا يوجد تقييم</span>';
-                echo '</div>';
+
+    private function update_post_rating_meta($post_id) {
+        global $wpdb;
+        $stats = $wpdb->get_row($wpdb->prepare(
+            "SELECT COUNT(id) as total, AVG(rating) as average FROM {$this->table_name} WHERE post_id = %d",
+            $post_id
+        ));
+
+        if ($stats) {
+            update_post_meta($post_id, 'ps_total_ratings', $stats->total);
+            update_post_meta($post_id, 'ps_average_rating', round($stats->average, 2));
+        }
+    }
+
+    public function get_post_rating_data($post_id) {
+        $total = get_post_meta($post_id, 'ps_total_ratings', true) ?: 0;
+        $average = get_post_meta($post_id, 'ps_average_rating', true) ?: 0;
+        
+        return [
+            'average' => floatval($average),
+            'total'   => intval($total),
+            'user_rating' => $this->get_user_rating($post_id)
+        ];
+    }
+
+    public function get_user_rating($post_id) {
+        global $wpdb;
+        $user_id = get_current_user_id();
+        $user_ip = $this->get_user_ip();
+
+        $sql = $wpdb->prepare(
+            "SELECT rating FROM {$this->table_name} WHERE post_id = %d AND user_ip = %s",
+            $post_id, $user_ip
+        );
+
+        if ($user_id > 0) {
+            $sql = $wpdb->prepare(
+                "SELECT rating FROM {$this->table_name} WHERE post_id = %d AND (user_ip = %s OR user_id = %d)",
+                $post_id, $user_ip, $user_id
+            );
+        }
+
+        $rating = $wpdb->get_var($sql);
+        return $rating ? intval($rating) : 0;
+    }
+
+    public function add_rating_to_content($content) {
+        if (is_singular('post') && in_the_loop() && is_main_query()) {
+            $settings = get_option('ps_general_settings', []);
+            if ($settings['rating_system'] ?? true) {
+                $content .= $this->render_rating_widget(get_the_ID());
             }
         }
+        return $content;
     }
-    
-    /**
-     * ==== تحميل ملفات الإدارة ====
-     */
-    public function enqueue_admin_assets($hook) {
-        if ($hook === 'post.php' || $hook === 'post-new.php' || $hook === 'edit.php') {
-            wp_add_inline_style('wp-admin', '
-                .ps-rating-column { text-align: center; }
-                .ps-rating-column strong { color: #0073aa; }
-                .ps-no-rating { color: #999; font-style: italic; }
-            ');
+
+    public function render_rating_widget($post_id) {
+        $rating_data = $this->get_post_rating_data($post_id);
+        ob_start();
+        ?>
+        <div class="ps-rating-system-widget" data-post-id="<?php echo esc_attr($post_id); ?>" data-initial-rating="<?php echo esc_attr($rating_data['user_rating']); ?>">
+            <h4><?php _e('ما رأيك في هذا المقال؟', 'practical-solutions'); ?></h4>
+            <div class="ps-stars" aria-label="<?php _e('Rating', 'practical-solutions'); ?>">
+                <?php for ($i = 5; $i >= 1; $i--): ?>
+                    <input type="radio" id="ps-star-<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" <?php checked($i, $rating_data['user_rating']); ?> />
+                    <label for="ps-star-<?php echo $i; ?>" title="<?php echo sprintf(__('%d stars', 'practical-solutions'), $i); ?>">★</label>
+                <?php endfor; ?>
+            </div>
+            <div class="ps-rating-summary">
+                <?php if ($rating_data['total'] > 0): ?>
+                    <?php printf(__('متوسط التقييم: %s (%d تقييم)', 'practical-solutions'), '<strong>' . esc_html($rating_data['average']) . '</strong>', esc_html($rating_data['total'])); ?>
+                <?php else: ?>
+                    <?php _e('كن أول من يقيم!', 'practical-solutions'); ?>
+                <?php endif; ?>
+            </div>
+            <div class="ps-rating-feedback" style="display:none;"></div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    public function add_rating_schema() {
+        if (!is_singular('post')) return;
+        
+        $rating_data = $this->get_post_rating_data(get_the_ID());
+        if ($rating_data['total'] > 0) {
+            $schema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Article',
+                'aggregateRating' => [
+                    '@type' => 'AggregateRating',
+                    'ratingValue' => $rating_data['average'],
+                    'ratingCount' => $rating_data['total'],
+                    'bestRating' => 5,
+                    'worstRating' => 1,
+                ],
+            ];
+            echo '<script type="application/ld+json">' . wp_json_encode($schema ) . '</script>';
         }
     }
-    
-    /**
-     * ==== معالج الحصول على التقييم ====
-     */
-    public function handle_get_rating() {
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-        }
-        
-        $post_id = intval($_POST['post_id']);
-        
-        if (!$post_id) {
-            wp_send_json_error(__('معرف المقال مطلوب', 'practical-solutions'));
-        }
-        
-        $stats = $this->get_rating_stats($post_id);
-        $user_rating = $this->get_user_rating($post_id);
-        
-        wp_send_json_success(array(
-            'stats' => $stats,
-            'user_rating' => $user_rating
-        ));
-    }
-    
-    /**
-     * ==== الحصول على IP المستخدم ====
-     */
+
     private function get_user_ip() {
-        $ip_keys = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR');
-        
+        $ip_keys = ['HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR'];
         foreach ($ip_keys as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip);
-                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                    if (filter_var($ip, FILTER_VALIDATE_IP)) {
                         return $ip;
                     }
                 }
             }
         }
-        
-        return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-    }
-    
-    /**
-     * ==== API عامة لاستخدام المطورين ====
-     */
-    
-    // الحصول على أفضل المقالات تقييماً
-    public function get_top_rated_posts($limit = 10, $min_ratings = 1) {
-        global $wpdb;
-        
-        return $wpdb->get_results($wpdb->prepare(
-            "SELECT p.ID, p.post_title, 
-                    AVG(r.rating) as average_rating,
-                    COUNT(r.rating) as rating_count
-             FROM {$wpdb->posts} p
-             INNER JOIN {$this->table_ratings} r ON p.ID = r.post_id
-             WHERE p.post_status = 'publish' AND p.post_type = 'post'
-             GROUP BY p.ID
-             HAVING rating_count >= %d
-             ORDER BY average_rating DESC, rating_count DESC
-             LIMIT %d",
-            $min_ratings,
-            $limit
-        ));
-    }
-    
-    // إحصائيات عامة
-    public function get_general_stats() {
-        global $wpdb;
-        
-        return $wpdb->get_row(
-            "SELECT 
-                COUNT(DISTINCT post_id) as total_rated_posts,
-                COUNT(*) as total_ratings,
-                AVG(rating) as overall_average,
-                MIN(rating) as min_rating,
-                MAX(rating) as max_rating
-             FROM {$this->table_ratings}",
-            ARRAY_A
-        );
+        return '0.0.0.0';
     }
 }
 
-// تهيئة النظام
 new PS_Rating_System();
+
+
 
 📁 اسم الملف: team-members.php
 <?php
@@ -10073,703 +7555,6 @@ window.addEventListener('beforeunload', () => {
 window.EnhancedVoiceSearch = EnhancedVoiceSearch;
 
 
-📁 اسم الملف: ai-search-suggestions.php
-<?php
-/**
- * AI-Powered Search Suggestions
- * نظام الاقتراحات الذكية بالذكاء الاصطناعي
- */
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-class PS_AI_Search_Suggestions {
-    
-    private $api_key;
-    private $cache_duration = 86400; // 24 hours
-    private $max_suggestions = 8;
-    
-    public function __construct() {
-        $this->api_key = get_option('ps_openai_api_key', '');
-        
-        add_action('wp_ajax_ps_ai_suggestions', array($this, 'get_ai_suggestions'));
-        add_action('wp_ajax_nopriv_ps_ai_suggestions', array($this, 'get_ai_suggestions'));
-        add_action('wp_ajax_ps_smart_search', array($this, 'smart_search'));
-        add_action('wp_ajax_nopriv_ps_smart_search', array($this, 'smart_search'));
-        
-        // إضافة إعدادات API
-        add_action('admin_init', array($this, 'register_ai_settings'));
-    }
-    
-    /**
-     * تسجيل إعدادات الذكاء الاصطناعي
-     */
-    public function register_ai_settings() {
-        register_setting('ps_ai_settings', 'ps_openai_api_key');
-        register_setting('ps_ai_settings', 'ps_ai_search_enabled');
-        register_setting('ps_ai_settings', 'ps_ai_model');
-        register_setting('ps_ai_settings', 'ps_ai_temperature');
-        register_setting('ps_ai_settings', 'ps_ai_max_tokens');
-    }
-    
-    /**
-     * الحصول على اقتراحات ذكية
-     */
-    public function get_ai_suggestions() {
-        // التحقق من الأمان
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_ai_nonce')) {
-            wp_send_json_error('غير مصرح');
-        }
-        
-        $query = sanitize_text_field($_POST['query']);
-        $context = sanitize_text_field($_POST['context'] ?? '');
-        $user_behavior = json_decode(stripslashes($_POST['user_behavior'] ?? '{}'), true);
-        
-        if (strlen($query) < 2) {
-            wp_send_json_error('الاستعلام قصير جداً');
-        }
-        
-        // فحص الكاش أولاً
-        $cache_key = 'ps_ai_suggestions_' . md5($query . $context);
-        $cached_suggestions = get_transient($cache_key);
-        
-        if ($cached_suggestions !== false) {
-            wp_send_json_success($cached_suggestions);
-        }
-        
-        // إنشاء اقتراحات ذكية
-        $suggestions = $this->generate_smart_suggestions($query, $context, $user_behavior);
-        
-        // حفظ في الكاش
-        set_transient($cache_key, $suggestions, $this->cache_duration);
-        
-        wp_send_json_success($suggestions);
-    }
-    
-    /**
-     * إنشاء اقتراحات ذكية
-     */
-    private function generate_smart_suggestions($query, $context = '', $user_behavior = array()) {
-        $suggestions = array();
-        
-        // 1. اقتراحات محلية سريعة
-        $local_suggestions = $this->get_local_suggestions($query);
-        
-        // 2. اقتراحات مبنية على سلوك المستخدم
-        $behavioral_suggestions = $this->get_behavioral_suggestions($query, $user_behavior);
-        
-        // 3. اقتراحات بالذكاء الاصطناعي (إذا كان متاحاً)
-        $ai_suggestions = array();
-        if ($this->is_ai_enabled() && !empty($this->api_key)) {
-            $ai_suggestions = $this->get_openai_suggestions($query, $context);
-        }
-        
-        // 4. اقتراحات من المحتوى المشابه
-        $semantic_suggestions = $this->get_semantic_suggestions($query);
-        
-        // دمج وترتيب الاقتراحات
-        $all_suggestions = array_merge(
-            $local_suggestions,
-            $behavioral_suggestions,
-            $ai_suggestions,
-            $semantic_suggestions
-        );
-        
-        // إزالة التكرارات وترتيب حسب الأهمية
-        $unique_suggestions = $this->deduplicate_and_rank($all_suggestions, $query);
-        
-        // تحديد العدد المطلوب
-        $suggestions = array_slice($unique_suggestions, 0, $this->max_suggestions);
-        
-        return array(
-            'suggestions' => $suggestions,
-            'query' => $query,
-            'total_sources' => count($all_suggestions),
-            'ai_enabled' => $this->is_ai_enabled()
-        );
-    }
-    
-    /**
-     * الحصول على اقتراحات محلية
-     */
-    private function get_local_suggestions($query) {
-        global $wpdb;
-        
-        $suggestions = array();
-        
-        // البحث في العناوين
-        $posts = $wpdb->get_results($wpdb->prepare("
-            SELECT post_title, post_excerpt, ID
-            FROM {$wpdb->posts} 
-            WHERE post_status = 'publish' 
-            AND post_type = 'post'
-            AND (post_title LIKE %s OR post_content LIKE %s)
-            ORDER BY 
-                CASE 
-                    WHEN post_title LIKE %s THEN 1
-                    WHEN post_title LIKE %s THEN 2
-                    ELSE 3
-                END,
-                post_date DESC
-            LIMIT 15
-        ", 
-            '%' . $query . '%',
-            '%' . $query . '%',
-            $query . '%',
-            '%' . $query . '%'
-        ));
-        
-        foreach ($posts as $post) {
-            $suggestions[] = array(
-                'text' => $post->post_title,
-                'type' => 'post',
-                'url' => get_permalink($post->ID),
-                'excerpt' => wp_trim_words($post->post_excerpt, 15),
-                'relevance' => $this->calculate_relevance($query, $post->post_title),
-                'source' => 'local'
-            );
-        }
-        
-        // البحث في التصنيفات
-        $categories = get_terms(array(
-            'taxonomy' => 'category',
-            'search' => $query,
-            'number' => 5
-        ));
-        
-        foreach ($categories as $category) {
-            $suggestions[] = array(
-                'text' => $category->name,
-                'type' => 'category',
-                'url' => get_category_link($category->term_id),
-                'excerpt' => $category->description,
-                'relevance' => $this->calculate_relevance($query, $category->name),
-                'source' => 'category'
-            );
-        }
-        
-        return $suggestions;
-    }
-    
-    /**
-     * اقتراحات مبنية على سلوك المستخدم
-     */
-    private function get_behavioral_suggestions($query, $user_behavior) {
-        $suggestions = array();
-        
-        // إذا كان لدينا بيانات سلوك المستخدم
-        if (!empty($user_behavior['recent_searches'])) {
-            foreach ($user_behavior['recent_searches'] as $search) {
-                if (stripos($search, $query) !== false || stripos($query, $search) !== false) {
-                    $suggestions[] = array(
-                        'text' => $search,
-                        'type' => 'recent',
-                        'url' => '/?s=' . urlencode($search),
-                        'excerpt' => 'بحث سابق',
-                        'relevance' => 0.8,
-                        'source' => 'behavior'
-                    );
-                }
-            }
-        }
-        
-        // اقتراحات مبنية على التصنيفات المفضلة
-        if (!empty($user_behavior['preferred_categories'])) {
-            foreach ($user_behavior['preferred_categories'] as $cat_id => $count) {
-                $category = get_category($cat_id);
-                if ($category && stripos($category->name, $query) !== false) {
-                    $suggestions[] = array(
-                        'text' => 'حلول ' . $category->name,
-                        'type' => 'preference',
-                        'url' => get_category_link($cat_id),
-                        'excerpt' => 'من اهتماماتك المفضلة',
-                        'relevance' => 0.7,
-                        'source' => 'preference'
-                    );
-                }
-            }
-        }
-        
-        return $suggestions;
-    }
-    
-    /**
-     * اقتراحات OpenAI
-     */
-    private function get_openai_suggestions($query, $context = '') {
-        if (empty($this->api_key)) {
-            return array();
-        }
-        
-        $suggestions = array();
-        
-        try {
-            $prompt = $this->build_ai_prompt($query, $context);
-            $response = $this->call_openai_api($prompt);
-            
-            if ($response && isset($response['choices'][0]['message']['content'])) {
-                $ai_text = $response['choices'][0]['message']['content'];
-                $parsed_suggestions = $this->parse_ai_response($ai_text, $query);
-                
-                foreach ($parsed_suggestions as $suggestion) {
-                    $suggestions[] = array(
-                        'text' => $suggestion,
-                        'type' => 'ai',
-                        'url' => '/?s=' . urlencode($suggestion),
-                        'excerpt' => 'اقتراح ذكي',
-                        'relevance' => 0.9,
-                        'source' => 'ai'
-                    );
-                }
-            }
-            
-        } catch (Exception $e) {
-            error_log('AI Suggestions Error: ' . $e->getMessage());
-        }
-        
-        return $suggestions;
-    }
-    
-    /**
-     * بناء prompt للذكاء الاصطناعي
-     */
-    private function build_ai_prompt($query, $context) {
-        $site_name = get_bloginfo('name');
-        $site_description = get_bloginfo('description');
-        
-        $prompt = "أنت مساعد ذكي متخصص في اقتراح عمليات البحث لموقع '{$site_name}' الذي يقدم {$site_description}.
-
-المستخدم يبحث عن: '{$query}'
-السياق: {$context}
-
-قدم 5 اقتراحات بحث ذكية ومفيدة باللغة العربية تساعد المستخدم في العثور على حلول عملية.
-الاقتراحات يجب أن تكون:
-1. مرتبطة بالاستعلام الأصلي
-2. عملية ومفيدة
-3. متنوعة في المجالات (منزل، مطبخ، نصائح حياتية، إلخ)
-4. واضحة ومباشرة
-
-أرجع الاقتراحات في شكل قائمة مرقمة، كل اقتراح في سطر منفصل:";
-
-        return $prompt;
-    }
-    
-    /**
-     * استدعاء OpenAI API
-     */
-    private function call_openai_api($prompt) {
-        $model = get_option('ps_ai_model', 'gpt-3.5-turbo');
-        $temperature = floatval(get_option('ps_ai_temperature', 0.7));
-        $max_tokens = intval(get_option('ps_ai_max_tokens', 150));
-        
-        $body = array(
-            'model' => $model,
-            'messages' => array(
-                array(
-                    'role' => 'user',
-                    'content' => $prompt
-                )
-            ),
-            'temperature' => $temperature,
-            'max_tokens' => $max_tokens
-        );
-        
-        $response = wp_remote_post('https://api.openai.com/v1/chat/completions', array(
-            'headers' => array(
-                'Authorization' => 'Bearer ' . $this->api_key,
-                'Content-Type' => 'application/json'
-             ),
-            'body' => wp_json_encode($body),
-            'timeout' => 10
-        ));
-        
-        if (is_wp_error($response)) {
-            throw new Exception($response->get_error_message());
-        }
-        
-        $body = wp_remote_retrieve_body($response);
-        $data = json_decode($body, true);
-        
-        if (isset($data['error'])) {
-            throw new Exception($data['error']['message']);
-        }
-        
-        return $data;
-    }
-    
-    /**
-     * تحليل استجابة الذكاء الاصطناعي
-     */
-    private function parse_ai_response($ai_text, $original_query) {
-        $suggestions = array();
-        $lines = explode("\n", $ai_text);
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            
-            // إزالة الترقيم
-            $line = preg_replace('/^\d+\.\s*/', '', $line);
-            $line = preg_replace('/^[-•]\s*/', '', $line);
-            
-            if (!empty($line) && strlen($line) > 3 && strlen($line) < 100) {
-                // تنظيف الاقتراح
-                $suggestion = $this->clean_ai_suggestion($line, $original_query);
-                if ($suggestion) {
-                    $suggestions[] = $suggestion;
-                }
-            }
-        }
-        
-        return array_slice($suggestions, 0, 5);
-    }
-    
-    /**
-     * تنظيف اقتراح الذكاء الاصطناعي
-     */
-    private function clean_ai_suggestion($suggestion, $original_query) {
-        // إزالة العلامات غير المرغوبة
-        $suggestion = preg_replace('/[\\\'"`"]/', '', $suggestion);
-        $suggestion = trim($suggestion, '.-,');
-        
-        // التأكد من أنه ليس مطابقاً للاستعلام الأصلي
-        if (strtolower($suggestion) === strtolower($original_query)) {
-            return null;
-        }
-        
-        // التأكد من الطول المناسب
-        if (strlen($suggestion) < 5 || strlen($suggestion) > 80) {
-            return null;
-        }
-        
-        return $suggestion;
-    }
-    
-    /**
-     * اقتراحات دلالية
-     */
-    private function get_semantic_suggestions($query) {
-        $suggestions = array();
-        
-        // خريطة الكلمات المرادفة والمصطلحات ذات الصلة
-        $semantic_map = array(
-            'تنظيف' => array('ترتيب', 'تطهير', 'غسيل', 'تنظيم المنزل'),
-            'مطبخ' => array('طبخ', 'وصفات', 'أدوات مطبخ', 'تنظيم المطبخ'),
-            'منزل' => array('بيت', 'ديكور', 'ترتيب المنزل', 'تنظيم المنزل'),
-            'توفير' => array('اقتصاد', 'خصم', 'عروض', 'ميزانية'),
-            'صحة' => array('لياقة', 'رياضة', 'تغذية', 'صحة نفسية')
-        );
-        
-        foreach ($semantic_map as $key => $related_terms) {
-            if (stripos($query, $key) !== false) {
-                foreach ($related_terms as $term) {
-                    $suggestions[] = array(
-                        'text' => $term,
-                        'type' => 'semantic',
-                        'url' => '/?s=' . urlencode($term),
-                        'excerpt' => 'مصطلح ذو صلة',
-                        'relevance' => 0.6,
-                        'source' => 'semantic'
-                    );
-                }
-                break;
-            }
-        }
-        
-        return $suggestions;
-    }
-    
-    /**
-     * حساب مدى الصلة
-     */
-    private function calculate_relevance($query, $text) {
-        $query = strtolower($query);
-        $text = strtolower($text);
-        
-        // مطابقة تامة
-        if ($text === $query) {
-            return 1.0;
-        }
-        
-        // يبدأ بنفس الكلمات
-        if (strpos($text, $query) === 0) {
-            return 0.9;
-        }
-        
-        // يحتوي على الاستعلام
-        if (strpos($text, $query) !== false) {
-            return 0.8;
-        }
-        
-        // حساب التشابه بالكلمات
-        $query_words = explode(' ', $query);
-        $text_words = explode(' ', $text);
-        $common_words = array_intersect($query_words, $text_words);
-        
-        if (count($query_words) > 0) {
-            return count($common_words) / count($query_words) * 0.7;
-        }
-        
-        return 0.1;
-    }
-    
-    /**
-     * إزالة التكرارات والترتيب
-     */
-    private function deduplicate_and_rank($suggestions, $query) {
-        $unique = array();
-        $seen = array();
-        
-        foreach ($suggestions as $suggestion) {
-            $key = strtolower($suggestion['text']);
-            
-            if (!isset($seen[$key])) {
-                $seen[$key] = true;
-                $unique[] = $suggestion;
-            }
-        }
-        
-        // ترتيب حسب الصلة
-        usort($unique, function($a, $b) {
-            return $b['relevance'] <=> $a['relevance'];
-        });
-        
-        return $unique;
-    }
-    
-    /**
-     * البحث الذكي
-     */
-    public function smart_search() {
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_search_nonce')) {
-            wp_send_json_error('غير مصرح');
-        }
-        
-        $query = sanitize_text_field($_POST['query']);
-        $filters = json_decode(stripslashes($_POST['filters'] ?? '{}'), true);
-        $user_context = json_decode(stripslashes($_POST['context'] ?? '{}'), true);
-        
-        // تحليل الاستعلام بالذكاء الاصطناعي
-        $analyzed_query = $this->analyze_search_intent($query);
-        
-        // البحث المحسن
-        $results = $this->perform_enhanced_search($analyzed_query, $filters, $user_context);
-        
-        wp_send_json_success($results);
-    }
-    
-    /**
-     * تحليل نية البحث
-     */
-    private function analyze_search_intent($query) {
-        // تحليل نوع الاستعلام
-        $intent_patterns = array(
-            'how' => '/^(كيف|كيفية|طريقة|how to|how do)/i',
-            'what' => '/^(ما هو|ماذا|what is|what are)/i',
-            'where' => '/^(أين|where)/i',
-            'when' => '/^(متى|when)/i',
-            'why' => '/^(لماذا|لم|why)/i',
-            'solution' => '/(حل|مشكلة|علاج|solution|problem)/i',
-            'tip' => '/(نصيحة|نصائح|tips|advice)/i',
-            'recipe' => '/(وصفة|طبخ|recipe|cooking)/i'
-        );
-        
-        $detected_intent = 'general';
-        foreach ($intent_patterns as $intent => $pattern) {
-            if (preg_match($pattern, $query)) {
-                $detected_intent = $intent;
-                break;
-            }
-        }
-        
-        return array(
-            'original_query' => $query,
-            'intent' => $detected_intent,
-            'keywords' => $this->extract_keywords($query),
-            'entities' => $this->extract_entities($query)
-        );
-    }
-    
-    /**
-     * استخراج الكلمات المفتاحية
-     */
-    private function extract_keywords($query) {
-        // إزالة كلمات الوقف
-        $stop_words = array('في', 'من', 'إلى', 'على', 'عن', 'مع', 'هذا', 'هذه', 'التي', 'الذي');
-        
-        $words = preg_split('/\s+/', strtolower($query));
-        $keywords = array_diff($words, $stop_words);
-        
-        return array_values($keywords);
-    }
-    
-    /**
-     * استخراج الكيانات
-     */
-    private function extract_entities($query) {
-        $entities = array(
-            'categories' => array(),
-            'locations' => array(),
-            'tools' => array()
-        );
-        
-        // خريطة الكيانات
-        $entity_map = array(
-            'categories' => array('مطبخ', 'منزل', 'صحة', 'نصائح'),
-            'locations' => array('بيت', 'غرفة', 'حمام', 'مطبخ', 'غرفة نوم'),
-            'tools' => array('أدوات', 'جهاز', 'آلة', 'معدات')
-        );
-        
-        foreach ($entity_map as $type => $terms) {
-            foreach ($terms as $term) {
-                if (stripos($query, $term) !== false) {
-                    $entities[$type][] = $term;
-                }
-            }
-        }
-        
-        return $entities;
-    }
-    
-    /**
-     * البحث المحسن
-     */
-    private function perform_enhanced_search($analyzed_query, $filters, $context) {
-        global $wpdb;
-        
-        $query = $analyzed_query['original_query'];
-        $intent = $analyzed_query['intent'];
-        $keywords = $analyzed_query['keywords'];
-        
-        // بناء استعلام SQL محسن
-        $sql_parts = array(
-            'SELECT' => "p.ID, p.post_title, p.post_excerpt, p.post_date",
-            'FROM' => "{$wpdb->posts} p",
-            'WHERE' => array("p.post_status = 'publish'", "p.post_type = 'post'"),
-            'ORDER' => array(),
-            'LIMIT' => 20
-        );
-        
-        // إضافة شروط البحث المتقدم
-        $search_conditions = array();
-        
-        // البحث في العنوان (أولوية عالية)
-        $search_conditions[] = $wpdb->prepare("p.post_title LIKE %s", '%' . $query . '%');
-        
-        // البحث في المحتوى
-        $search_conditions[] = $wpdb->prepare("p.post_content LIKE %s", '%' . $query . '%');
-        
-        // البحث بالكلمات المفتاحية
-        foreach ($keywords as $keyword) {
-            if (strlen($keyword) > 2) {
-                $search_conditions[] = $wpdb->prepare("(p.post_title LIKE %s OR p.post_content LIKE %s)", 
-                    '%' . $keyword . '%', '%' . $keyword . '%');
-            }
-        }
-        
-        // دمج شروط البحث
-        if (!empty($search_conditions)) {
-            $sql_parts['WHERE'][] = '(' . implode(' OR ', $search_conditions) . ')';
-        }
-        
-        // ترتيب حسب الصلة والتاريخ
-        $sql_parts['ORDER'][] = "CASE 
-            WHEN p.post_title LIKE '%" . esc_sql($query) . "%' THEN 1
-            WHEN p.post_content LIKE '%" . esc_sql($query) . "%' THEN 2
-            ELSE 3
-        END";
-        $sql_parts['ORDER'][] = "p.post_date DESC";
-        
-        // بناء الاستعلام النهائي
-        $final_sql = $sql_parts['SELECT'] . ' FROM ' . $sql_parts['FROM'] . 
-                    ' WHERE ' . implode(' AND ', $sql_parts['WHERE']) . 
-                    ' ORDER BY ' . implode(', ', $sql_parts['ORDER']) . 
-                    ' LIMIT ' . $sql_parts['LIMIT'];
-        
-        $results = $wpdb->get_results($final_sql);
-        
-        // تحسين النتائج
-        $enhanced_results = array();
-        foreach ($results as $result) {
-            $enhanced_results[] = array(
-                'id' => $result->ID,
-                'title' => $result->post_title,
-                'excerpt' => wp_trim_words($result->post_excerpt ?: strip_tags($result->post_content), 25),
-                'url' => get_permalink($result->ID),
-                'date' => $result->post_date,
-                'thumbnail' => get_the_post_thumbnail_url($result->ID, 'medium'),
-                'relevance' => $this->calculate_result_relevance($query, $result),
-                'intent_match' => $this->check_intent_match($intent, $result)
-            );
-        }
-        
-        return array(
-            'results' => $enhanced_results,
-            'query_analysis' => $analyzed_query,
-            'total_found' => count($enhanced_results),
-            'search_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']
-        );
-    }
-    
-    /**
-     * حساب صلة النتيجة
-     */
-    private function calculate_result_relevance($query, $result) {
-        $score = 0;
-        
-        // مطابقة العنوان
-        if (stripos($result->post_title, $query) !== false) {
-            $score += 0.6;
-        }
-        
-        // مطابقة بداية العنوان
-        if (stripos($result->post_title, $query) === 0) {
-            $score += 0.3;
-        }
-        
-        // مطابقة المحتوى
-        if (stripos($result->post_content, $query) !== false) {
-            $score += 0.1;
-        }
-        
-        return min($score, 1.0);
-    }
-    
-    /**
-     * فحص مطابقة النية
-     */
-    private function check_intent_match($intent, $result) {
-        $content = strtolower($result->post_title . ' ' . $result->post_content);
-        
-        $intent_indicators = array(
-            'how' => array('كيف', 'طريقة', 'خطوات', 'how', 'step'),
-            'what' => array('ما هو', 'تعريف', 'what', 'definition'),
-            'solution' => array('حل', 'علاج', 'solution', 'fix'),
-            'tip' => array('نصيحة', 'tip', 'advice'),
-            'recipe' => array('وصفة', 'مقادير', 'recipe', 'ingredients')
-        );
-        
-        if (isset($intent_indicators[$intent])) {
-            foreach ($intent_indicators[$intent] as $indicator) {
-                if (strpos($content, $indicator) !== false) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
-    
-    /**
-     * فحص تفعيل الذكاء الاصطناعي
-     */
-    private function is_ai_enabled() {
-        return get_option('ps_ai_search_enabled', false) && !empty($this->api_key);
-    }
-}
-
-// تهيئة النظام
-new PS_AI_Search_Suggestions();
 
 
 📁 اسم الملف: interactive-features.js
@@ -13407,1074 +10192,13 @@ a:focus {
 }
 
 
-📁 اسم الملف: rtl.css
-/**
- * Enhanced UX Styles - تحسينات تجربة المستخدم
- * 
- * @package Practical_Solutions_Pro
- * @version 2.1.0
- */
-
-/* ========================================
-   🎨 ENHANCED USER EXPERIENCE STYLES
-   ======================================== */
-
-/* ===== متغيرات CSS المحسنة ===== */
-:root {
-  /* الألوان الأساسية */
-  --ps-primary: #007cba;
-  --ps-primary-dark: #005a87;
-  --ps-primary-light: #60a5fa;
-  --ps-secondary: #6366f1;
-  --ps-accent: #f59e0b;
-  --ps-success: #10b981;
-  --ps-warning: #f59e0b;
-  --ps-error: #ef4444;
-  --ps-info: #3b82f6;
-  
-  /* الألوان الحيادية */
-  --ps-white: #ffffff;
-  --ps-gray-50: #f9fafb;
-  --ps-gray-100: #f3f4f6;
-  --ps-gray-200: #e5e7eb;
-  --ps-gray-300: #d1d5db;
-  --ps-gray-400: #9ca3af;
-  --ps-gray-500: #6b7280;
-  --ps-gray-600: #4b5563;
-  --ps-gray-700: #374151;
-  --ps-gray-800: #1f2937;
-  --ps-gray-900: #111827;
-  
-  /* الظلال المحسنة */
-  --ps-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --ps-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --ps-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --ps-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --ps-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --ps-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  
-  /* التحولات والحركات */
-  --ps-transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --ps-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --ps-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* المسافات المحسنة */
-  --ps-space-xs: 0.25rem;
-  --ps-space-sm: 0.5rem;
-  --ps-space-md: 1rem;
-  --ps-space-lg: 1.5rem;
-  --ps-space-xl: 2rem;
-  --ps-space-2xl: 3rem;
-  --ps-space-3xl: 4rem;
-  
-  /* أحجام الخطوط */
-  --ps-text-xs: 0.75rem;
-  --ps-text-sm: 0.875rem;
-  --ps-text-base: 1rem;
-  --ps-text-lg: 1.125rem;
-  --ps-text-xl: 1.25rem;
-  --ps-text-2xl: 1.5rem;
-  --ps-text-3xl: 1.875rem;
-  --ps-text-4xl: 2.25rem;
-  --ps-text-5xl: 3rem;
-  
-  /* نصف الأقطار */
-  --ps-radius-sm: 0.25rem;
-  --ps-radius: 0.5rem;
-  --ps-radius-md: 0.75rem;
-  --ps-radius-lg: 1rem;
-  --ps-radius-xl: 1.5rem;
-  --ps-radius-full: 9999px;
-  
-  /* Z-index */
-  --ps-z-dropdown: 1000;
-  --ps-z-sticky: 1020;
-  --ps-z-fixed: 1030;
-  --ps-z-modal: 1040;
-  --ps-z-popover: 1050;
-  --ps-z-tooltip: 1060;
-}
-
-/* ===== تحسينات أساسية للعناصر ===== */
-* {
-  box-sizing: border-box;
-}
-
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
-body {
-  font-feature-settings: 'liga' 1, 'kern' 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-}
-
-/* ===== تحسينات الروابط ===== */
-a {
-  color: var(--ps-primary);
-  text-decoration: none;
-  transition: var(--ps-transition-fast);
-  outline: none;
-}
-
-a:hover {
-  color: var(--ps-primary-dark);
-  text-decoration: underline;
-}
-
-a:focus {
-  outline: 2px solid var(--ps-primary);
-  outline-offset: 2px;
-  border-radius: var(--ps-radius-sm);
-}
-
-/* تحسين الروابط التفاعلية */
-.ps-interactive-link {
-  position: relative;
-  color: var(--ps-primary);
-  font-weight: 500;
-  transition: var(--ps-transition-all);
-}
-
-.ps-interactive-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--ps-primary), var(--ps-secondary));
-  transition: width 0.3s ease;
-}
-
-.ps-interactive-link:hover::after {
-  width: 100%;
-}
-
-/* ===== تحسينات الأزرار ===== */
-.ps-btn,
-.wp-block-button__link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ps-space-sm);
-  padding: var(--ps-space-md) var(--ps-space-lg);
-  border: none;
-  border-radius: var(--ps-radius);
-  font-size: var(--ps-text-base);
-  font-weight: 500;
-  line-height: 1.5;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: var(--ps-transition-all);
-  outline: none;
-  box-shadow: var(--ps-shadow);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  position: relative;
-  overflow: hidden;
-}
-
-/* تأثير التموج للأزرار */
-.ps-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.ps-btn:active::before {
-  width: 300px;
-  height: 300px;
-}
-
-/* أنواع الأزرار المحسنة */
-.ps-btn-primary {
-  background: linear-gradient(135deg, var(--ps-primary), var(--ps-primary-dark));
-  color: var(--ps-white);
-}
-
-.ps-btn-primary:hover {
-  background: linear-gradient(135deg, var(--ps-primary-dark), var(--ps-primary));
-  transform: translateY(-2px);
-  box-shadow: var(--ps-shadow-lg);
-  color: var(--ps-white);
-  text-decoration: none;
-}
-
-.ps-btn-secondary {
-  background: linear-gradient(135deg, var(--ps-gray-100), var(--ps-gray-200));
-  color: var(--ps-gray-800);
-  border: 1px solid var(--ps-gray-300);
-}
-
-.ps-btn-secondary:hover {
-  background: linear-gradient(135deg, var(--ps-gray-200), var(--ps-gray-300));
-  transform: translateY(-1px);
-  box-shadow: var(--ps-shadow-md);
-  color: var(--ps-gray-900);
-  text-decoration: none;
-}
-
-.ps-btn-accent {
-  background: linear-gradient(135deg, var(--ps-accent), #f59e0b);
-  color: var(--ps-white);
-}
-
-.ps-btn-accent:hover {
-  background: linear-gradient(135deg, #f59e0b, var(--ps-accent));
-  transform: translateY(-2px);
-  box-shadow: var(--ps-shadow-lg);
-  color: var(--ps-white);
-  text-decoration: none;
-}
-
-/* أحجام الأزرار */
-.ps-btn-sm {
-  padding: var(--ps-space-sm) var(--ps-space-md);
-  font-size: var(--ps-text-sm);
-}
-
-.ps-btn-lg {
-  padding: var(--ps-space-lg) var(--ps-space-2xl);
-  font-size: var(--ps-text-lg);
-}
-
-.ps-btn-xl {
-  padding: var(--ps-space-xl) var(--ps-space-3xl);
-  font-size: var(--ps-text-xl);
-}
-
-/* أزرار دائرية */
-.ps-btn-rounded {
-  border-radius: var(--ps-radius-full);
-}
-
-/* أزرار مع أيقونات */
-.ps-btn-icon {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ps-space-sm);
-}
-
-.ps-btn-icon svg,
-.ps-btn-icon i {
-  width: 1.25em;
-  height: 1.25em;
-  fill: currentColor;
-}
-
-/* ===== تحسينات النماذج ===== */
-.ps-form-group {
-  margin-bottom: var(--ps-space-lg);
-}
-
-.ps-form-label {
-  display: block;
-  margin-bottom: var(--ps-space-sm);
-  font-weight: 500;
-  color: var(--ps-gray-700);
-  font-size: var(--ps-text-sm);
-}
-
-.ps-form-input,
-.ps-form-textarea,
-.ps-form-select {
-  width: 100%;
-  padding: var(--ps-space-md);
-  border: 2px solid var(--ps-gray-200);
-  border-radius: var(--ps-radius);
-  font-size: var(--ps-text-base);
-  line-height: 1.5;
-  background: var(--ps-white);
-  transition: var(--ps-transition-all);
-  outline: none;
-}
-
-.ps-form-input:focus,
-.ps-form-textarea:focus,
-.ps-form-select:focus {
-  border-color: var(--ps-primary);
-  box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
-}
-
-.ps-form-input:invalid,
-.ps-form-textarea:invalid {
-  border-color: var(--ps-error);
-}
-
-.ps-form-input:invalid:focus,
-.ps-form-textarea:invalid:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-/* حقول البحث المحسنة */
-.ps-search-field {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.ps-search-input {
-  padding-right: 3rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1.25rem;
-}
-
-/* ===== تحسينات البطاقات ===== */
-.ps-card {
-  background: var(--ps-white);
-  border-radius: var(--ps-radius-lg);
-  border: 1px solid var(--ps-gray-200);
-  box-shadow: var(--ps-shadow);
-  overflow: hidden;
-  transition: var(--ps-transition-all);
-}
-
-.ps-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--ps-shadow-xl);
-}
-
-.ps-card-header {
-  padding: var(--ps-space-lg);
-  border-bottom: 1px solid var(--ps-gray-100);
-  background: var(--ps-gray-50);
-}
-
-.ps-card-body {
-  padding: var(--ps-space-lg);
-}
-
-.ps-card-footer {
-  padding: var(--ps-space-lg);
-  border-top: 1px solid var(--ps-gray-100);
-  background: var(--ps-gray-50);
-}
-
-/* بطاقات متقدمة مع تدرجات */
-.ps-card-gradient {
-  background: linear-gradient(135deg, var(--ps-white), var(--ps-gray-50));
-  border: none;
-}
-
-.ps-card-primary {
-  background: linear-gradient(135deg, var(--ps-primary), var(--ps-primary-dark));
-  color: var(--ps-white);
-  border: none;
-}
-
-.ps-card-secondary {
-  background: linear-gradient(135deg, var(--ps-secondary), #6366f1);
-  color: var(--ps-white);
-  border: none;
-}
-
-/* ===== تحسينات التنبيهات ===== */
-.ps-alert {
-  padding: var(--ps-space-md) var(--ps-space-lg);
-  border-radius: var(--ps-radius);
-  border: 1px solid transparent;
-  margin-bottom: var(--ps-space-lg);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--ps-space-md);
-}
-
-.ps-alert-icon {
-  flex-shrink: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-top: 0.125rem;
-}
-
-.ps-alert-content {
-  flex: 1;
-}
-
-.ps-alert-title {
-  font-weight: 600;
-  margin-bottom: var(--ps-space-xs);
-}
-
-.ps-alert-success {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: var(--ps-success);
-  color: #065f46;
-}
-
-.ps-alert-warning {
-  background: rgba(245, 158, 11, 0.1);
-  border-color: var(--ps-warning);
-  color: #92400e;
-}
-
-.ps-alert-error {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: var(--ps-error);
-  color: #991b1b;
-}
-
-.ps-alert-info {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: var(--ps-info);
-  color: #1e40af;
-}
-
-/* ===== تحسينات التبديلات (Tabs) ===== */
-.ps-tabs {
-  border-bottom: 1px solid var(--ps-gray-200);
-  margin-bottom: var(--ps-space-lg);
-}
-
-.ps-tabs-list {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: var(--ps-space-md);
-}
-
-.ps-tab-button {
-  padding: var(--ps-space-md) var(--ps-space-lg);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--ps-gray-600);
-  cursor: pointer;
-  transition: var(--ps-transition-all);
-  font-weight: 500;
-  position: relative;
-}
-
-.ps-tab-button:hover {
-  color: var(--ps-primary);
-  background: rgba(0, 124, 186, 0.05);
-}
-
-.ps-tab-button.active {
-  color: var(--ps-primary);
-  border-bottom-color: var(--ps-primary);
-}
-
-.ps-tab-content {
-  display: none;
-}
-
-.ps-tab-content.active {
-  display: block;
-  animation: ps-fadeIn 0.3s ease;
-}
-
-/* ===== تحسينات الصور ===== */
-.ps-image-enhanced {
-  transition: var(--ps-transition-all);
-  border-radius: var(--ps-radius);
-  overflow: hidden;
-}
-
-.ps-image-enhanced:hover {
-  transform: scale(1.02);
-  box-shadow: var(--ps-shadow-lg);
-}
-
-.ps-image-overlay {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--ps-radius);
-}
-
-.ps-image-overlay::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(0, 124, 186, 0.1), rgba(99, 102, 241, 0.1));
-  opacity: 0;
-  transition: var(--ps-transition-all);
-}
-
-.ps-image-overlay:hover::after {
-  opacity: 1;
-}
-
-/* ===== تحسينات شريط التقدم ===== */
-.ps-progress {
-  width: 100%;
-  height: 0.5rem;
-  background: var(--ps-gray-200);
-  border-radius: var(--ps-radius-full);
-  overflow: hidden;
-}
-
-.ps-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--ps-primary), var(--ps-secondary));
-  border-radius: var(--ps-radius-full);
-  transition: width 0.3s ease;
-}
-
-.ps-progress-animated .ps-progress-bar {
-  background-size: 2rem 2rem;
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.2) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    transparent 75%,
-    transparent
-  );
-  animation: ps-progress-stripes 1s linear infinite;
-}
-
-@keyframes ps-progress-stripes {
-  0% {
-    background-position: 2rem 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-
-/* ===== تحسينات التسميات (Badges) ===== */
-.ps-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--ps-space-xs) var(--ps-space-sm);
-  border-radius: var(--ps-radius-full);
-  font-size: var(--ps-text-xs);
-  font-weight: 600;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.ps-badge-primary {
-  background: var(--ps-primary);
-  color: var(--ps-white);
-}
-
-.ps-badge-secondary {
-  background: var(--ps-gray-100);
-  color: var(--ps-gray-800);
-}
-
-.ps-badge-success {
-  background: var(--ps-success);
-  color: var(--ps-white);
-}
-
-.ps-badge-warning {
-  background: var(--ps-warning);
-  color: var(--ps-white);
-}
-
-.ps-badge-error {
-  background: var(--ps-error);
-  color: var(--ps-white);
-}
-
-/* ===== تحسينات القوائم المنسدلة ===== */
-.ps-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.ps-dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 12rem;
-  background: var(--ps-white);
-  border: 1px solid var(--ps-gray-200);
-  border-radius: var(--ps-radius);
-  box-shadow: var(--ps-shadow-lg);
-  z-index: var(--ps-z-dropdown);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-0.5rem);
-  transition: var(--ps-transition-all);
-}
-
-.ps-dropdown:hover .ps-dropdown-content,
-.ps-dropdown.active .ps-dropdown-content {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.ps-dropdown-item {
-  display: block;
-  padding: var(--ps-space-sm) var(--ps-space-md);
-  color: var(--ps-gray-700);
-  text-decoration: none;
-  transition: var(--ps-transition-fast);
-}
-
-.ps-dropdown-item:hover {
-  background: var(--ps-gray-50);
-  color: var(--ps-primary);
-  text-decoration: none;
-}
-
-/* ===== تحسينات التلميحات (Tooltips) ===== */
-.ps-tooltip {
-  position: relative;
-  cursor: help;
-}
-
-.ps-tooltip::before,
-.ps-tooltip::after {
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--ps-transition-all);
-  pointer-events: none;
-}
-
-.ps-tooltip::before {
-  content: attr(data-tooltip);
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-0.5rem);
-  background: var(--ps-gray-900);
-  color: var(--ps-white);
-  padding: var(--ps-space-sm) var(--ps-space-md);
-  border-radius: var(--ps-radius);
-  font-size: var(--ps-text-sm);
-  white-space: nowrap;
-  z-index: var(--ps-z-tooltip);
-}
-
-.ps-tooltip::after {
-  content: '';
-  bottom: calc(100% - 0.25rem);
-  left: 50%;
-  transform: translateX(-50%);
-  border: 0.25rem solid transparent;
-  border-top-color: var(--ps-gray-900);
-}
-
-.ps-tooltip:hover::before,
-.ps-tooltip:hover::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ===== تحسينات النوافذ المنبثقة ===== */
-.ps-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--ps-z-modal);
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--ps-transition-all);
-}
-
-.ps-modal.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.ps-modal-content {
-  background: var(--ps-white);
-  border-radius: var(--ps-radius-lg);
-  box-shadow: var(--ps-shadow-2xl);
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow: auto;
-  transform: scale(0.9);
-  transition: var(--ps-transition-all);
-}
-
-.ps-modal.active .ps-modal-content {
-  transform: scale(1);
-}
-
-.ps-modal-header {
-  padding: var(--ps-space-lg);
-  border-bottom: 1px solid var(--ps-gray-200);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ps-modal-title {
-  margin: 0;
-  font-size: var(--ps-text-xl);
-  font-weight: 600;
-}
-
-.ps-modal-close {
-  background: none;
-  border: none;
-  font-size: var(--ps-text-xl);
-  cursor: pointer;
-  color: var(--ps-gray-400);
-  transition: var(--ps-transition-fast);
-}
-
-.ps-modal-close:hover {
-  color: var(--ps-gray-600);
-}
-
-.ps-modal-body {
-  padding: var(--ps-space-lg);
-}
-
-.ps-modal-footer {
-  padding: var(--ps-space-lg);
-  border-top: 1px solid var(--ps-gray-200);
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--ps-space-md);
-}
-
-/* ===== حركات وتأثيرات ===== */
-@keyframes ps-fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes ps-slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(2rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes ps-slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-2rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes ps-slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-2rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes ps-slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(2rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes ps-scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes ps-bounce {
-  0%, 20%, 53%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40%, 43% {
-    transform: translateY(-1rem);
-  }
-  70% {
-    transform: translateY(-0.5rem);
-  }
-  90% {
-    transform: translateY(-0.25rem);
-  }
-}
-
-@keyframes ps-pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes ps-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* فئات الحركة */
-.ps-animate-fadeIn {
-  animation: ps-fadeIn 0.6s ease;
-}
-
-.ps-animate-slideInUp {
-  animation: ps-slideInUp 0.6s ease;
-}
-
-.ps-animate-slideInDown {
-  animation: ps-slideInDown 0.6s ease;
-}
-
-.ps-animate-slideInLeft {
-  animation: ps-slideInLeft 0.6s ease;
-}
-
-.ps-animate-slideInRight {
-  animation: ps-slideInRight 0.6s ease;
-}
-
-.ps-animate-scaleIn {
-  animation: ps-scaleIn 0.6s ease;
-}
-
-.ps-animate-bounce {
-  animation: ps-bounce 1s ease;
-}
-
-.ps-animate-pulse {
-  animation: ps-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.ps-animate-spin {
-  animation: ps-spin 1s linear infinite;
-}
-
-/* ===== تحسينات الاستجابة ===== */
-@media (max-width: 1024px) {
-  :root {
-    --ps-space-lg: 1.25rem;
-    --ps-space-xl: 1.75rem;
-    --ps-space-2xl: 2.5rem;
-    --ps-space-3xl: 3.5rem;
-    
-    --ps-text-lg: 1.1rem;
-    --ps-text-xl: 1.2rem;
-    --ps-text-2xl: 1.4rem;
-    --ps-text-3xl: 1.7rem;
-    --ps-text-4xl: 2rem;
-    --ps-text-5xl: 2.5rem;
-  }
-  
-  .ps-tabs-list {
-    flex-wrap: wrap;
-  }
-  
-  .ps-modal-content {
-    margin: var(--ps-space-md);
-    max-width: calc(100vw - 2rem);
-  }
-  
-  .ps-dropdown-content {
-    position: fixed;
-    left: var(--ps-space-md) !important;
-    right: var(--ps-space-md);
-    min-width: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .ps-btn-lg {
-    padding: var(--ps-space-md) var(--ps-space-xl);
-    font-size: var(--ps-text-base);
-  }
-  
-  .ps-btn-xl {
-    padding: var(--ps-space-lg) var(--ps-space-2xl);
-    font-size: var(--ps-text-lg);
-  }
-  
-  .ps-card-header,
-  .ps-card-body,
-  .ps-card-footer {
-    padding: var(--ps-space-md);
-  }
-  
-  .ps-modal-header,
-  .ps-modal-body,
-  .ps-modal-footer {
-    padding: var(--ps-space-md);
-  }
-  
-  .ps-tooltip::before {
-    white-space: normal;
-    max-width: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .ps-tabs-list {
-    flex-direction: column;
-  }
-  
-  .ps-modal-footer {
-    flex-direction: column;
-  }
-  
-  .ps-dropdown-content {
-    left: var(--ps-space-sm) !important;
-    right: var(--ps-space-sm);
-  }
-}
-
-/* ===== تحسينات إمكانية الوصول ===== */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ps-white: #1f2937;
-    --ps-gray-50: #374151;
-    --ps-gray-100: #4b5563;
-    --ps-gray-200: #6b7280;
-    --ps-gray-300: #9ca3af;
-    --ps-gray-400: #d1d5db;
-    --ps-gray-500: #e5e7eb;
-    --ps-gray-600: #f3f4f6;
-    --ps-gray-700: #f9fafb;
-    --ps-gray-800: #ffffff;
-    --ps-gray-900: #ffffff;
-  }
-}
-
-/* فئات أدوات سريعة */
-.ps-text-center { text-align: center; }
-.ps-text-left { text-align: left; }
-.ps-text-right { text-align: right; }
-.ps-font-light { font-weight: 300; }
-.ps-font-normal { font-weight: 400; }
-.ps-font-medium { font-weight: 500; }
-.ps-font-semibold { font-weight: 600; }
-.ps-font-bold { font-weight: 700; }
-.ps-uppercase { text-transform: uppercase; }
-.ps-lowercase { text-transform: lowercase; }
-.ps-capitalize { text-transform: capitalize; }
-
-.ps-flex { display: flex; }
-.ps-inline-flex { display: inline-flex; }
-.ps-grid { display: grid; }
-.ps-block { display: block; }
-.ps-inline-block { display: inline-block; }
-.ps-hidden { display: none; }
-
-.ps-items-center { align-items: center; }
-.ps-items-start { align-items: flex-start; }
-.ps-items-end { align-items: flex-end; }
-.ps-justify-center { justify-content: center; }
-.ps-justify-between { justify-content: space-between; }
-.ps-justify-around { justify-content: space-around; }
-
-.ps-rounded { border-radius: var(--ps-radius); }
-.ps-rounded-lg { border-radius: var(--ps-radius-lg); }
-.ps-rounded-full { border-radius: var(--ps-radius-full); }
-
-.ps-shadow { box-shadow: var(--ps-shadow); }
-.ps-shadow-md { box-shadow: var(--ps-shadow-md); }
-.ps-shadow-lg { box-shadow: var(--ps-shadow-lg); }
-.ps-shadow-xl { box-shadow: var(--ps-shadow-xl); }
-
-.ps-transition { transition: var(--ps-transition-all); }
-.ps-transition-fast { transition: var(--ps-transition-fast); }
-.ps-transition-slow { transition: var(--ps-transition-slow); }
-
-/* ===== تحسينات الطباعة ===== */
-@media print {
-  .ps-btn,
-  .ps-modal,
-  .ps-dropdown,
-  .ps-tooltip {
-    display: none !important;
-  }
-  
-  .ps-card {
-    box-shadow: none;
-    border: 1px solid var(--ps-gray-300);
-  }
-  
-  body {
-    background: white !important;
-    color: black !important;
-  }
-  
-  a {
-    color: black !important;
-    text-decoration: underline !important;
-  }
-}
-
-
 
 📁 اسم الملف: advanced-analytics.php
+
 <?php
 /**
- * Advanced Analytics System for Practical Solutions Pro
- * نظام التحليلات المتقدمة للحلول العملية الاحترافية
- * المكان: /inc/advanced-analytics.php
+ * Advanced Analytics System - نظام التحليلات المتقدم المُصلح
+ * المسار: /inc/advanced-analytics.php
  */
 
 if (!defined('ABSPATH')) {
@@ -14483,851 +10207,249 @@ if (!defined('ABSPATH')) {
 
 class PS_Advanced_Analytics {
     
-    private $table_analytics;
-    private $table_user_activity;
-    private $table_search_analytics;
-    private $table_content_performance;
+    private static $table_name;
+    private static $search_table;
     
     public function __construct() {
         global $wpdb;
-        $this->table_analytics = $wpdb->prefix . 'ps_analytics';
-        $this->table_user_activity = $wpdb->prefix . 'ps_user_activity';
-        $this->table_search_analytics = $wpdb->prefix . 'ps_search_analytics';
-        $this->table_content_performance = $wpdb->prefix . 'ps_content_performance';
+        self::$table_name = $wpdb->prefix . 'ps_analytics';
+        self::$search_table = $wpdb->prefix . 'ps_search_analytics';
         
         add_action('init', array($this, 'init'));
-        register_activation_hook(__FILE__, array($this, 'create_analytics_tables'));
     }
     
-    /**
-     * ==== التهيئة ====
-     */
     public function init() {
-        // AJAX handlers
-        add_action('wp_ajax_ps_track_user_activity', array($this, 'handle_track_user_activity'));
-        add_action('wp_ajax_nopriv_ps_track_user_activity', array($this, 'handle_track_user_activity'));
+        add_action('wp_ajax_ps_get_analytics_data', array($this, 'get_analytics_data'));
+        add_action('wp_ajax_ps_export_analytics', array($this, 'export_analytics'));
+        add_action('wp_ajax_ps_cleanup_old_analytics', array($this, 'cleanup_old_data'));
+        add_action('after_switch_theme', array($this, 'create_tables'));
+        add_action('ps_daily_cleanup', array($this, 'daily_cleanup'));
         
-        add_action('wp_ajax_ps_track_search_activity', array($this, 'handle_track_search_activity'));
-        add_action('wp_ajax_nopriv_ps_track_search_activity', array($this, 'handle_track_search_activity'));
-        
-        add_action('wp_ajax_ps_get_analytics_data', array($this, 'handle_get_analytics_data'));
-        add_action('wp_ajax_ps_get_content_performance', array($this, 'handle_get_content_performance'));
-        
-        // Hooks للتتبع التلقائي
-        add_action('wp_footer', array($this, 'inject_tracking_script'));
-        add_action('wp_head', array($this, 'inject_tracking_metadata'));
-        
-        // تتبع أحداث WordPress
-        add_action('wp_insert_comment', array($this, 'track_comment_activity'));
-        add_action('transition_post_status', array($this, 'track_post_status_change'), 10, 3);
-        
-        // تنظيف البيانات القديمة
-        add_action('ps_cleanup_analytics', array($this, 'cleanup_old_analytics_data'));
-        if (!wp_next_scheduled('ps_cleanup_analytics')) {
-            wp_schedule_event(time(), 'daily', 'ps_cleanup_analytics');
+        if (!wp_next_scheduled('ps_daily_cleanup')) {
+            wp_schedule_event(time(), 'daily', 'ps_daily_cleanup');
         }
     }
     
-    /**
-     * ==== إنشاء جداول التحليلات ====
-     */
-    public function create_analytics_tables() {
+    public static function create_tables() {
         global $wpdb;
-        
         $charset_collate = $wpdb->get_charset_collate();
         
-        // جدول التحليلات العامة
-        $sql_analytics = "CREATE TABLE {$this->table_analytics} (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            event_type varchar(50) NOT NULL,
-            event_action varchar(100) NOT NULL,
-            event_value longtext NULL,
-            user_id bigint(20) NULL,
-            session_id varchar(100) NOT NULL,
-            ip_address varchar(45) NOT NULL,
-            user_agent text NOT NULL,
-            page_url text NOT NULL,
-            referrer_url text NULL,
-            utm_source varchar(100) NULL,
-            utm_medium varchar(100) NULL,
-            utm_campaign varchar(100) NULL,
-            device_type varchar(20) NOT NULL DEFAULT 'desktop',
-            browser varchar(50) NULL,
-            operating_system varchar(50) NULL,
-            country varchar(5) NULL,
-            city varchar(100) NULL,
-            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            INDEX idx_event_type (event_type),
-            INDEX idx_session_id (session_id),
-            INDEX idx_user_id (user_id),
-            INDEX idx_created_at (created_at),
-            INDEX idx_page_url (page_url(100))
+        $analytics_table_sql = "CREATE TABLE " . self::$table_name . " (
+            id bigint(20) NOT NULL AUTO_INCREMENT, post_id bigint(20) DEFAULT NULL, page_url varchar(255) NOT NULL, page_title varchar(255) DEFAULT NULL, user_ip varchar(45) DEFAULT NULL, user_agent text DEFAULT NULL, referer varchar(255) DEFAULT NULL, visit_date datetime NOT NULL, time_on_page int(11) DEFAULT 0, bounce_rate tinyint(1) DEFAULT 0, device_type varchar(20) DEFAULT NULL, browser varchar(50) DEFAULT NULL, country varchar(2) DEFAULT NULL, PRIMARY KEY (id), KEY post_id (post_id), KEY visit_date (visit_date), KEY device_type (device_type)
         ) $charset_collate;";
         
-        // جدول نشاط المستخدمين
-        $sql_user_activity = "CREATE TABLE {$this->table_user_activity} (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            user_id bigint(20) NULL,
-            session_id varchar(100) NOT NULL,
-            post_id bigint(20) NULL,
-            activity_type varchar(50) NOT NULL,
-            scroll_depth float DEFAULT 0,
-            time_on_page int DEFAULT 0,
-            interactions_count int DEFAULT 0,
-            reading_progress float DEFAULT 0,
-            mouse_movements int DEFAULT 0,
-            clicks_count int DEFAULT 0,
-            form_interactions int DEFAULT 0,
-            search_interactions int DEFAULT 0,
-            social_shares int DEFAULT 0,
-            bookmarks_added int DEFAULT 0,
-            comments_posted int DEFAULT 0,
-            engagement_score float DEFAULT 0,
-            bounce_rate float DEFAULT 0,
-            return_visitor boolean DEFAULT FALSE,
-            device_info text NULL,
-            location_data text NULL,
-            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            INDEX idx_user_id (user_id),
-            INDEX idx_session_id (session_id),
-            INDEX idx_post_id (post_id),
-            INDEX idx_activity_type (activity_type),
-            INDEX idx_created_at (created_at)
-        ) $charset_collate;";
-        
-        // جدول تحليلات البحث
-        $sql_search_analytics = "CREATE TABLE {$this->table_search_analytics} (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            search_query varchar(255) NOT NULL,
-            search_type varchar(50) NOT NULL DEFAULT 'regular',
-            results_count int DEFAULT 0,
-            user_id bigint(20) NULL,
-            session_id varchar(100) NOT NULL,
-            clicked_result_id bigint(20) NULL,
-            clicked_result_position int NULL,
-            time_to_click int NULL,
-            search_refinements int DEFAULT 0,
-            voice_search boolean DEFAULT FALSE,
-            ai_suggestions_used boolean DEFAULT FALSE,
-            search_success boolean DEFAULT FALSE,
-            user_satisfaction_score float NULL,
-            search_intent varchar(100) NULL,
-            search_category varchar(100) NULL,
-            geographic_location varchar(100) NULL,
-            device_type varchar(20) NOT NULL DEFAULT 'desktop',
-            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            INDEX idx_search_query (search_query),
-            INDEX idx_search_type (search_type),
-            INDEX idx_user_id (user_id),
-            INDEX idx_session_id (session_id),
-            INDEX idx_created_at (created_at),
-            FULLTEXT idx_search_content (search_query, search_intent, search_category)
-        ) $charset_collate;";
-        
-        // جدول أداء المحتوى
-        $sql_content_performance = "CREATE TABLE {$this->table_content_performance} (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            post_id bigint(20) NOT NULL,
-            date_tracked date NOT NULL,
-            views_count int DEFAULT 0,
-            unique_views int DEFAULT 0,
-            avg_time_on_page float DEFAULT 0,
-            avg_scroll_depth float DEFAULT 0,
-            bounce_rate float DEFAULT 0,
-            engagement_rate float DEFAULT 0,
-            social_shares_total int DEFAULT 0,
-            facebook_shares int DEFAULT 0,
-            twitter_shares int DEFAULT 0,
-            linkedin_shares int DEFAULT 0,
-            whatsapp_shares int DEFAULT 0,
-            telegram_shares int DEFAULT 0,
-            email_shares int DEFAULT 0,
-            bookmarks_count int DEFAULT 0,
-            comments_count int DEFAULT 0,
-            ratings_average float DEFAULT 0,
-            ratings_count int DEFAULT 0,
-            search_impressions int DEFAULT 0,
-            search_clicks int DEFAULT 0,
-            search_ctr float DEFAULT 0,
-            organic_traffic int DEFAULT 0,
-            referral_traffic int DEFAULT 0,
-            direct_traffic int DEFAULT 0,
-            social_traffic int DEFAULT 0,
-            conversion_rate float DEFAULT 0,
-            revenue_generated decimal(10,2) DEFAULT 0,
-            performance_score float DEFAULT 0,
-            quality_score float DEFAULT 0,
-            user_satisfaction float DEFAULT 0,
-            mobile_views_percentage float DEFAULT 0,
-            top_referrers text NULL,
-            top_search_terms text NULL,
-            user_demographics text NULL,
-            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            UNIQUE KEY unique_post_date (post_id, date_tracked),
-            INDEX idx_post_id (post_id),
-            INDEX idx_date_tracked (date_tracked),
-            INDEX idx_performance_score (performance_score),
-            INDEX idx_views_count (views_count)
+        $search_table_sql = "CREATE TABLE " . self::$search_table . " (
+            id bigint(20) NOT NULL AUTO_INCREMENT, search_query varchar(255) NOT NULL, voice_text text DEFAULT NULL, results_count int(11) DEFAULT 0, search_type varchar(20) DEFAULT 'text', user_ip varchar(45) DEFAULT NULL, user_agent text DEFAULT NULL, search_date datetime NOT NULL, clicked_result varchar(255) DEFAULT NULL, session_id varchar(64) DEFAULT NULL, PRIMARY KEY (id), KEY search_query (search_query), KEY search_date (search_date), KEY search_type (search_type)
         ) $charset_collate;";
         
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql_analytics);
-        dbDelta($sql_user_activity);
-        dbDelta($sql_search_analytics);
-        dbDelta($sql_content_performance);
+        dbDelta($analytics_table_sql);
+        dbDelta($search_table_sql);
         
-        // إضافة إعدادات افتراضية
-        add_option('ps_analytics_version', '1.0');
-        add_option('ps_analytics_settings', array(
-            'track_user_activity' => true,
-            'track_search_analytics' => true,
-            'track_content_performance' => true,
-            'anonymize_ip' => true,
-            'data_retention_days' => 365,
-            'real_time_tracking' => true,
-            'advanced_metrics' => true
-        ));
+        self::create_index_safely(self::$table_name, 'idx_analytics_performance', '(visit_date, post_id, device_type)');
+        self::create_index_safely(self::$search_table, 'idx_search_performance', '(search_date, search_type, results_count)');
+    }
+
+    private static function create_index_safely($table_name, $index_name, $columns) {
+        global $wpdb;
+        $index_exists = $wpdb->get_var($wpdb->prepare("SHOW INDEX FROM `$table_name` WHERE Key_name = %s", $index_name));
+        if (!$index_exists) {
+            $wpdb->query("CREATE INDEX `$index_name` ON `$table_name` $columns");
+        }
     }
     
-    /**
-     * ==== تتبع نشاط المستخدم ====
-     */
-    public function handle_track_user_activity() {
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-        }
+    public static function track_page_view($post_id = null) {
+        global $wpdb;
+        $analytics_settings = get_option('ps_analytics_settings', array());
+        if (!($analytics_settings['enabled'] ?? true)) { return; }
         
-        $activity_data = array(
-            'user_id' => get_current_user_id() ?: null,
-            'session_id' => sanitize_text_field($_POST['session_id'] ?? ''),
-            'post_id' => intval($_POST['post_id'] ?? 0),
-            'activity_type' => sanitize_text_field($_POST['activity_type'] ?? 'page_view'),
-            'scroll_depth' => floatval($_POST['scroll_depth'] ?? 0),
-            'time_on_page' => intval($_POST['time_on_page'] ?? 0),
-            'interactions_count' => intval($_POST['interactions_count'] ?? 0),
-            'reading_progress' => floatval($_POST['reading_progress'] ?? 0),
-            'mouse_movements' => intval($_POST['mouse_movements'] ?? 0),
-            'clicks_count' => intval($_POST['clicks_count'] ?? 0),
-            'engagement_score' => floatval($_POST['engagement_score'] ?? 0),
-            'device_info' => json_encode($_POST['device_info'] ?? array()),
-            'location_data' => json_encode($_POST['location_data'] ?? array())
+        $data = array(
+            'post_id' => $post_id,
+            'page_url' => esc_url_raw($_SERVER['REQUEST_URI'] ?? ''),
+            'page_title' => wp_get_document_title(),
+            'user_ip' => self::get_anonymized_ip(),
+            'user_agent' => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? ''),
+            'referer' => esc_url_raw($_SERVER['HTTP_REFERER'] ?? ''),
+            'visit_date' => current_time('mysql'),
+            'device_type' => self::detect_device_type(),
+            'browser' => self::detect_browser(),
+            'country' => self::detect_country()
         );
-        
-        try {
-            $result = $this->save_user_activity($activity_data);
-            if ($result) {
-                wp_send_json_success(array('activity_id' => $result));
-            } else {
-                wp_send_json_error(__('فشل في حفظ النشاط', 'practical-solutions'));
-            }
-        } catch (Exception $e) {
-            error_log('User Activity Tracking Error: ' . $e->getMessage());
-            wp_send_json_error(__('حدث خطأ في التتبع', 'practical-solutions'));
-        }
+        $wpdb->insert(self::$table_name, $data);
     }
     
-    /**
-     * ==== حفظ نشاط المستخدم ====
-     */
-    public function save_user_activity($data) {
+    public static function log_search_event($search_data) {
         global $wpdb;
+        $analytics_settings = get_option('ps_analytics_settings', array());
+        if (!($analytics_settings['track_search_analytics'] ?? true)) { return; }
         
-        // التحقق من وجود نشاط سابق في نفس الجلسة
-        $existing_activity = $wpdb->get_row($wpdb->prepare(
-            "SELECT id FROM {$this->table_user_activity} 
-             WHERE session_id = %s AND post_id = %d AND activity_type = %s 
-             ORDER BY created_at DESC LIMIT 1",
-            $data['session_id'],
-            $data['post_id'],
-            $data['activity_type']
-        ));
-        
-        if ($existing_activity) {
-            // تحديث النشاط الموجود
-            return $wpdb->update(
-                $this->table_user_activity,
-                $data,
-                array('id' => $existing_activity->id),
-                array('%d', '%s', '%d', '%s', '%f', '%d', '%d', '%f', '%d', '%d', '%f', '%s', '%s'),
-                array('%d')
-            );
-        } else {
-            // إنشاء نشاط جديد
-            $result = $wpdb->insert(
-                $this->table_user_activity,
-                $data,
-                array('%d', '%s', '%d', '%s', '%f', '%d', '%d', '%f', '%d', '%d', '%f', '%s', '%s')
-            );
-            
-            return $result ? $wpdb->insert_id : false;
-        }
-    }
-    
-    /**
-     * ==== تتبع نشاط البحث ====
-     */
-    public function handle_track_search_activity() {
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-        }
-        
-        $search_data = array(
-            'search_query' => sanitize_text_field($_POST['search_query'] ?? ''),
-            'search_type' => sanitize_text_field($_POST['search_type'] ?? 'regular'),
-            'results_count' => intval($_POST['results_count'] ?? 0),
-            'user_id' => get_current_user_id() ?: null,
-            'session_id' => sanitize_text_field($_POST['session_id'] ?? ''),
-            'clicked_result_id' => intval($_POST['clicked_result_id'] ?? 0) ?: null,
-            'clicked_result_position' => intval($_POST['clicked_result_position'] ?? 0) ?: null,
-            'time_to_click' => intval($_POST['time_to_click'] ?? 0) ?: null,
-            'search_refinements' => intval($_POST['search_refinements'] ?? 0),
-            'voice_search' => boolval($_POST['voice_search'] ?? false),
-            'ai_suggestions_used' => boolval($_POST['ai_suggestions_used'] ?? false),
-            'search_success' => boolval($_POST['search_success'] ?? false),
-            'search_intent' => sanitize_text_field($_POST['search_intent'] ?? ''),
-            'search_category' => sanitize_text_field($_POST['search_category'] ?? ''),
-            'device_type' => sanitize_text_field($_POST['device_type'] ?? 'desktop')
+        $data = array(
+            'search_query' => sanitize_text_field($search_data['query'] ?? ''),
+            'voice_text' => sanitize_textarea_field($search_data['voice_text'] ?? ''),
+            'results_count' => intval($search_data['results_count'] ?? 0),
+            'search_type' => sanitize_text_field($search_data['search_type'] ?? 'text'),
+            'user_ip' => self::get_anonymized_ip(),
+            'user_agent' => sanitize_text_field($search_data['user_agent'] ?? ''),
+            'search_date' => current_time('mysql'),
+            'session_id' => self::get_session_id()
         );
-        
-        try {
-            $result = $this->save_search_activity($search_data);
-            wp_send_json_success(array('search_id' => $result));
-        } catch (Exception $e) {
-            error_log('Search Activity Tracking Error: ' . $e->getMessage());
-            wp_send_json_error(__('حدث خطأ في تتبع البحث', 'practical-solutions'));
-        }
+        $wpdb->insert(self::$search_table, $data);
     }
     
-    /**
-     * ==== حفظ نشاط البحث ====
-     */
-    public function save_search_activity($data) {
-        global $wpdb;
+    public function get_analytics_data() {
+        check_ajax_referer('ps_admin_nonce', 'nonce');
+        if (!current_user_can('manage_options')) { wp_send_json_error(__('غير مصرح', 'practical-solutions')); }
         
-        $result = $wpdb->insert(
-            $this->table_search_analytics,
-            $data,
-            array('%s', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
-        );
-        
-        if ($result) {
-            // تحديث إحصائيات البحث الفورية
-            $this->update_search_statistics($data['search_query']);
-            return $wpdb->insert_id;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * ==== تحديث إحصائيات البحث ====
-     */
-    private function update_search_statistics($query) {
-        // زيادة عداد البحثات الشائعة
-        $popular_searches = get_option('ps_popular_searches', array());
-        
-        if (isset($popular_searches[$query])) {
-            $popular_searches[$query]++;
-        } else {
-            $popular_searches[$query] = 1;
-        }
-        
-        // ترتيب وحفظ أفضل 100 بحث
-        arsort($popular_searches);
-        $popular_searches = array_slice($popular_searches, 0, 100, true);
-        update_option('ps_popular_searches', $popular_searches);
-    }
-    
-    /**
-     * ==== تتبع أداء المحتوى ====
-     */
-    public function track_content_performance($post_id, $metrics = array()) {
-        global $wpdb;
-        
-        $today = current_time('Y-m-d');
-        
-        // البحث عن سجل اليوم
-        $existing_record = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$this->table_content_performance} 
-             WHERE post_id = %d AND date_tracked = %s",
-            $post_id,
-            $today
-        ));
-        
-        if ($existing_record) {
-            // تحديث السجل الموجود
-            $update_data = array();
-            foreach ($metrics as $metric => $value) {
-                if (in_array($metric, array('views_count', 'unique_views', 'social_shares_total', 'bookmarks_count'))) {
-                    $update_data[$metric] = $existing_record->$metric + $value;
-                } elseif (in_array($metric, array('avg_time_on_page', 'avg_scroll_depth', 'engagement_rate'))) {
-                    // حساب المتوسط الجديد
-                    $current_views = max($existing_record->views_count, 1);
-                    $update_data[$metric] = (($existing_record->$metric * $current_views) + $value) / ($current_views + 1);
-                } else {
-                    $update_data[$metric] = $value;
-                }
-            }
-            
-            if (!empty($update_data)) {
-                $wpdb->update(
-                    $this->table_content_performance,
-                    $update_data,
-                    array('id' => $existing_record->id)
-                );
-            }
-        } else {
-            // إنشاء سجل جديد
-            $default_data = array(
-                'post_id' => $post_id,
-                'date_tracked' => $today,
-                'views_count' => 0,
-                'unique_views' => 0,
-                'avg_time_on_page' => 0,
-                'avg_scroll_depth' => 0,
-                'bounce_rate' => 0,
-                'engagement_rate' => 0,
-                'social_shares_total' => 0,
-                'bookmarks_count' => 0,
-                'comments_count' => 0,
-                'performance_score' => 0
-            );
-            
-            $insert_data = array_merge($default_data, $metrics);
-            
-            $wpdb->insert(
-                $this->table_content_performance,
-                $insert_data
-            );
-        }
-        
-        // حساب نقاط الأداء
-        $this->calculate_performance_score($post_id);
-    }
-    
-    /**
-     * ==== حساب نقاط الأداء ====
-     */
-    private function calculate_performance_score($post_id) {
-        global $wpdb;
-        
-        $metrics = $wpdb->get_row($wpdb->prepare(
-            "SELECT AVG(views_count) as avg_views,
-                    AVG(avg_time_on_page) as avg_time,
-                    AVG(avg_scroll_depth) as avg_scroll,
-                    AVG(engagement_rate) as avg_engagement,
-                    AVG(social_shares_total) as avg_shares
-             FROM {$this->table_content_performance} 
-             WHERE post_id = %d AND date_tracked >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)",
-            $post_id
-        ));
-        
-        if ($metrics) {
-            // معادلة حساب النقاط (من 0 إلى 100)
-            $views_score = min(($metrics->avg_views / 100) * 25, 25);
-            $time_score = min(($metrics->avg_time / 300) * 20, 20); // 5 دقائق = نقاط كاملة
-            $scroll_score = min($metrics->avg_scroll * 20, 20); // 100% تمرير = نقاط كاملة
-            $engagement_score = min($metrics->avg_engagement * 25, 25);
-            $social_score = min(($metrics->avg_shares / 10) * 10, 10); // 10 مشاركات = نقاط كاملة
-            
-            $total_score = $views_score + $time_score + $scroll_score + $engagement_score + $social_score;
-            
-            // تحديث نقاط الأداء
-            $wpdb->update(
-                $this->table_content_performance,
-                array('performance_score' => round($total_score, 2)),
-                array('post_id' => $post_id, 'date_tracked' => current_time('Y-m-d'))
-            );
-            
-            // حفظ في meta للوصول السريع
-            update_post_meta($post_id, '_ps_performance_score', round($total_score, 2));
-        }
-    }
-    
-    /**
-     * ==== الحصول على بيانات التحليلات ====
-     */
-    public function handle_get_analytics_data() {
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-        }
-        
-        if (!wp_verify_nonce($_POST['nonce'], 'ps_nonce')) {
-            wp_send_json_error(__('غير مصرح', 'practical-solutions'));
-        }
-        
-        $report_type = sanitize_text_field($_POST['report_type'] ?? 'overview');
-        $date_range = sanitize_text_field($_POST['date_range'] ?? '30');
-        $filters = $_POST['filters'] ?? array();
-        
-        try {
-            $data = $this->get_analytics_report($report_type, $date_range, $filters);
-            wp_send_json_success($data);
-        } catch (Exception $e) {
-            error_log('Analytics Data Error: ' . $e->getMessage());
-            wp_send_json_error(__('حدث خطأ في جلب البيانات', 'practical-solutions'));
-        }
-    }
-    
-    /**
-     * ==== إنشاء تقرير التحليلات ====
-     */
-    public function get_analytics_report($type, $date_range, $filters = array()) {
-        global $wpdb;
-        
-        $date_condition = $this->build_date_condition($date_range);
+        $period = sanitize_text_field($_POST['period'] ?? '7days');
+        $type = sanitize_text_field($_POST['type'] ?? 'overview');
+        $data = array();
         
         switch ($type) {
-            case 'overview':
-                return $this->get_overview_report($date_condition);
-            case 'user_behavior':
-                return $this->get_user_behavior_report($date_condition, $filters);
-            case 'search_analytics':
-                return $this->get_search_analytics_report($date_condition, $filters);
-            case 'content_performance':
-                return $this->get_content_performance_report($date_condition, $filters);
-            case 'real_time':
-                return $this->get_real_time_report();
-            default:
-                return array('error' => 'نوع التقرير غير معروف');
+            case 'overview': $data = $this->get_overview_data($period); break;
+            case 'pages': $data = $this->get_pages_performance($period); break;
+            case 'search': $data = $this->get_search_analytics($period); break;
+            case 'devices': $data = $this->get_device_analytics($period); break;
+            default: $data = $this->get_overview_data($period);
         }
+        wp_send_json_success($data);
     }
     
-    /**
-     * ==== تقرير نظرة عامة ====
-     */
-    private function get_overview_report($date_condition) {
+    private function get_overview_data($period) {
         global $wpdb;
+        $date_condition = $this->get_date_condition($period);
+        $total_views = $wpdb->get_var("SELECT COUNT(*) FROM " . self::$table_name . " WHERE $date_condition");
+        $unique_pages = $wpdb->get_var("SELECT COUNT(DISTINCT post_id) FROM " . self::$table_name . " WHERE $date_condition AND post_id IS NOT NULL");
+        $total_searches = $wpdb->get_var("SELECT COUNT(*) FROM " . self::$search_table . " WHERE $date_condition");
+        $bounce_rate = $wpdb->get_var("SELECT AVG(bounce_rate) FROM " . self::$table_name . " WHERE $date_condition");
+        $daily_views = $wpdb->get_results("SELECT DATE(visit_date) as date, COUNT(*) as views FROM " . self::$table_name . " WHERE $date_condition GROUP BY DATE(visit_date) ORDER BY date ASC");
         
-        $data = array();
-        
-        // إحصائيات أساسية
-        $data['basic_stats'] = $wpdb->get_row("
-            SELECT 
-                COUNT(DISTINCT session_id) as total_sessions,
-                COUNT(DISTINCT user_id) as total_users,
-                COUNT(*) as total_page_views,
-                AVG(time_on_page) as avg_session_duration,
-                AVG(scroll_depth) as avg_scroll_depth,
-                AVG(interactions_count) as avg_interactions
-            FROM {$this->table_user_activity} 
-            WHERE $date_condition
-        ");
-        
-        // أفضل المحتوى
-        $data['top_content'] = $wpdb->get_results("
-            SELECT 
-                cp.post_id,
-                p.post_title,
-                cp.views_count,
-                cp.avg_time_on_page,
-                cp.social_shares_total,
-                cp.performance_score
-            FROM {$this->table_content_performance} cp
-            LEFT JOIN {$wpdb->posts} p ON cp.post_id = p.ID
-            WHERE cp.date_tracked >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-            ORDER BY cp.performance_score DESC
-            LIMIT 10
-        ");
-        
-        // الكلمات المفتاحية الشائعة
-        $data['popular_searches'] = $wpdb->get_results("
-            SELECT 
-                search_query,
-                COUNT(*) as search_count,
-                AVG(results_count) as avg_results,
-                SUM(CASE WHEN search_success THEN 1 ELSE 0 END) as success_count
-            FROM {$this->table_search_analytics}
-            WHERE $date_condition
-            GROUP BY search_query
-            ORDER BY search_count DESC
-            LIMIT 15
-        ");
-        
-        // إحصائيات الأجهزة
-        $data['device_stats'] = $wpdb->get_results("
-            SELECT 
-                device_type,
-                COUNT(*) as count,
-                AVG(time_on_page) as avg_time
-            FROM {$this->table_user_activity}
-            WHERE $date_condition
-            GROUP BY device_type
-        ");
-        
-        // الاتجاهات اليومية
-        $data['daily_trends'] = $wpdb->get_results("
-            SELECT 
-                DATE(created_at) as date,
-                COUNT(DISTINCT session_id) as sessions,
-                COUNT(*) as page_views,
-                AVG(time_on_page) as avg_time
-            FROM {$this->table_user_activity}
-            WHERE $date_condition
-            GROUP BY DATE(created_at)
-            ORDER BY date DESC
-            LIMIT 30
-        ");
-        
-        return $data;
+        return array('total_views' => intval($total_views), 'unique_pages' => intval($unique_pages), 'total_searches' => intval($total_searches), 'bounce_rate' => round(floatval($bounce_rate) * 100, 1), 'daily_views' => $daily_views);
     }
     
-    /**
-     * ==== تقرير سلوك المستخدمين ====
-     */
-    private function get_user_behavior_report($date_condition, $filters) {
+    private function get_pages_performance($period) {
         global $wpdb;
-        
-        $data = array();
-        
-        // معدلات التفاعل
-        $data['engagement_metrics'] = $wpdb->get_row("
-            SELECT 
-                AVG(scroll_depth) as avg_scroll,
-                AVG(time_on_page) as avg_time,
-                AVG(interactions_count) as avg_interactions,
-                AVG(engagement_score) as avg_engagement,
-                COUNT(CASE WHEN scroll_depth > 0.7 THEN 1 END) / COUNT(*) * 100 as deep_readers_percent,
-                COUNT(CASE WHEN time_on_page > 120 THEN 1 END) / COUNT(*) * 100 as engaged_users_percent
-            FROM {$this->table_user_activity}
-            WHERE $date_condition
-        ");
-        
-        // مسارات المستخدمين
-        $data['user_flows'] = $wpdb->get_results("
-            SELECT 
-                ua1.post_id as from_post,
-                ua2.post_id as to_post,
-                p1.post_title as from_title,
-                p2.post_title as to_title,
-                COUNT(*) as transition_count
-            FROM {$this->table_user_activity} ua1
-            JOIN {$this->table_user_activity} ua2 ON ua1.session_id = ua2.session_id 
-                AND ua2.created_at > ua1.created_at
-            LEFT JOIN {$wpdb->posts} p1 ON ua1.post_id = p1.ID
-            LEFT JOIN {$wpdb->posts} p2 ON ua2.post_id = p2.ID
-            WHERE ua1.$date_condition
-                AND ua1.post_id != ua2.post_id
-            GROUP BY ua1.post_id, ua2.post_id
-            HAVING transition_count > 5
-            ORDER BY transition_count DESC
-            LIMIT 20
-        ");
-        
-        // أوقات النشاط
-        $data['activity_hours'] = $wpdb->get_results("
-            SELECT 
-                HOUR(created_at) as hour,
-                COUNT(*) as activity_count,
-                AVG(engagement_score) as avg_engagement
-            FROM {$this->table_user_activity}
-            WHERE $date_condition
-            GROUP BY HOUR(created_at)
-            ORDER BY hour
-        ");
-        
-        return $data;
+        $date_condition = $this->get_date_condition($period);
+        return $wpdb->get_results("SELECT p.ID, p.post_title, COUNT(a.id) as views, AVG(a.time_on_page) as avg_time, COUNT(DISTINCT DATE(a.visit_date)) as active_days FROM " . self::$table_name . " a LEFT JOIN {$wpdb->posts} p ON a.post_id = p.ID WHERE $date_condition AND a.post_id IS NOT NULL GROUP BY a.post_id ORDER BY views DESC LIMIT 20");
     }
     
-    /**
-     * ==== حقن سكريبت التتبع ====
-     */
-    public function inject_tracking_script() {
-        if (!get_option('ps_analytics_settings')['track_user_activity']) {
-            return;
-        }
-        
-        $session_id = $this->get_or_create_session_id();
-        $post_id = get_the_ID() ?: 0;
-        
-        ?>
-        <script>
-        (function() {
-            'use strict';
-            
-            // متغيرات التتبع
-            const trackingData = {
-                sessionId: '<?php echo esc_js($session_id); ?>',
-                postId: <?php echo $post_id; ?>,
-                startTime: Date.now(),
-                scrollDepth: 0,
-                interactions: 0,
-                mouseMovements: 0,
-                clicks: 0,
-                lastActivityTime: Date.now()
-            };
-            
-            // تتبع عمق التمرير
-            function trackScrollDepth() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollDepth = documentHeight > 0 ? scrollTop / documentHeight : 0;
-                
-                trackingData.scrollDepth = Math.max(trackingData.scrollDepth, scrollDepth);
-                trackingData.lastActivityTime = Date.now();
-            }
-            
-            // تتبع حركات الماوس
-            function trackMouseMovement() {
-                trackingData.mouseMovements++;
-                trackingData.lastActivityTime = Date.now();
-            }
-            
-            // تتبع النقرات
-            function trackClicks() {
-                trackingData.clicks++;
-                trackingData.interactions++;
-                trackingData.lastActivityTime = Date.now();
-            }
-            
-            // إرسال البيانات
-            function sendTrackingData() {
-                const timeOnPage = Math.round((Date.now() - trackingData.startTime) / 1000);
-                const engagementScore = calculateEngagementScore();
-                
-                const data = {
-                    action: 'ps_track_user_activity',
-                    nonce: psSettings.nonce,
-                    session_id: trackingData.sessionId,
-                    post_id: trackingData.postId,
-                    activity_type: 'page_engagement',
-                    scroll_depth: trackingData.scrollDepth,
-                    time_on_page: timeOnPage,
-                    interactions_count: trackingData.interactions,
-                    mouse_movements: trackingData.mouseMovements,
-                    clicks_count: trackingData.clicks,
-                    engagement_score: engagementScore,
-                    device_info: getDeviceInfo()
-                };
-                
-                if (navigator.sendBeacon) {
-                    const formData = new FormData();
-                    Object.keys(data).forEach(key => formData.append(key, data[key]));
-                    navigator.sendBeacon(psSettings.ajaxUrl, formData);
-                } else {
-                    fetch(psSettings.ajaxUrl, {
-                        method: 'POST',
-                        body: new URLSearchParams(data),
-                        credentials: 'same-origin'
-                    }).catch(console.error);
-                }
-            }
-            
-            // حساب نقاط التفاعل
-            function calculateEngagementScore() {
-                const timeWeight = Math.min(trackingData.lastActivityTime - trackingData.startTime, 300000) / 300000; // 5 دقائق كحد أقصى
-                const scrollWeight = trackingData.scrollDepth;
-                const interactionWeight = Math.min(trackingData.interactions / 10, 1);
-                
-                return Math.round((timeWeight * 0.4 + scrollWeight * 0.4 + interactionWeight * 0.2) * 100);
-            }
-            
-            // معلومات الجهاز
-            function getDeviceInfo() {
-                return JSON.stringify({
-                    screen: screen.width + 'x' + screen.height,
-                    viewport: window.innerWidth + 'x' + window.innerHeight,
-                    userAgent: navigator.userAgent,
-                    language: navigator.language,
-                    platform: navigator.platform,
-                    cookieEnabled: navigator.cookieEnabled,
-                    onlineStatus: navigator.onLine
-                });
-            }
-            
-            // ربط الأحداث
-            window.addEventListener('scroll', PS.Utils.throttle(trackScrollDepth, 250));
-            document.addEventListener('mousemove', PS.Utils.throttle(trackMouseMovement, 1000));
-            document.addEventListener('click', trackClicks);
-            
-            // إرسال البيانات قبل مغادرة الصفحة
-            window.addEventListener('beforeunload', sendTrackingData);
-            
-            // إرسال دوري للبيانات
-            setInterval(sendTrackingData, 30000); // كل 30 ثانية
-            
-        })();
-        </script>
-        <?php
-    }
-    
-    /**
-     * ==== إنشاء أو الحصول على معرف الجلسة ====
-     */
-    private function get_or_create_session_id() {
-        if (isset($_COOKIE['ps_session_id'])) {
-            return sanitize_text_field($_COOKIE['ps_session_id']);
-        }
-        
-        $session_id = wp_generate_uuid4();
-        setcookie('ps_session_id', $session_id, time() + (30 * 24 * 60 * 60), '/'); // 30 يوم
-        
-        return $session_id;
-    }
-    
-    /**
-     * ==== إضافة بيانات تعريفية للتتبع ====
-     */
-    public function inject_tracking_metadata() {
-        if (is_single()) {
-            $post_id = get_the_ID();
-            echo '<meta name="ps-post-id" content="' . $post_id . '">';
-            echo '<meta name="ps-post-type" content="' . get_post_type() . '">';
-            
-            $categories = get_the_category();
-            if ($categories) {
-                echo '<meta name="ps-post-category" content="' . esc_attr($categories[0]->name) . '">';
-            }
-        }
-    }
-    
-    /**
-     * ==== تنظيف البيانات القديمة ====
-     */
-    public function cleanup_old_analytics_data() {
+    private function get_search_analytics($period) {
         global $wpdb;
-        
-        $retention_days = get_option('ps_analytics_settings')['data_retention_days'] ?? 365;
-        
-        $tables = array(
-            $this->table_analytics,
-            $this->table_user_activity,
-            $this->table_search_analytics
-        );
-        
-        foreach ($tables as $table) {
-            $wpdb->query($wpdb->prepare(
-                "DELETE FROM $table WHERE created_at < DATE_SUB(NOW(), INTERVAL %d DAY)",
-                $retention_days
-            ));
-        }
-        
-        // تنظيف جدول أداء المحتوى (الاحتفاظ بالبيانات الشهرية فقط بعد سنة)
-        $wpdb->query($wpdb->prepare(
-            "DELETE FROM {$this->table_content_performance} 
-             WHERE date_tracked < DATE_SUB(CURDATE(), INTERVAL %d DAY) 
-             AND DAY(date_tracked) != 1",
-            $retention_days
-        ));
+        $date_condition = $this->get_date_condition($period, 'search_date');
+        $top_searches = $wpdb->get_results("SELECT search_query, COUNT(*) as search_count, AVG(results_count) as avg_results, search_type FROM " . self::$search_table . " WHERE $date_condition GROUP BY search_query ORDER BY search_count DESC LIMIT 20");
+        $voice_stats = $wpdb->get_row("SELECT COUNT(*) as total_voice_searches, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM " . self::$search_table . " WHERE $date_condition) as voice_percentage FROM " . self::$search_table . " WHERE $date_condition AND search_type = 'voice'");
+        return array('top_searches' => $top_searches, 'voice_stats' => $voice_stats);
     }
     
-    /**
-     * ==== بناء شرط التاريخ ====
-     */
-    private function build_date_condition($date_range) {
-        $days = intval($date_range);
-        return "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+    private function get_device_analytics($period) {
+        global $wpdb;
+        $date_condition = $this->get_date_condition($period);
+        $device_stats = $wpdb->get_results("SELECT device_type, COUNT(*) as views, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM " . self::$table_name . " WHERE $date_condition) as percentage FROM " . self::$table_name . " WHERE $date_condition GROUP BY device_type ORDER BY views DESC");
+        $browser_stats = $wpdb->get_results("SELECT browser, COUNT(*) as views FROM " . self::$table_name . " WHERE $date_condition GROUP BY browser ORDER BY views DESC LIMIT 10");
+        return array('devices' => $device_stats, 'browsers' => $browser_stats);
+    }
+    
+    private function get_date_condition($period, $date_column = 'visit_date') {
+        $days = 7;
+        switch ($period) {
+            case '1day': $days = 1; break;
+            case '7days': $days = 7; break;
+            case '30days': $days = 30; break;
+            case '90days': $days = 90; break;
+        }
+        return "$date_column >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+    }
+    
+    public function export_analytics() {
+        check_ajax_referer('ps_admin_nonce', 'nonce');
+        if (!current_user_can('manage_options')) { wp_send_json_error(__('غير مصرح', 'practical-solutions')); }
+        
+        $period = sanitize_text_field($_POST['period'] ?? '30days');
+        $format = sanitize_text_field($_POST['format'] ?? 'csv');
+        $data = $this->get_export_data($period);
+        
+        if ($format === 'csv') {
+            $csv_data = $this->convert_to_csv($data);
+            wp_send_json_success(array('data' => $csv_data, 'filename' => 'analytics-' . date('Y-m-d') . '.csv'));
+        } else {
+            wp_send_json_success(array('data' => $data, 'filename' => 'analytics-' . date('Y-m-d') . '.json'));
+        }
+    }
+    
+    public function cleanup_old_data() {
+        check_ajax_referer('ps_admin_nonce', 'nonce');
+        if (!current_user_can('manage_options')) { wp_send_json_error(__('غير مصرح', 'practical-solutions')); }
+        $this->daily_cleanup();
+        wp_send_json_success(__('تم تنظيف البيانات القديمة', 'practical-solutions'));
+    }
+    
+    public function daily_cleanup() {
+        global $wpdb;
+        $analytics_settings = get_option('ps_analytics_settings', array());
+        $retention_days = intval($analytics_settings['data_retention_days'] ?? 365);
+        
+        $wpdb->query($wpdb->prepare("DELETE FROM " . self::$table_name . " WHERE visit_date < DATE_SUB(NOW(), INTERVAL %d DAY)", $retention_days));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . self::$search_table . " WHERE search_date < DATE_SUB(NOW(), INTERVAL %d DAY)", $retention_days));
+        $wpdb->query("OPTIMIZE TABLE " . self::$table_name);
+        $wpdb->query("OPTIMIZE TABLE " . self::$search_table);
+    }
+    
+    private static function get_anonymized_ip() {
+        $analytics_settings = get_option('ps_analytics_settings', array());
+        if ($analytics_settings['anonymize_ip'] ?? true) { return 'anonymized'; }
+        
+        $ip_keys = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR');
+        foreach ($ip_keys as $key) {
+            if (array_key_exists($key, $_SERVER) === true) {
+                $ip = sanitize_text_field($_SERVER[$key]);
+                return preg_replace('/\.\d+$/', '.xxx', $ip);
+            }
+        }
+        return 'unknown';
+    }
+    
+    private static function detect_device_type() {
+        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        if (preg_match('/mobile|android|iphone|ipad/i', $user_agent)) { return 'mobile'; }
+        if (preg_match('/tablet/i', $user_agent)) { return 'tablet'; }
+        return 'desktop';
+    }
+    
+    private static function detect_browser() {
+        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        if (strpos($user_agent, 'Chrome') !== false) { return 'Chrome'; }
+        if (strpos($user_agent, 'Firefox') !== false) { return 'Firefox'; }
+        if (strpos($user_agent, 'Safari') !== false) { return 'Safari'; }
+        if (strpos($user_agent, 'Edge') !== false) { return 'Edge'; }
+        return 'Other';
+    }
+    
+    private static function detect_country() {
+        return 'SA';
+    }
+    
+    private static function get_session_id() {
+        if (!session_id()) { session_start(); }
+        return session_id();
+    }
+    
+    private function get_export_data($period) {
+        return array('overview' => $this->get_overview_data($period), 'pages' => $this->get_pages_performance($period), 'search' => $this->get_search_analytics($period), 'devices' => $this->get_device_analytics($period));
+    }
+    
+    private function convert_to_csv($data) {
+        $csv = "Type,Metric,Value\n";
+        $csv .= "Overview,Total Views," . $data['overview']['total_views'] . "\n";
+        $csv .= "Overview,Unique Pages," . $data['overview']['unique_pages'] . "\n";
+        $csv .= "Overview,Total Searches," . $data['overview']['total_searches'] . "\n";
+        return $csv;
     }
 }
 
-// تهيئة نظام التحليلات
 new PS_Advanced_Analytics();
+
+
+
+
 
 📁 اسم الملف: theme-admin-panel.php
 <?php
@@ -17220,7 +12342,13 @@ class PS_Theme_Admin_Panel {
     /**
      * ==== وظائف AJAX ====
      */
-    public function test_api_connection() {
+    public function test_api_connection() {    // ==== بداية التعديل المطلوب ====
+    check_ajax_referer('ps_admin_nonce', 'nonce');
+    if (!current_user_can($this->capability)) { 
+        wp_die(__('غير مصرح لك بهذا الإجراء', 'practical-solutions')); 
+    }
+    // ==== نهاية التعديل المطلوب ====
+
         check_ajax_referer('ps_admin_nonce', 'nonce');
         
         if (!current_user_can($this->capability)) {
@@ -17266,7 +12394,13 @@ class PS_Theme_Admin_Panel {
         }
     }
     
-    public function clear_cache() {
+    public function clear_cache() {    // ==== بداية التعديل المطلوب ====
+    check_ajax_referer('ps_admin_nonce', 'nonce');
+    if (!current_user_can($this->capability)) { 
+        wp_die(__('غير مصرح لك بهذا الإجراء', 'practical-solutions')); 
+    }
+    // ==== نهاية التعديل المطلوب ====
+
         check_ajax_referer('ps_admin_nonce', 'nonce');
         
         if (!current_user_can($this->capability)) {
@@ -17283,7 +12417,13 @@ class PS_Theme_Admin_Panel {
         wp_send_json_success(__('تم مسح الذاكرة المؤقتة بنجاح', 'practical-solutions'));
     }
     
-    public function export_settings() {
+    public function export_settings() {    // ==== بداية التعديل المطلوب ====
+    check_ajax_referer('ps_admin_nonce', 'nonce');
+    if (!current_user_can($this->capability)) { 
+        wp_die(__('غير مصرح لك بهذا الإجراء', 'practical-solutions')); 
+    }
+    // ==== نهاية التعديل المطلوب ====
+
         check_ajax_referer('ps_admin_nonce', 'nonce');
         
         if (!current_user_can($this->capability)) {
@@ -17305,7 +12445,13 @@ class PS_Theme_Admin_Panel {
         wp_send_json_success($settings);
     }
     
-    public function import_settings() {
+    public function import_settings() {    // ==== بداية التعديل المطلوب ====
+    check_ajax_referer('ps_admin_nonce', 'nonce');
+    if (!current_user_can($this->capability)) { 
+        wp_die(__('غير مصرح لك بهذا الإجراء', 'practical-solutions')); 
+    }
+    // ==== نهاية التعديل المطلوب ====
+
         check_ajax_referer('ps_admin_nonce', 'nonce');
         
         if (!current_user_can($this->capability)) {
@@ -17429,7 +12575,6 @@ class PS_Theme_Admin_Panel {
 
 // تشغيل اللوحة
 new PS_Theme_Admin_Panel();
-
 
 📁 اسم الملف: admin-styles.css
 /**
@@ -18625,8 +13770,122 @@ document.head.insertAdjacentHTML('beforeend', additionalCSS);
 !function(window,document,$){"use strict";$=$||window.jQuery;window.PracticalSolutions=window.PracticalSolutions||{};const PS=window.PracticalSolutions;PS.settings=window.psSettings||{ajaxUrl:"/wp-admin/admin-ajax.php",nonce:"",homeUrl:"/",themeUri:"",isRTL:!1,features:{voice_search:!0,bookmarks:!0,share_tracking:!0,reading_progress:!0,ai_suggestions:!1}};PS.cache=new Map;PS.debounceTimers=new Map;PS.observers=new Map;PS.initialized=!1;PS.State={theme:localStorage.getItem("ps_theme")||"light",searchHistory:JSON.parse(localStorage.getItem("ps_search_history")||"[]"),bookmarks:new Set(JSON.parse(localStorage.getItem("ps_bookmarks")||"[]")),userPreferences:JSON.parse(localStorage.getItem("ps_user_preferences")||"{}"),save:function(key,value){try{this[key]=value;localStorage.setItem("ps_"+key,"object"==typeof value?JSON.stringify(value):value)}catch(e){console.warn("خطأ في حفظ البيانات:",e)}},get:function(key,defaultValue=null){try{return void 0!==this[key]?this[key]:defaultValue}catch(e){return defaultValue}}};PS.Utils={debounce:function(func,delay,key="default"){return function(...args){const timerId=PS.debounceTimers.get(key);timerId&&clearTimeout(timerId);PS.debounceTimers.set(key,setTimeout(()=>{func.apply(this,args);PS.debounceTimers.delete(key)},delay))}},throttle:function(func,limit){let inThrottle;return function(...args){inThrottle||(func.apply(this,args),inThrottle=!0,setTimeout(()=>inThrottle=!1,limit))}},isSupported:function(feature){const support={webSpeech:"webkitSpeechRecognition"in window||"SpeechRecognition"in window,serviceWorker:"serviceWorker"in navigator,intersectionObserver:"IntersectionObserver"in window,localStorage:(()=>{try{return localStorage.setItem("test","test"),localStorage.removeItem("test"),!0}catch(e){return!1}})(),fetch:"fetch"in window};return support[feature]||!1},sanitizeText:function(text){const div=document.createElement("div");return div.textContent=text,div.innerHTML},toArabicNumbers:function(str){const arabicNumbers=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];return str.replace(/[0-9]/g,function(w){return arabicNumbers[+w]})},toEnglishNumbers:function(str){const englishNumbers=["0","1","2","3","4","5","6","7","8","9"],arabicNumbers=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];for(let i=0;i<10;i++)str=str.replace(new RegExp(arabicNumbers[i],"g"),englishNumbers[i]);return str},calculateReadingTime:function(text){const wordsPerMinute=PS.settings.isRTL?180:200,words=text.split(/\s+/).length,minutes=Math.ceil(words/wordsPerMinute);return PS.settings.isRTL?`${minutes} دقيقة قراءة`:`${minutes} min read`},formatDate:function(date,format="relative"){const now=new Date,diff=now-new Date(date),minutes=Math.floor(diff/6e4),hours=Math.floor(diff/36e5),days=Math.floor(diff/864e5);if("relative"===format){if(minutes<1)return PS.settings.isRTL?"الآن":"now";if(minutes<60)return PS.settings.isRTL?`منذ ${minutes} دقيقة`:`${minutes}m ago`;if(hours<24)return PS.settings.isRTL?`منذ ${hours} ساعة`:`${hours}h ago`;if(days<7)return PS.settings.isRTL?`منذ ${days} يوم`:`${days}d ago`}return new Date(date).toLocaleDateString(PS.settings.isRTL?"ar-SA":"en-US")}};PS.Events={listeners:new Map,on:function(event,callback,context=null){this.listeners.has(event)||this.listeners.set(event,[]);this.listeners.get(event).push({callback,context})},off:function(event,callback=null){if(!this.listeners.has(event))return;if(callback){const eventListeners=this.listeners.get(event),index=eventListeners.findIndex(listener=>listener.callback===callback);index>-1&&eventListeners.splice(index,1)}else this.listeners.delete(event)},emit:function(event,data=null){this.listeners.has(event)&&this.listeners.get(event).forEach(listener=>{try{listener.callback.call(listener.context,data)}catch(e){console.error(`خطأ في معالج الحدث ${event}:`,e)}})}};PS.Search={initialized:!1,currentQuery:"",suggestionsCache:new Map,init:function(){this.initialized||(this.bindEvents(),this.initVoiceSearch(),this.initialized=!0,PS.Events.emit("search:initialized"))},bindEvents:function(){$(document).on("input",".ps-search-input, .ps-hero-search-input",PS.Utils.debounce(this.handleSearchInput.bind(this),300,"search-input"));$(document).on("submit",".ps-search-form, .ps-hero-search-form",this.handleSearchSubmit.bind(this));$(document).on("click",".ps-suggestion-item",this.handleSuggestionClick.bind(this));$(document).on("click",e=>{$(e.target).closest(".ps-search-container").length||this.hideSuggestions()});$(document).on("keydown",".ps-search-input",this.handleKeyboardNavigation.bind(this))},handleSearchInput:function(e){const input=e.target,query=input.value.trim();if(query.length<2)return void this.hideSuggestions();this.currentQuery=query;this.showSuggestions(input,query)},handleSearchSubmit:function(e){e.preventDefault();const form=e.target,input=form.querySelector(".ps-search-input, .ps-hero-search-input"),query=input.value.trim();query&&(this.addToHistory(query),this.hideSuggestions(),window.location.href=`${PS.settings.homeUrl}?s=${encodeURIComponent(query)}`)},handleSuggestionClick:function(e){e.preventDefault();const item=e.currentTarget,url=item.dataset.url,title=item.dataset.title;title&&this.addToHistory(title);url&&(window.location.href=url)},handleKeyboardNavigation:function(e){const suggestions=document.querySelector(".ps-search-suggestions");if(!suggestions||!suggestions.classList.contains("show"))return;const items=suggestions.querySelectorAll(".ps-suggestion-item");let currentIndex=Array.from(items).findIndex(item=>item.classList.contains("highlighted"));switch(e.key){case"ArrowDown":e.preventDefault();this.highlightSuggestion(items,currentIndex+1);break;case"ArrowUp":e.preventDefault();this.highlightSuggestion(items,currentIndex-1);break;case"Enter":e.preventDefault();currentIndex>-1&&items[currentIndex].click();break;case"Escape":this.hideSuggestions()}},highlightSuggestion:function(items,index){items.forEach(item=>item.classList.remove("highlighted"));index>=0&&index<items.length&&(items[index].classList.add("highlighted"),items[index].scrollIntoView({block:"nearest"}))},showSuggestions:async function(input,query){let container=input.parentElement.querySelector(".ps-search-suggestions");container||(container=document.createElement("div"),container.className="ps-search-suggestions",input.parentElement.appendChild(container));if(this.suggestionsCache.has(query))return void this.renderSuggestions(container,this.suggestionsCache.get(query));container.innerHTML='<div class="ps-suggestion-loading">جاري البحث...</div>';container.classList.add("show");try{const suggestions=await this.fetchSuggestions(query);this.suggestionsCache.set(query,suggestions);this.renderSuggestions(container,suggestions)}catch(error){console.error("خطأ في جلب الاقتراحات:",error);container.innerHTML='<div class="ps-suggestion-loading">حدث خطأ في البحث</div>'}},fetchSuggestions:async function(query){if(!PS.Utils.isSupported("fetch"))throw new Error("Fetch not supported");const formData=new FormData;formData.append("action","ps_search_suggestions");formData.append("query",query);formData.append("nonce",PS.settings.nonce);const response=await fetch(PS.settings.ajaxUrl,{method:"POST",body:formData,credentials:"same-origin"});if(!response.ok)throw new Error("Network response was not ok");const data=await response.json();if(!data.success)throw new Error(data.data||"Unknown error");return data.data||[]},renderSuggestions:function(container,suggestions){if(!suggestions.length)return void(container.innerHTML='<div class="ps-suggestion-loading">لا توجد نتائج</div>');const html=suggestions.map(item=>`\n                <div class="ps-suggestion-item" data-url="${item.url||""}" data-title="${item.title||""}" data-id="${item.id||""}">\n                    ${item.thumbnail?`<img src="${item.thumbnail}" alt="" class="ps-suggestion-thumbnail">`:""}\n                    <div class="ps-suggestion-content">\n                        <div class="ps-suggestion-title">${this.highlightQuery(item.title||"",this.currentQuery)}</div>\n                        ${item.type?`<span class="ps-suggestion-type">${item.type}</span>`:""}\n                    </div>\n                </div>\n            `).join("");container.innerHTML=html;container.classList.add("show")},highlightQuery:function(text,query){if(!query)return text;const regex=new RegExp(`(${query})`,"gi");return text.replace(regex,"<mark>$1</mark>")},hideSuggestions:function(){const suggestions=document.querySelectorAll(".ps-search-suggestions");suggestions.forEach(container=>{container.classList.remove("show");setTimeout(()=>{container.classList.contains("show")||(container.innerHTML="")},300)})},addToHistory:function(query){const history=PS.State.get("searchHistory",[]),index=history.indexOf(query);index>-1&&history.splice(index,1);history.unshift(query);history.length>10&&history.pop();PS.State.save("searchHistory",history)},initVoiceSearch:function(){PS.settings.features.voice_search&&PS.Utils.isSupported("webSpeech")&&PS.Events.emit("voice-search:init-required")}};PS.DarkMode={init:function(){this.setTheme(PS.State.get("theme","light"));this.bindEvents()},bindEvents:function(){$(document).on("click",".ps-theme-toggle",this.toggle.bind(this));if(window.matchMedia&&!1!==PS.State.get("userPreferences",{}).autoTheme){const mediaQuery=window.matchMedia("(prefers-color-scheme: dark)");mediaQuery.addListener(this.handleSystemThemeChange.bind(this));this.handleSystemThemeChange(mediaQuery)}},toggle:function(){const currentTheme=PS.State.get("theme"),newTheme="dark"===currentTheme?"light":"dark";this.setTheme(newTheme)},setTheme:function(theme){document.documentElement.setAttribute("data-theme",theme);PS.State.save("theme",theme);const toggles=document.querySelectorAll(".ps-theme-toggle");toggles.forEach(toggle=>{const icon=toggle.querySelector("i, .icon");icon&&(icon.className="dark"===theme?"icon-sun":"icon-moon")});PS.Events.emit("theme:changed",{theme})},handleSystemThemeChange:function(e){!1!==PS.State.get("userPreferences",{}).autoTheme&&this.setTheme(e.matches?"dark":"light")}};PS.ReadingProgress={init:function(){PS.settings.features.reading_progress&&(this.createProgressBar(),this.bindScrollEvents(),this.calculateReadingTime())},createProgressBar:function(){if(document.querySelector(".ps-reading-progress"))return;const progressBar=document.createElement("div");progressBar.className="ps-reading-progress";document.body.appendChild(progressBar)},bindScrollEvents:function(){const updateProgress=PS.Utils.throttle(()=>{const article=document.querySelector(".ps-single-content, .entry-content, article");if(!article)return;const rect=article.getBoundingClientRect(),windowHeight=window.innerHeight,documentHeight=document.documentElement.scrollHeight-windowHeight,scrolled=window.scrollY,progress=Math.min(scrolled/documentHeight*100,100),progressBar=document.querySelector(".ps-reading-progress");progressBar&&(progressBar.style.width=`${progress}%`);PS.Events.emit("reading:progress",{progress,scrolled})},100);window.addEventListener("scroll",updateProgress);window.addEventListener("resize",updateProgress)},calculateReadingTime:function(){const content=document.querySelector(".ps-single-content, .entry-content, article");if(!content)return;const text=content.textContent||content.innerText||"",readingTime=PS.Utils.calculateReadingTime(text);document.querySelectorAll(".ps-reading-time, .reading-time").forEach(element=>{element.textContent=readingTime})}};PS.LazyLoading={init:function(){PS.Utils.isSupported("intersectionObserver")?this.createObserver():this.fallbackLazyLoad();this.observeImages()},createObserver:function(){this.observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{entry.isIntersecting&&(this.loadImage(entry.target),this.observer.unobserve(entry.target))})},{rootMargin:"50px"})},observeImages:function(){const images=document.querySelectorAll("img[data-src], img[loading=\"lazy\"]");images.forEach(img=>{img.dataset.src&&!img.src&&this.observer.observe(img)})},loadImage:function(img){img.dataset.src&&(img.src=img.dataset.src,img.removeAttribute("data-src"));img.addEventListener("load",()=>{img.classList.add("loaded")});img.addEventListener("error",()=>{img.classList.add("error")})},fallbackLazyLoad:function(){const images=document.querySelectorAll("img[data-src]");images.forEach(img=>this.loadImage(img))}};PS.Notifications={container:null,notifications:[],init:function(){this.createContainer()},createContainer:function(){this.container||(this.container=document.createElement("div"),this.container.className="ps-notifications-container",document.body.appendChild(this.container))},show:function(message,type="info",duration=5e3){const notification=document.createElement("div");notification.className=`ps-notification ${type}`;notification.innerHTML=`\n                <div class="ps-notification-header">\n                    <div class="ps-notification-title">${this.getTypeTitle(type)}</div>\n                    <button class="ps-notification-close" aria-label="إغلاق">&times;</button>\n                </div>\n                <div class="ps-notification-message">${message}</div>\n            `;this.container.appendChild(notification);setTimeout(()=>notification.classList.add("show"),100);duration>0&&setTimeout(()=>this.hide(notification),duration);notification.querySelector(".ps-notification-close").addEventListener("click",()=>{this.hide(notification)});this.notifications.push(notification);PS.Events.emit("notification:shown",{message,type});return notification},hide:function(notification){notification.classList.remove("show");setTimeout(()=>{notification.parentNode&&notification.parentNode.removeChild(notification);const index=this.notifications.indexOf(notification);index>-1&&this.notifications.splice(index,1)},300)},getTypeTitle:function(type){const titles={success:PS.settings.isRTL?"نجح":"Success",error:PS.settings.isRTL?"خطأ":"Error",warning:PS.settings.isRTL?"تحذير":"Warning",info:PS.settings.isRTL?"معلومات":"Info"};return titles[type]||titles.info}};PS.Ajax={request:async function(action,data={},options={}){const defaultOptions={method:"POST",timeout:1e4,showLoader:!1,showNotification:!1},config={...defaultOptions,...options};config.showLoader&&PS.Notifications.show("جاري التحميل...","info",0);try{const formData=new FormData;formData.append("action",action);formData.append("nonce",PS.settings.nonce);Object.keys(data).forEach(key=>{null!=data[key]&&formData.append(key,data[key])});const controller=new AbortController,timeoutId=setTimeout(()=>controller.abort(),config.timeout),response=await fetch(PS.settings.ajaxUrl,{method:config.method,body:formData,credentials:"same-origin",signal:controller.signal});clearTimeout(timeoutId);if(!response.ok)throw new Error(`HTTP error! status: ${response.status}`);const result=await response.json();config.showLoader&&PS.Notifications.hide(document.querySelector(".ps-notification"));!result.success&&config.showNotification?PS.Notifications.show(result.data||"حدث خطأ","error"):result.success&&config.showNotification&&PS.Notifications.show("تم بنجاح","success");return result}catch(error){config.showLoader&&PS.Notifications.hide(document.querySelector(".ps-notification"));config.showNotification&&PS.Notifications.show("حدث خطأ في الاتصال","error");console.error("AJAX Error:",error);throw error}}};PS.init=function(){this.initialized||(this.DarkMode.init(),this.Notifications.init(),this.LazyLoading.init(),this.settings.features.reading_progress&&this.ReadingProgress.init(),(this.settings.features.voice_search||this.settings.features.ai_suggestions)&&this.Search.init(),PS.Utils.isSupported("serviceWorker")&&navigator.serviceWorker.register(PS.settings.themeUri+"/sw.js").then(registration=>{console.log("Service Worker registered successfully")}).catch(error=>{console.log("Service Worker registration failed:",error)}),this.bindGlobalEvents(),this.initialized=!0,PS.Events.emit("ps:ready"))};PS.bindGlobalEvents=function(){document.addEventListener("DOMContentLoaded",()=>{PS.LazyLoading.observeImages()});window.addEventListener("beforeunload",()=>{sessionStorage.setItem("ps_scroll_position",window.scrollY)});window.addEventListener("load",()=>{const scrollPosition=sessionStorage.getItem("ps_scroll_position");scrollPosition&&(window.scrollTo(0,parseInt(scrollPosition)),sessionStorage.removeItem("ps_scroll_position"))});window.addEventListener("error",e=>{console.error("JavaScript Error:",e.error)});"ontouchstart"in window&&document.body.classList.add("touch-device")};"loading"===document.readyState?document.addEventListener("DOMContentLoaded",()=>PS.init()):PS.init();window.PracticalSolutions=PS}(window,document,window.jQuery);function isMobileDevice(){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)}function getUrlParameter(param){return new URLSearchParams(window.location.search).get(param)}function formatNumber(num,locale="ar-SA"){return new Intl.NumberFormat(locale).format(num)}"undefined"!=typeof module&&module.exports&&(module.exports=window.PracticalSolutions);
 
 
-📁 اسم الملف: 
 
+
+📁 اسم الملف: unified-search-system.php
+<?php
+/**
+ * Unified Search System - Nonce Fixed Version
+ * نظام البحث الموحد - نسخة مُصلحة للـ Nonce
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class PS_Unified_Search_System {
+    
+    private $ai_system;
+    
+    public function __construct() {
+        if (class_exists('PS_AI_OpenRouter_System')) {
+            $this->ai_system = new PS_AI_OpenRouter_System();
+        }
+        add_action('init', array($this, 'init'));
+    }
+    
+    public function init() {
+        add_action('wp_ajax_ps_search_suggestions', array($this, 'handle_search_suggestions'));
+        add_action('wp_ajax_nopriv_ps_search_suggestions', array($this, 'handle_search_suggestions'));
+        
+        add_action('wp_ajax_ps_voice_search', array($this, 'handle_voice_search'));
+        add_action('wp_ajax_nopriv_ps_voice_search', array($this, 'handle_voice_search'));
+        
+        add_action('pre_get_posts', array($this, 'enhance_search_query'));
+    }
+    
+    public function handle_search_suggestions() {
+        // **إصلاح:** التحقق من الـ nonce الموحد
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'ps_ajax_nonce')) {
+            wp_send_json_error(__('Nonce verification failed', 'practical-solutions'), 403);
+            return;
+        }
+        
+        $query = sanitize_text_field($_POST['query'] ?? '');
+        
+        if (empty($query) || strlen($query) < 2) {
+            wp_send_json_error(__('Query is too short', 'practical-solutions'));
+            return;
+        }
+        
+        $cache_key = 'ps_unified_suggestions_' . md5($query);
+        $cached = get_transient($cache_key);
+        
+        if ($cached !== false) {
+            wp_send_json_success($cached);
+            return;
+        }
+        
+        $suggestions = [];
+        
+        if ($this->ai_system && method_exists($this->ai_system, 'get_ai_search_suggestions')) {
+            try {
+                $ai_suggestions = $this->ai_system->get_ai_search_suggestions($query);
+                $suggestions = array_merge($suggestions, $ai_suggestions);
+            } catch (Exception $e) {
+                error_log('AI Suggestion Error: ' . $e->getMessage());
+            }
+        }
+        
+        $local_suggestions = $this->get_local_suggestions($query);
+        $suggestions = array_merge($suggestions, $local_suggestions);
+        
+        $final_suggestions = $this->process_suggestions($suggestions);
+        
+        set_transient($cache_key, $final_suggestions, HOUR_IN_SECONDS);
+        
+        wp_send_json_success($final_suggestions);
+    }
+    
+    public function handle_voice_search() {
+        // **إصلاح:** التحقق من الـ nonce الموحد
+        if (!wp_verify_nonce($_POST['nonce'] ?? '', 'ps_ajax_nonce')) {
+            wp_send_json_error(__('Nonce verification failed', 'practical-solutions'), 403);
+            return;
+        }
+        // ... باقي الكود هنا ...
+    }
+
+    private function get_local_suggestions($query) {
+        global $wpdb;
+        $suggestions = [];
+        $posts = $wpdb->get_results($wpdb->prepare("SELECT post_title, ID FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type = 'post' AND post_title LIKE %s LIMIT 5", '%' . $wpdb->esc_like($query) . '%'));
+        foreach ($posts as $post) {
+            $suggestions[] = ['title' => $post->post_title, 'url' => get_permalink($post->ID), 'type' => 'post'];
+        }
+        return $suggestions;
+    }
+
+    private function process_suggestions($suggestions) {
+        $unique_suggestions = [];
+        $seen_titles = [];
+        foreach ($suggestions as $suggestion) {
+            if (!in_array(strtolower($suggestion['title']), $seen_titles)) {
+                $unique_suggestions[] = $suggestion;
+                $seen_titles[] = strtolower($suggestion['title']);
+            }
+        }
+        return array_slice($unique_suggestions, 0, 8);
+    }
+
+    public function enhance_search_query($query) {
+        if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+            $query->set('orderby', 'relevance');
+        }
+    }
+}
+
+new PS_Unified_Search_System();
 
 
 
