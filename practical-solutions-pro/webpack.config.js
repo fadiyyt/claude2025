@@ -17,11 +17,21 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env'],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-optional-chaining'
+            ]
           }
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
   },
   optimization: {
     splitChunks: {
@@ -31,8 +41,15 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
+        },
+        common: {
+          minChunks: 2,
+          chunks: 'all',
+          name: 'common'
         }
       }
     }
-  }
+  },
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
+  mode: process.env.NODE_ENV || 'development'
 };

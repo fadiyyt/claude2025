@@ -1,0 +1,218 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "base",
+          "color": "#ffffff",
+          "name": "الخلفية الأساسية"
+        },
+        {
+          "slug": "contrast", 
+          "color": "#1a1a1a",
+          "name": "النص الأساسي"
+        },
+        {
+          "slug": "primary",
+          "color": "#007cba", 
+          "name": "اللون الرئيسي"
+        },
+        {
+          "slug": "secondary",
+          "color": "#f0f4f8",
+          "name": "اللون الثانوي"
+        },
+        {
+          "slug": "tertiary",
+          "color": "#64748b",
+          "name": "اللون الثلاثي"
+        },
+        {
+          "slug": "accent",
+          "color": "#e74c3c",
+          "name": "لون التمييز"
+        },
+        {
+          "slug": "success",
+          "color": "#10b981",
+          "name": "لون النجاح"
+        },
+        {
+          "slug": "warning",
+          "color": "#f59e0b",
+          "name": "لون التحذير"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          "name": "الخط الأساسي",
+          "slug": "primary"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "small",
+          "size": "0.875rem",
+          "name": "صغير"
+        },
+        {
+          "slug": "medium", 
+          "size": "1rem",
+          "name": "متوسط"
+        },
+        {
+          "slug": "large",
+          "size": "1.125rem", 
+          "name": "كبير"
+        },
+        {
+          "slug": "x-large",
+          "size": "1.25rem",
+          "name": "كبير جداً"
+        },
+        {
+          "slug": "xx-large", 
+          "size": "1.5rem",
+          "name": "ضخم"
+        }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "vh", "vw", "%"],
+      "spacingSizes": [
+        {
+          "slug": "small",
+          "size": "1rem",
+          "name": "صغير"
+        },
+        {
+          "slug": "medium",
+          "size": "1.5rem", 
+          "name": "متوسط"
+        },
+        {
+          "slug": "large",
+          "size": "2rem",
+          "name": "كبير"
+        },
+        {
+          "slug": "x-large",
+          "size": "4rem",
+          "name": "كبير جداً"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "800px",
+      "wideSize": "1200px"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--base)",
+      "text": "var(--wp--preset--color--contrast)"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--primary)",
+      "fontSize": "var(--wp--preset--font-size--medium)",
+      "lineHeight": "1.6"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var(--wp--preset--color--primary)"
+        },
+        ":hover": {
+          "color": {
+            "text": "var(--wp--preset--color--accent)"
+          }
+        }
+      },
+      "button": {
+        "color": {
+          "background": "var(--wp--preset--color--primary)",
+          "text": "var(--wp--preset--color--base)"
+        },
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--primary)",
+          "fontSize": "var(--wp--preset--font-size--medium)",
+          "fontWeight": "500"
+        },
+        "border": {
+          "radius": "8px"
+        },
+        "spacing": {
+          "padding": {
+            "top": "12px",
+            "right": "24px", 
+            "bottom": "12px",
+            "left": "24px"
+          }
+        }
+      }
+    },
+    "blocks": {
+      "core/group": {
+        "variations": {
+          "ps-card-style": {
+            "color": {
+              "background": "var(--wp--preset--color--secondary)"
+            },
+            "border": {
+              "radius": "8px"
+            },
+            "spacing": {
+              "padding": "1.5rem"
+            }
+          },
+          "ps-feature-box": {
+            "color": {
+              "background": "linear-gradient(135deg, var(--wp--preset--color--primary), var(--wp--preset--color--accent))",
+              "text": "var(--wp--preset--color--base)"
+            },
+            "border": {
+              "radius": "12px"
+            },
+            "spacing": {
+              "padding": "2rem"
+            }
+          }
+        }
+      }
+    }
+  },
+  "customTemplates": [
+    {
+      "name": "single-with-rating",
+      "title": "مقال مع تقييم",
+      "postTypes": ["post"]
+    },
+    {
+      "name": "page-with-search",
+      "title": "صفحة مع بحث",
+      "postTypes": ["page"]
+    }
+  ],
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "رأس الصفحة",
+      "area": "header"
+    },
+    {
+      "name": "footer", 
+      "title": "تذييل الصفحة",
+      "area": "footer"
+    },
+    {
+      "name": "sidebar",
+      "title": "الشريط الجانبي",
+      "area": "uncategorized"
+    }
+  ]
+}

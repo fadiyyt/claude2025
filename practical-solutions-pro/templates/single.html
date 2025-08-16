@@ -1,0 +1,82 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:2rem;padding-bottom:2rem">
+
+  <!-- wp:group {"className":"ps-article-header","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-article-header" style="margin-bottom:2rem">
+    
+    <!-- زر العودة للرئيسية -->
+    <!-- wp:html -->
+    <a href="/" class="ps-back-home">
+      <span class="back-icon">🏠</span>
+      <span class="back-text">العودة للرئيسية</span>
+    </a>
+    <!-- /wp:html -->
+    
+    <!-- wp:post-title {"level":1,"className":"is-style-ps-article-title"} /-->
+    
+    <!-- wp:group {"className":"ps-post-meta","style":{"spacing":{"margin":{"top":"1rem","bottom":"1rem"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+    <div class="wp-block-group ps-post-meta" style="margin-top:1rem;margin-bottom:1rem">
+      <!-- wp:post-date {"format":"j F Y","style":{"typography":{"fontSize":"14px"}},"textColor":"tertiary"} /-->
+      <!-- wp:post-author {"showAvatar":false,"style":{"typography":{"fontSize":"14px"}},"textColor":"tertiary"} /-->
+      
+      <!-- أزرار التفاعل -->
+      <!-- wp:html -->
+      <div class="ps-post-actions">
+        <button class="ps-bookmark-btn" data-post-id="" data-post-title="" data-post-url="">
+          <span class="bookmark-icon">📌</span>
+          <span class="bookmark-text">حفظ</span>
+        </button>
+      </div>
+      <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:post-featured-image {"className":"ps-featured-image"} /-->
+
+  <!-- wp:post-content {"className":"ps-article-content","layout":{"type":"constrained"}} /-->
+  
+  <!-- wp:group {"className":"ps-article-footer","style":{"spacing":{"margin":{"top":"3rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-article-footer" style="margin-top:3rem">
+    
+    <!-- نظام التقييم -->
+    <!-- wp:html -->
+    <div class="ps-rating-widget" data-post-id="">
+      <h4 class="ps-rating-title">قيم هذا المقال:</h4>
+      <div class="ps-rating-stars">
+        <button class="ps-rating-btn" data-rating="1" aria-label="نجمة واحدة">★</button>
+        <button class="ps-rating-btn" data-rating="2" aria-label="نجمتان">★</button>
+        <button class="ps-rating-btn" data-rating="3" aria-label="ثلاث نجوم">★</button>
+        <button class="ps-rating-btn" data-rating="4" aria-label="أربع نجوم">★</button>
+        <button class="ps-rating-btn" data-rating="5" aria-label="خمس نجوم">★</button>
+      </div>
+      <div class="ps-rating-display">
+        <span class="ps-rating-average">0.0</span>
+        <span class="ps-rating-count">(0 تقييمات)</span>
+      </div>
+    </div>
+    <!-- /wp:html -->
+    
+    <!-- wp:post-terms {"term":"category","className":"ps-post-categories"} /-->
+    <!-- wp:post-terms {"term":"post_tag","className":"ps-post-tags"} /-->
+    
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:group {"className":"ps-post-navigation","style":{"spacing":{"margin":{"top":"3rem"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
+  <div class="wp-block-group ps-post-navigation" style="margin-top:3rem">
+    <!-- wp:post-navigation-link {"type":"previous","label":"المقال السابق","showTitle":true,"className":"ps-nav-previous"} /-->
+    <!-- wp:post-navigation-link {"type":"next","label":"المقال التالي","showTitle":true,"className":"ps-nav-next"} /-->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:comments {"className":"ps-comments-section"} /-->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
