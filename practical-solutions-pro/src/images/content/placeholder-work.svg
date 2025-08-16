@@ -1,0 +1,52 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc"/>
+      <stop offset="100%" style="stop-color:#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- خلفية -->
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- مكتب -->
+  <rect x="50" y="180" width="300" height="80" fill="#8B4513" rx="5"/>
+  <rect x="60" y="170" width="280" height="10" fill="#A0522D"/>
+  
+  <!-- كمبيوتر -->
+  <rect x="120" y="120" width="160" height="100" fill="#2F2F2F" rx="8"/>
+  <rect x="130" y="130" width="140" height="80" fill="#4169E1"/>
+  <rect x="190" y="220" width="20" height="15" fill="#696969"/>
+  <ellipse cx="200" cy="245" rx="30" ry="8" fill="#696969"/>
+  
+  <!-- لوحة مفاتيح -->
+  <rect x="100" y="230" width="100" height="20" fill="#D3D3D3" rx="3"/>
+  
+  <!-- فأرة -->
+  <ellipse cx="250" cy="240" rx="12" ry="18" fill="#D3D3D3"/>
+  
+  <!-- أوراق -->
+  <rect x="320" y="160" width="40" height="50" fill="white" stroke="#ccc"/>
+  <line x1="325" y1="170" x2="355" y2="170" stroke="#333" stroke-width="1"/>
+  <line x1="325" y1="180" x2="355" y2="180" stroke="#333" stroke-width="1"/>
+  <line x1="325" y1="190" x2="345" y2="190" stroke="#333" stroke-width="1"/>
+  
+  <!-- قلم -->
+  <rect x="350" y="155" width="3" height="25" fill="#FFD700"/>
+  <circle cx="351.5" cy="152" r="2" fill="#FF6347"/>
+  
+  <!-- رسم بياني على الشاشة -->
+  <g stroke="#00FF00" stroke-width="2" fill="none">
+    <polyline points="140,180 160,160 180,170 200,150 220,160 240,140 260,150"/>
+  </g>
+  
+  <!-- أيقونات على الشاشة -->
+  <rect x="145" y="145" width="8" height="8" fill="#FF6B6B" rx="1"/>
+  <rect x="160" y="145" width="8" height="8" fill="#4ECDC4" rx="1"/>
+  <rect x="175" y="145" width="8" height="8" fill="#45B7D1" rx="1"/>
+  
+  <!-- نص توضيحي -->
+  <text x="200" y="280" text-anchor="middle" font-family="Cairo, Arial" font-size="14" fill="#2563eb">
+    💼 العمل والمهنة
+  </text>
+</svg>

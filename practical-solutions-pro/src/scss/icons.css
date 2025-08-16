@@ -1,0 +1,60 @@
+/* أنماط الأيقونات العامة */
+.ps-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+/* أحجام الأيقونات */
+.ps-icon--xs { width: 0.75rem; height: 0.75rem; }
+.ps-icon--sm { width: 1rem; height: 1rem; }
+.ps-icon--md { width: 1.5rem; height: 1.5rem; }
+.ps-icon--lg { width: 2rem; height: 2rem; }
+.ps-icon--xl { width: 3rem; height: 3rem; }
+
+/* أيقونات ملونة */
+.ps-icon--primary { color: var(--ps-primary-color); }
+.ps-icon--accent { color: var(--ps-accent-color); }
+.ps-icon--success { color: #10b981; }
+.ps-icon--warning { color: #f59e0b; }
+.ps-icon--danger { color: #ef4444; }
+
+/* تأثيرات تفاعلية */
+.ps-icon--hover:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.ps-icon--spin {
+  animation: ps-spin 2s linear infinite;
+}
+
+@keyframes ps-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* أيقونات وسائل التواصل */
+.ps-social-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.ps-social-icon--facebook { background: #1877f2; color: white; }
+.ps-social-icon--twitter { background: #1da1f2; color: white; }
+.ps-social-icon--linkedin { background: #0077b5; color: white; }
+.ps-social-icon--instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+.ps-social-icon--youtube { background: #ff0000; color: white; }
+.ps-social-icon--whatsapp { background: #25d366; color: white; }
+
+.ps-social-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}

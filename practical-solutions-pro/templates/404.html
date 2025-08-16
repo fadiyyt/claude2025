@@ -1,162 +1,136 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"5rem","bottom":"5rem"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="padding-top:5rem;padding-bottom:5rem">
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:3rem;padding-bottom:3rem">
 
-  <!-- wp:group {"className":"ps-404-content","layout":{"type":"constrained"}} -->
-  <div class="wp-block-group ps-404-content">
+  <!-- wp:group {"className":"ps-404-container","style":{"spacing":{"margin":{"bottom":"3rem"}}},"layout":{"type":"constrained","contentSize":"800px"}} -->
+  <div class="wp-block-group ps-404-container" style="margin-bottom:3rem">
     
-    <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"8rem","fontWeight":"900"}},"textColor":"primary"} -->
-    <h1 class="wp-block-heading has-text-align-center has-primary-color has-text-color" style="font-size:8rem;font-weight:900">404</h1>
-    <!-- /wp:heading -->
-    
-    <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-    <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">😔 الصفحة غير موجودة</h2>
-    <!-- /wp:heading -->
-    
-    <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"3rem"}}}} -->
-    <p class="has-text-align-center" style="margin-bottom:3rem">عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها إلى مكان آخر</p>
+    <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"8rem","fontWeight":"700"},"color":{"text":"#e5e7eb"},"spacing":{"margin":{"bottom":"0"}}}} -->
+    <p class="has-text-align-center has-text-color" style="color:#e5e7eb;margin-bottom:0;font-size:8rem;font-weight:700">404</p>
     <!-- /wp:paragraph -->
     
-    <!-- wp:html -->
-    <div class="ps-search-container">
-      <form role="search" method="get" class="ps-search-form" action="/">
-        <input type="search" class="ps-search-input" placeholder="ابحث عما تريد..." name="s" id="search-input">
-        <button type="button" class="ps-voice-btn" id="voice-search" title="البحث الصوتي">🎤</button>
-        <button type="submit" class="ps-search-btn" title="بحث">🔍</button>
-      </form>
-      <div class="ps-search-suggestions"></div>
-    </div>
-    <!-- /wp:html -->
+    <!-- wp:heading {"textAlign":"center","level":1,"style":{"spacing":{"margin":{"top":"0","bottom":"1rem"}}}} -->
+    <h1 class="wp-block-heading has-text-align-center" style="margin-top:0;margin-bottom:1rem">😔 الصفحة غير موجودة</h1>
+    <!-- /wp:heading -->
     
-    <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"3rem","bottom":"3rem"}}}} -->
-    <div class="wp-block-buttons" style="margin-top:3rem;margin-bottom:3rem">
+    <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+    <p class="has-text-align-center" style="margin-bottom:2rem">عذراً، الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها إلى مكان آخر</p>
+    <!-- /wp:paragraph -->
+    
+    <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+    <div class="wp-block-buttons">
       <!-- wp:button {"className":"is-style-ps-primary-button"} -->
-      <div class="wp-block-button is-style-ps-primary-button"><a class="wp-block-button__link wp-element-button" href="/">🏠 العودة للرئيسية</a></div>
+      <div class="wp-block-button is-style-ps-primary-button"><a class="wp-block-button__link wp-element-button" href="/">العودة للرئيسية</a></div>
       <!-- /wp:button -->
     </div>
     <!-- /wp:buttons -->
     
-    <!-- wp:group {"className":"ps-404-suggestions","style":{"spacing":{"margin":{"top":"4rem"}}},"layout":{"type":"constrained"}} -->
-    <div class="wp-block-group ps-404-suggestions" style="margin-top:4rem">
-      
-      <!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-ps-section-title"} -->
-      <h3 class="wp-block-heading is-style-ps-section-title has-text-align-center">أو تصفح هذه الأقسام:</h3>
-      <!-- /wp:heading -->
-      
-      <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"2rem","left":"2rem"}}}} -->
-      <div class="wp-block-columns">
-        
-        <!-- wp:column -->
-        <div class="wp-block-column">
-          <!-- wp:group {"className":"is-style-ps-feature-box","layout":{"type":"constrained"}} -->
-          <div class="wp-block-group is-style-ps-feature-box">
-            
-            <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <h4 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">🏠 البيت والمنزل</h4>
-            <!-- /wp:heading -->
-            
-            <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <p class="has-text-align-center" style="margin-bottom:1rem">نصائح لتنظيف وترتيب وتحسين منزلك</p>
-            <!-- /wp:paragraph -->
-            
-            <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
-            <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/home">استكشف الآن</a></div>
-            <!-- /wp:button -->
-            
-          </div>
-          <!-- /wp:group -->
-        </div>
-        <!-- /wp:column -->
-        
-        <!-- wp:column -->
-        <div class="wp-block-column">
-          <!-- wp:group {"className":"is-style-ps-feature-box","layout":{"type":"constrained"}} -->
-          <div class="wp-block-group is-style-ps-feature-box">
-            
-            <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <h4 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">🍳 المطبخ والطبخ</h4>
-            <!-- /wp:heading -->
-            
-            <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <p class="has-text-align-center" style="margin-bottom:1rem">وصفات وحيل مطبخية لتوفير الوقت والجهد</p>
-            <!-- /wp:paragraph -->
-            
-            <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
-            <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/kitchen">استكشف الآن</a></div>
-            <!-- /wp:button -->
-            
-          </div>
-          <!-- /wp:group -->
-        </div>
-        <!-- /wp:column -->
-        
-        <!-- wp:column -->
-        <div class="wp-block-column">
-          <!-- wp:group {"className":"is-style-ps-feature-box","layout":{"type":"constrained"}} -->
-          <div class="wp-block-group is-style-ps-feature-box">
-            
-            <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <h4 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">💡 نصائح حياتية</h4>
-            <!-- /wp:heading -->
-            
-            <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
-            <p class="has-text-align-center" style="margin-bottom:1rem">حلول ذكية لتحسين نمط حياتك اليومي</p>
-            <!-- /wp:paragraph -->
-            
-            <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
-            <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/lifestyle">استكشف الآن</a></div>
-            <!-- /wp:button -->
-            
-          </div>
-          <!-- /wp:group -->
-        </div>
-        <!-- /wp:column -->
-        
-      </div>
-      <!-- /wp:columns -->
-      
-    </div>
-    <!-- /wp:group -->
+  </div>
+  <!-- /wp:group -->
+  
+  <!-- wp:group {"className":"ps-404-suggestions","style":{"spacing":{"margin":{"top":"3rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-404-suggestions" style="margin-top:3rem">
     
-    <!-- wp:group {"className":"ps-404-recent","style":{"spacing":{"margin":{"top":"4rem"}}},"layout":{"type":"constrained"}} -->
-    <div class="wp-block-group ps-404-recent" style="margin-top:4rem">
+    <!-- wp:heading {"textAlign":"center","level":3,"style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+    <h3 class="wp-block-heading has-text-align-center" style="margin-bottom:2rem">أو تصفح هذه الأقسام:</h3>
+    <!-- /wp:heading -->
+    
+    <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"2rem","left":"2rem"}}}} -->
+    <div class="wp-block-columns">
       
-      <!-- wp:heading {"textAlign":"center","level":3,"className":"is-style-ps-section-title"} -->
-      <h3 class="wp-block-heading is-style-ps-section-title has-text-align-center">أحدث المقالات</h3>
-      <!-- /wp:heading -->
-      
-      <!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
-      <div class="wp-block-query">
-        
-        <!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"grid","columnCount":3}} -->
-        
-        <!-- wp:group {"className":"is-style-ps-card-style","layout":{"type":"constrained"}} -->
-        <div class="wp-block-group is-style-ps-card-style">
+      <!-- wp:column -->
+      <div class="wp-block-column">
+        <!-- wp:group {"className":"ps-404-suggestion-card","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"8px"}},"backgroundColor":"light-gray","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group ps-404-suggestion-card has-light-gray-background-color has-background" style="border-radius:8px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
           
-          <!-- wp:post-featured-image {"isLink":true,"className":"is-style-ps-rounded-image"} /-->
+          <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"2rem"}}} -->
+          <p class="has-text-align-center" style="font-size:2rem">🏠</p>
+          <!-- /wp:paragraph -->
           
-          <!-- wp:post-title {"level":4,"isLink":true,"style":{"spacing":{"margin":{"top":"1rem","bottom":"0.5rem"}}}} /-->
+          <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"top":"0.5rem","bottom":"0.5rem"}}}} -->
+          <h4 class="wp-block-heading has-text-align-center" style="margin-top:0.5rem;margin-bottom:0.5rem">البيت والمنزل</h4>
+          <!-- /wp:heading -->
           
-          <!-- wp:post-excerpt {"moreText":"اقرأ المزيد","excerptLength":15} /-->
+          <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+          <p class="has-text-align-center" style="margin-bottom:1rem">نصائح لتنظيف وترتيب منزلك</p>
+          <!-- /wp:paragraph -->
           
-          <!-- wp:group {"style":{"spacing":{"margin":{"top":"1rem"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
-          <div class="wp-block-group" style="margin-top:1rem">
-            <!-- wp:post-date {"format":"j F Y","style":{"typography":{"fontSize":"12px"}},"textColor":"tertiary"} /-->
-            <!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"12px"}},"textColor":"primary"} /-->
-          </div>
-          <!-- /wp:group -->
+          <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/home">استكشف الآن</a></div>
+          <!-- /wp:button -->
           
         </div>
         <!-- /wp:group -->
-        
-        <!-- /wp:post-template -->
-        
       </div>
-      <!-- /wp:query -->
+      <!-- /wp:column -->
+      
+      <!-- wp:column -->
+      <div class="wp-block-column">
+        <!-- wp:group {"className":"ps-404-suggestion-card","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"8px"}},"backgroundColor":"light-gray","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group ps-404-suggestion-card has-light-gray-background-color has-background" style="border-radius:8px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+          
+          <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"2rem"}}} -->
+          <p class="has-text-align-center" style="font-size:2rem">💼</p>
+          <!-- /wp:paragraph -->
+          
+          <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"top":"0.5rem","bottom":"0.5rem"}}}} -->
+          <h4 class="wp-block-heading has-text-align-center" style="margin-top:0.5rem;margin-bottom:0.5rem">العمل والمهنة</h4>
+          <!-- /wp:heading -->
+          
+          <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+          <p class="has-text-align-center" style="margin-bottom:1rem">حلول لتطوير حياتك المهنية</p>
+          <!-- /wp:paragraph -->
+          
+          <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/work">استكشف الآن</a></div>
+          <!-- /wp:button -->
+          
+        </div>
+        <!-- /wp:group -->
+      </div>
+      <!-- /wp:column -->
+      
+      <!-- wp:column -->
+      <div class="wp-block-column">
+        <!-- wp:group {"className":"ps-404-suggestion-card","style":{"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"}},"border":{"radius":"8px"}},"backgroundColor":"light-gray","layout":{"type":"constrained"}} -->
+        <div class="wp-block-group ps-404-suggestion-card has-light-gray-background-color has-background" style="border-radius:8px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+          
+          <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"2rem"}}} -->
+          <p class="has-text-align-center" style="font-size:2rem">📚</p>
+          <!-- /wp:paragraph -->
+          
+          <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"top":"0.5rem","bottom":"0.5rem"}}}} -->
+          <h4 class="wp-block-heading has-text-align-center" style="margin-top:0.5rem;margin-bottom:0.5rem">التعلم والتطوير</h4>
+          <!-- /wp:heading -->
+          
+          <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+          <p class="has-text-align-center" style="margin-bottom:1rem">مهارات جديدة لحياة أفضل</p>
+          <!-- /wp:paragraph -->
+          
+          <!-- wp:button {"textAlign":"center","className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link has-text-align-center wp-element-button" href="/category/learning">استكشف الآن</a></div>
+          <!-- /wp:button -->
+          
+        </div>
+        <!-- /wp:group -->
+      </div>
+      <!-- /wp:column -->
       
     </div>
-    <!-- /wp:group -->
+    <!-- /wp:columns -->
+    
+  </div>
+  <!-- /wp:group -->
+  
+  <!-- wp:group {"className":"ps-404-search","style":{"spacing":{"margin":{"top":"3rem","bottom":"2rem"}}},"layout":{"type":"constrained","contentSize":"600px"}} -->
+  <div class="wp-block-group ps-404-search" style="margin-top:3rem;margin-bottom:2rem">
+    
+    <!-- wp:heading {"textAlign":"center","level":4,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+    <h4 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">🔍 أو ابحث عما تريد</h4>
+    <!-- /wp:heading -->
+    
+    <!-- wp:search {"label":"البحث","showLabel":false,"placeholder":"ابحث في الموقع...","buttonText":"بحث","buttonPosition":"button-inside","buttonUseIcon":true} /-->
     
   </div>
   <!-- /wp:group -->

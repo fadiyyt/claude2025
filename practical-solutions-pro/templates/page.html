@@ -1,25 +1,28 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="padding-top:3rem;padding-bottom:3rem">
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"2rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:2rem;padding-bottom:3rem">
 
-  <!-- wp:group {"className":"ps-page-header","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
-  <div class="wp-block-group ps-page-header" style="margin-bottom:2rem">
-    
-    <!-- Breadcrumbs -->
+  <!-- wp:group {"className":"ps-breadcrumbs","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-breadcrumbs" style="margin-bottom:2rem">
     <!-- wp:shortcode -->
     [ps_breadcrumbs]
     <!-- /wp:shortcode -->
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:group {"className":"ps-page-header","style":{"spacing":{"margin":{"bottom":"2rem"}}},"layout":{"type":"constrained","contentSize":"800px"}} -->
+  <div class="wp-block-group ps-page-header" style="margin-bottom:2rem">
     
-    <!-- wp:post-title {"level":1,"textAlign":"center","className":"is-style-ps-section-title","style":{"spacing":{"margin":{"top":"2rem","bottom":"1rem"}}}} /-->
+    <!-- wp:post-title {"level":1,"textAlign":"center","style":{"spacing":{"margin":{"bottom":"1rem"}}}} /-->
     
   </div>
   <!-- /wp:group -->
 
-  <!-- wp:group {"className":"ps-page-content","layout":{"type":"constrained"}} -->
+  <!-- wp:group {"className":"ps-page-content","layout":{"type":"constrained","contentSize":"800px"}} -->
   <div class="wp-block-group ps-page-content">
     
-    <!-- wp:post-featured-image {"className":"is-style-ps-rounded-image","style":{"spacing":{"margin":{"bottom":"2rem"}}}} /-->
+    <!-- wp:post-featured-image {"align":"wide","className":"ps-page-featured-image","style":{"spacing":{"margin":{"bottom":"2rem"}}}} /-->
     
     <!-- wp:post-content {"style":{"spacing":{"blockGap":"2rem"}}} /-->
     

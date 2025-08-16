@@ -1,8 +1,7 @@
 <?php
 /**
- * Performance Optimizer for Practical Solutions Pro
- * محسن الأداء لقالب الحلول العملية الاحترافي
- * الإصدار: 2.2.2 (محسن - بدون دمج ديناميكي)
+ * Performance Optimizer - Enhanced Version
+ * محسن الأداء المتقدم
  */
 
 if (!defined('ABSPATH')) {
@@ -11,306 +10,254 @@ if (!defined('ABSPATH')) {
 
 class PS_Performance_Optimizer {
     
-    private $cache_enabled = true;
-    private $compression_enabled = true;
+    private $cache_dir;
+    private $options;
     
     public function __construct() {
-        add_action('init', [$this, 'init_optimizations']);
-        add_action('wp_enqueue_scripts', [$this, 'optimize_scripts'], 100);
-        add_filter('style_loader_tag', [$this, 'add_async_css'], 10, 2);
-        add_filter('script_loader_tag', [$this, 'add_defer_attribute'], 10, 2);
-        add_action('wp_head', [$this, 'add_preload_hints'], 1);
-        add_action('wp_footer', [$this, 'add_resource_hints'], 1);
+        $this->cache_dir = WP_CONTENT_DIR . '/cache/ps-cache/';
+        $this->options = get_option('ps_performance_settings', []);
+        
+        add_action('init', [$this, 'init_optimizer']);
+        add_action('wp_enqueue_scripts', [$this, 'optimize_assets']);
+        add_action('wp_head', [$this, 'add_performance_hints'], 1);
+        add_action('wp_footer', [$this, 'optimize_footer'], 99);
+        add_filter('wp_get_attachment_image_attributes', [$this, 'add_lazy_loading'], 10, 3);
+        add_action('wp_ajax_ps_clear_cache', [$this, 'clear_cache_ajax']);
+        add_action('wp_ajax_ps_optimize_images', [$this, 'optimize_images_ajax']);
+        
+        // تحسينات تلقائية
+        $this->setup_automatic_optimizations();
     }
     
-    /**
-     * تطبيق التحسينات الأساسية
-     */
-    public function init_optimizations() {
-        // تفعيل gzip compression إذا لم يكن مفعلاً
-        if (!ob_get_level() && $this->compression_enabled) {
-            ob_start([$this, 'compress_output']);
+    public function init_optimizer() {
+        // إنشاء مجلد الكاش إذا لم يكن موجوداً
+        if (!file_exists($this->cache_dir)) {
+            wp_mkdir_p($this->cache_dir);
         }
         
-        // تحسين إعدادات PHP
-        if (function_exists('ini_set')) {
-            ini_set('memory_limit', '256M');
-            ini_set('max_execution_time', 120);
-            ini_set('max_input_vars', 3000);
+        // تحسينات قاعدة البيانات
+        if ($this->is_enabled('database_optimization')) {
+            add_action('wp_scheduled_delete', [$this, 'cleanup_database']);
         }
         
-        // إزالة query strings من الملفات الثابتة
-        add_filter('style_loader_src', [$this, 'remove_query_strings'], 10, 1);
-        add_filter('script_loader_src', [$this, 'remove_query_strings'], 10, 1);
-        
-        // تحسين قاعدة البيانات تلقائياً
-        add_action('wp_loaded', [$this, 'optimize_database_queries']);
+        // ضغط HTML
+        if ($this->is_enabled('html_minification')) {
+            add_action('wp_loaded', [$this, 'start_html_compression']);
+        }
     }
     
-    /**
-     * ضغط الإخراج النهائي
-     */
-    public function compress_output($output) {
-        if (strlen($output) > 2048 && function_exists('gzencode') && !headers_sent()) {
-            $accept_encoding = isset($_SERVER['HTTP_ACCEPT_ENCODING']) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : '';
+    public function optimize_assets() {
+        // إزالة Emoji scripts غير الضرورية
+        if ($this->is_enabled('remove_emoji')) {
+            remove_action('wp_head', 'print_emoji_detection_script', 7);
+            remove_action('wp_print_styles', 'print_emoji_styles');
+        }
+        
+        // إزالة jQuery Migrate
+        if ($this->is_enabled('remove_jquery_migrate')) {
+            add_action('wp_default_scripts', [$this, 'remove_jquery_migrate']);
+        }
+        
+        // تأجيل JavaScript غير الحرج
+        if ($this->is_enabled('defer_js')) {
+            add_filter('script_loader_tag', [$this, 'defer_non_critical_js'], 10, 3);
+        }
+        
+        // دمج وضغط CSS
+        if ($this->is_enabled('combine_css')) {
+            add_action('wp_print_styles', [$this, 'combine_css_files'], 100);
+        }
+    }
+    
+    public function add_performance_hints() {
+        // DNS Prefetch للخدمات الخارجية
+        echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">' . "\n";
+        echo '<link rel="dns-prefetch" href="//fonts.gstatic.com">' . "\n";
+        
+        // Preconnect للموارد المهمة
+        echo '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>' . "\n";
+        echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+        
+        // Preload للخطوط المهمة
+        if ($this->is_enabled('preload_fonts')) {
+            echo '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
+        }
+        
+        // Critical CSS inline
+        if ($this->is_enabled('critical_css')) {
+            $this->output_critical_css();
+        }
+    }
+    
+    public function add_lazy_loading($attr, $attachment, $size) {
+        if (!is_admin() && !is_feed()) {
+            $attr['loading'] = 'lazy';
+            $attr['decoding'] = 'async';
             
-            if (strpos($accept_encoding, 'gzip') !== false) {
-                $compressed = gzencode($output, 9);
-                if ($compressed !== false) {
-                    header('Content-Encoding: gzip');
-                    header('Vary: Accept-Encoding');
-                    header('Content-Length: ' . strlen($compressed));
-                    return $compressed;
+            // إضافة srcset محسن
+            if ($this->is_enabled('responsive_images')) {
+                $srcset = wp_get_attachment_image_srcset($attachment->ID, $size);
+                if ($srcset) {
+                    $attr['srcset'] = $srcset;
+                    $attr['sizes'] = '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw';
                 }
             }
         }
-        return $output;
+        return $attr;
     }
     
-    /**
-     * تحسين تحميل الملفات (بدون دمج ديناميكي)
-     */
-    public function optimize_scripts() {
-        // إزالة الملفات غير الضرورية
-        wp_dequeue_script('wp-embed');
-        wp_dequeue_style('wp-block-library-theme');
-        
-        // إزالة CSS و JS غير مستخدمة حسب الصفحة
-        if (!is_admin_bar_showing()) {
-            wp_dequeue_style('admin-bar');
-            wp_dequeue_script('admin-bar');
-        }
-        
-        if (!is_singular() || !comments_open()) {
-            wp_dequeue_script('comment-reply');
-        }
-        
-        // تحسين تحميل emoji styles
-        remove_action('wp_head', 'print_emoji_detection_script', 7);
-        remove_action('wp_print_styles', 'print_emoji_styles');
-        remove_action('admin_print_scripts', 'print_emoji_detection_script');
-        remove_action('admin_print_styles', 'print_emoji_styles');
-    }
-    
-    /**
-     * إضافة preload hints للموارد المهمة
-     */
-    public function add_preload_hints() {
-        // preload للخطوط المهمة
-        ?>
-        <link rel="preload" href="<?php echo PS_THEME_URI; ?>/dist/css/main.min.css" as="style">
-        <link rel="preload" href="<?php echo PS_THEME_URI; ?>/dist/js/main.min.js" as="script">
-        <?php
-        
-        // preload للصورة المميزة في المقالات
-        if (is_singular() && has_post_thumbnail()) {
-            $featured_image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
-            if ($featured_image) {
-                echo '<link rel="preload" href="' . esc_url($featured_image[0]) . '" as="image">';
-            }
+    public function optimize_footer() {
+        if ($this->is_enabled('optimize_footer')) {
+            // تأجيل تحميل ودجات غير مهمة
+            echo '<script>
+            window.addEventListener("load", function() {
+                // تحميل ودجات التواصل الاجتماعي
+                if (typeof loadSocialWidgets === "function") {
+                    setTimeout(loadSocialWidgets, 2000);
+                }
+            });
+            </script>';
         }
     }
     
-    /**
-     * إضافة resource hints للتحسين
-     */
-    public function add_resource_hints() {
-        ?>
-        <link rel="dns-prefetch" href="//fonts.googleapis.com">
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link rel="dns-prefetch" href="//www.google-analytics.com">
-        <?php
-    }
-    
-    /**
-     * إضافة async للـ CSS غير الحرجة
-     */
-    public function add_async_css($tag, $handle) {
-        // تطبيق async فقط على ملفات القالب
-        if (strpos($handle, 'ps-') === 0 && strpos($handle, 'main') === false) {
-            return str_replace('<link ', '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" ', $tag);
-        }
-        return $tag;
-    }
-    
-    /**
-     * إضافة defer للجافا سكريبت غير الحرجة
-     */
-    public function add_defer_attribute($tag, $handle) {
-        $defer_scripts = ['ps-rating-system', 'ps-analytics'];
-        
-        if (in_array($handle, $defer_scripts)) {
-            return str_replace(' src', ' defer src', $tag);
-        }
-        
-        // إضافة async للملفات غير الحرجة
-        $async_scripts = ['google-analytics', 'gtag'];
-        if (in_array($handle, $async_scripts)) {
-            return str_replace(' src', ' async src', $tag);
-        }
-        
-        return $tag;
-    }
-    
-    /**
-     * إزالة query strings
-     */
-    public function remove_query_strings($src) {
-        if (strpos($src, '?ver=')) {
-            $src = remove_query_arg('ver', $src);
-        }
-        return $src;
-    }
-    
-    /**
-     * تحسين استعلامات قاعدة البيانات
-     */
-    public function optimize_database_queries() {
-        // تقليل عدد المراجعات المحفوظة
-        if (!defined('WP_POST_REVISIONS')) {
-            define('WP_POST_REVISIONS', 3);
-        }
-        
-        // تحسين autosave interval
-        if (!defined('AUTOSAVE_INTERVAL')) {
-            define('AUTOSAVE_INTERVAL', 300); // 5 دقائق
-        }
-        
-        // تفعيل object cache إذا كان متاحاً
-        if (function_exists('wp_cache_add_global_groups')) {
-            wp_cache_add_global_groups(['posts', 'comments', 'options']);
-        }
-    }
-    
-    /**
-     * تحسين قاعدة البيانات المجدول
-     */
-    public function optimize_database() {
-        global $wpdb;
-        
-        // تحسين الجداول الرئيسية
-        $tables = [$wpdb->posts, $wpdb->postmeta, $wpdb->comments, $wpdb->commentmeta, $wpdb->options];
-        
-        foreach ($tables as $table) {
-            $wpdb->query("OPTIMIZE TABLE {$table}");
-        }
-        
-        // حذف البيانات غير الضرورية بطريقة آمنة
-        $this->cleanup_database_safely();
-        
-        // تحديث إحصائيات قاعدة البيانات
-        $wpdb->query("ANALYZE TABLE {$wpdb->posts}");
-        $wpdb->query("ANALYZE TABLE {$wpdb->options}");
-    }
-    
-    /**
-     * تنظيف قاعدة البيانات بطريقة آمنة
-     */
-    private function cleanup_database_safely() {
-        global $wpdb;
-        
-        // حذف transients منتهية الصلاحية فقط
-        $expired_transients = $wpdb->get_col(
-            "SELECT option_name FROM {$wpdb->options} 
-             WHERE option_name LIKE '_transient_timeout_%' 
-             AND option_value < UNIX_TIMESTAMP()"
-        );
-        
-        foreach ($expired_transients as $transient) {
-            $key = str_replace('_transient_timeout_', '', $transient);
-            delete_transient($key);
-        }
-        
-        // حذف orphaned meta data
-        $wpdb->query(
-            "DELETE pm FROM {$wpdb->postmeta} pm 
-             LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id 
-             WHERE p.ID IS NULL"
-        );
-        
-        $wpdb->query(
-            "DELETE cm FROM {$wpdb->commentmeta} cm 
-             LEFT JOIN {$wpdb->comments} c ON c.comment_ID = cm.comment_id 
-             WHERE c.comment_ID IS NULL"
-        );
-    }
-    
-    /**
-     * تنظيف التخزين المؤقت المتقدم
-     */
-    public function clear_cache() {
-        // مسح WordPress cache
-        if (function_exists('wp_cache_flush')) {
-            wp_cache_flush();
-        }
-        
-        // مسح object cache
-        if (function_exists('wp_cache_delete_multiple')) {
-            $cache_groups = ['posts', 'comments', 'options', 'post_meta', 'comment_meta'];
-            foreach ($cache_groups as $group) {
-                wp_cache_flush_group($group);
-            }
-        }
-        
-        // مسح ملفات التخزين المؤقت المخصصة
-        $cache_dirs = [
-            WP_CONTENT_DIR . '/cache/ps-cache/',
-            WP_CONTENT_DIR . '/uploads/ps-temp/'
+    public function defer_non_critical_js($tag, $handle, $src) {
+        // قائمة السكريبتات التي يجب تأجيلها
+        $defer_scripts = [
+            'ps-search',
+            'ps-rating',
+            'comment-reply',
+            'wp-embed'
         ];
         
-        foreach ($cache_dirs as $cache_dir) {
-            if (is_dir($cache_dir)) {
-                $this->delete_directory_contents($cache_dir);
-            }
-        }
-    }
-    
-    /**
-     * حذف محتويات مجلد
-     */
-    private function delete_directory_contents($dir) {
-        if (!is_dir($dir)) return;
+        // السكريبتات الحرجة التي لا يجب تأجيلها
+        $critical_scripts = [
+            'jquery-core',
+            'ps-main'
+        ];
         
-        $files = glob($dir . '*', GLOB_MARK);
-        foreach ($files as $file) {
-            if (is_dir($file)) {
-                $this->delete_directory_contents($file);
-                rmdir($file);
-            } else {
-                unlink($file);
+        if (in_array($handle, $critical_scripts)) {
+            return $tag;
+        }
+        
+        if (in_array($handle, $defer_scripts) || strpos($handle, 'social') !== false) {
+            return str_replace('<script ', '<script defer ', $tag);
+        }
+        
+        return $tag;
+    }
+    
+    public function remove_jquery_migrate($scripts) {
+        if (!is_admin() && isset($scripts->registered['jquery'])) {
+            $script = $scripts->registered['jquery'];
+            if ($script->deps) {
+                $script->deps = array_diff($script->deps, ['jquery-migrate']);
             }
         }
     }
     
-    /**
-     * تحسين الصور تلقائياً
-     */
-    public function optimize_images() {
-        // تحسين جودة الصور المرفوعة
-        add_filter('wp_editor_set_quality', function($quality, $mime_type) {
-            switch ($mime_type) {
-                case 'image/jpeg':
-                    return 85;
-                case 'image/png':
-                    return 90;
-                case 'image/webp':
-                    return 80;
-                default:
-                    return $quality;
+    public function combine_css_files() {
+        if (!$this->is_enabled('combine_css') || is_admin()) {
+            return;
+        }
+        
+        global $wp_styles;
+        
+        $css_handles = [];
+        $combined_css = '';
+        
+        foreach ($wp_styles->queue as $handle) {
+            if (isset($wp_styles->registered[$handle])) {
+                $style = $wp_styles->registered[$handle];
+                
+                // تجاهل الملفات الخارجية
+                if (strpos($style->src, home_url()) === 0) {
+                    $css_handles[] = $handle;
+                    $file_path = str_replace(home_url(), ABSPATH, $style->src);
+                    
+                    if (file_exists($file_path)) {
+                        $combined_css .= file_get_contents($file_path) . "\n";
+                    }
+                }
             }
+        }
+        
+        if (!empty($combined_css)) {
+            $cache_file = $this->cache_dir . 'combined-' . md5($combined_css) . '.css';
+            
+            if (!file_exists($cache_file)) {
+                $minified_css = $this->minify_css($combined_css);
+                file_put_contents($cache_file, $minified_css);
+            }
+            
+            // إزالة الملفات الأصلية من القائمة
+            foreach ($css_handles as $handle) {
+                wp_dequeue_style($handle);
+            }
+            
+            // إضافة الملف المدمج
+            wp_enqueue_style('ps-combined', str_replace(ABSPATH, home_url() . '/', $cache_file), [], filemtime($cache_file));
+        }
+    }
+    
+    public function start_html_compression() {
+        if (!is_admin() && $this->is_enabled('html_minification')) {
+            ob_start([$this, 'compress_html']);
+        }
+    }
+    
+    public function compress_html($html) {
+        // إزالة التعليقات HTML (عدا IE conditionals)
+        $html = preg_replace('/<!--(?![\s\S]*(?:<!|-->))[\s\S]*?-->/', '', $html);
+        
+        // إزالة المسافات الزائدة
+        $html = preg_replace('/\s+/', ' ', $html);
+        
+        // إزالة المسافات حول علامات HTML
+        $html = preg_replace('/>\s+</', '><', $html);
+        
+        // إزالة المسافات في بداية ونهاية الصفحة
+        $html = trim($html);
+        
+        return $html;
+    }
+    
+    private function minify_css($css) {
+        // إزالة التعليقات
+        $css = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css);
+        
+        // إزالة المسافات الزائدة
+        $css = str_replace(["\r\n", "\r", "\n", "\t"], '', $css);
+        $css = preg_replace('/\s+/', ' ', $css);
+        
+        // إزالة المسافات حول الأقواس والفواصل
+        $css = str_replace([' {', '{ ', ' }', '} ', '; ', ' ;', ': ', ' :', ', ', ' ,'], ['{', '{', '}', '}', ';', ';', ':', ':', ',', ','], $css);
+        
+        return trim($css);
+    }
+    
+    public function optimize_images() {
+        if (!$this->is_enabled('image_optimization')) {
+            return;
+        }
+        
+        // تحسين جودة JPEG
+        add_filter('wp_editor_set_quality', function($quality, $mime_type) {
+            if ($mime_type === 'image/jpeg') {
+                return 85;
+            }
+            return $quality;
         }, 10, 2);
         
-        // تفعيل WebP إذا كان مدعوماً
+        // تحويل تلقائي إلى WebP
         if (function_exists('imagewebp')) {
-            add_filter('wp_generate_attachment_metadata', [$this, 'generate_webp_images'], 10, 2);
+            add_filter('wp_generate_attachment_metadata', [$this, 'generate_webp_versions'], 10, 2);
         }
     }
     
-    /**
-     * إنشاء صور WebP
-     */
-    public function generate_webp_images($metadata, $attachment_id) {
-        if (!isset($metadata['file'])) return $metadata;
+    public function generate_webp_versions($metadata, $attachment_id) {
+        if (!isset($metadata['file'])) {
+            return $metadata;
+        }
         
         $upload_dir = wp_upload_dir();
         $original_file = $upload_dir['basedir'] . '/' . $metadata['file'];
@@ -318,7 +265,7 @@ class PS_Performance_Optimizer {
         if (file_exists($original_file)) {
             $this->convert_to_webp($original_file);
             
-            // تحويل الأحجام المختلفة أيضاً
+            // تحويل الأحجام المختلفة
             if (isset($metadata['sizes'])) {
                 foreach ($metadata['sizes'] as $size) {
                     $size_file = dirname($original_file) . '/' . $size['file'];
@@ -332,20 +279,18 @@ class PS_Performance_Optimizer {
         return $metadata;
     }
     
-    /**
-     * تحويل صورة إلى WebP
-     */
     private function convert_to_webp($file_path) {
         $path_info = pathinfo($file_path);
         $webp_path = $path_info['dirname'] . '/' . $path_info['filename'] . '.webp';
         
-        $image_type = wp_check_filetype($file_path)['type'];
+        $extension = strtolower($path_info['extension']);
         
-        switch ($image_type) {
-            case 'image/jpeg':
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
                 $image = imagecreatefromjpeg($file_path);
                 break;
-            case 'image/png':
+            case 'png':
                 $image = imagecreatefrompng($file_path);
                 break;
             default:
@@ -353,43 +298,159 @@ class PS_Performance_Optimizer {
         }
         
         if ($image) {
-            imagewebp($image, $webp_path, 80);
+            $result = imagewebp($image, $webp_path, 80);
             imagedestroy($image);
-            return true;
+            return $result;
         }
         
         return false;
     }
     
-    /**
-     * مراقبة الأداء
-     */
-    public function monitor_performance() {
-        if (PS_DEBUG) {
-            $memory_usage = memory_get_peak_usage(true);
-            $query_count = get_num_queries();
-            $load_time = timer_stop(0, 3);
-            
-            $performance_data = [
-                'memory' => $memory_usage,
-                'queries' => $query_count,
-                'load_time' => $load_time,
-                'timestamp' => time()
-            ];
-            
-            // حفظ بيانات الأداء للمراجعة
-            $daily_performance = get_option('ps_performance_' . date('Y_m_d'), []);
-            $daily_performance[] = $performance_data;
-            
-            // الاحتفاظ بآخر 100 قراءة فقط
-            if (count($daily_performance) > 100) {
-                $daily_performance = array_slice($daily_performance, -100);
-            }
-            
-            update_option('ps_performance_' . date('Y_m_d'), $daily_performance);
+    public function cleanup_database() {
+        global $wpdb;
+        
+        if (!$this->is_enabled('database_optimization')) {
+            return;
         }
+        
+        // حذف المراجعات القديمة (أكثر من 30 يوم)
+        $wpdb->query("
+            DELETE FROM {$wpdb->posts} 
+            WHERE post_type = 'revision' 
+            AND post_date < DATE_SUB(NOW(), INTERVAL 30 DAY)
+        ");
+        
+        // حذف التعليقات المرفوضة
+        $wpdb->query("
+            DELETE FROM {$wpdb->comments} 
+            WHERE comment_approved = 'spam' 
+            OR comment_approved = 'trash'
+        ");
+        
+        // حذف البيانات الوسيطة اليتيمة
+        $wpdb->query("
+            DELETE pm FROM {$wpdb->postmeta} pm
+            LEFT JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+            WHERE p.ID IS NULL
+        ");
+        
+        // تحسين الجداول
+        $tables = $wpdb->get_results("SHOW TABLES", ARRAY_N);
+        foreach ($tables as $table) {
+            $wpdb->query("OPTIMIZE TABLE {$table[0]}");
+        }
+    }
+    
+    private function output_critical_css() {
+        $critical_css = '
+        body { font-family: Cairo, sans-serif; margin: 0; padding: 0; }
+        .wp-block-site-logo img { max-width: 200px; height: auto; }
+        .wp-block-navigation { list-style: none; display: flex; }
+        .wp-block-heading { margin: 0 0 1rem; }
+        .wp-block-paragraph { margin: 0 0 1rem; line-height: 1.6; }
+        .wp-block-button__link { display: inline-block; padding: 0.75rem 1.5rem; text-decoration: none; }
+        ';
+        
+        echo '<style id="ps-critical-css">' . $critical_css . '</style>' . "\n";
+    }
+    
+    public function clear_cache() {
+        if (!file_exists($this->cache_dir)) {
+            return true;
+        }
+        
+        $files = glob($this->cache_dir . '*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+        
+        // مسح كاش WordPress
+        wp_cache_flush();
+        
+        return true;
+    }
+    
+    public function clear_cache_ajax() {
+        check_ajax_referer('ps_admin_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(__('غير مسموح', 'practical-solutions'));
+        }
+        
+        $result = $this->clear_cache();
+        
+        if ($result) {
+            wp_send_json_success(__('تم مسح الكاش بنجاح', 'practical-solutions'));
+        } else {
+            wp_send_json_error(__('فشل في مسح الكاش', 'practical-solutions'));
+        }
+    }
+    
+    public function optimize_images_ajax() {
+        check_ajax_referer('ps_admin_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(__('غير مسموح', 'practical-solutions'));
+        }
+        
+        $optimized_count = $this->bulk_optimize_images();
+        
+        wp_send_json_success([
+            'message' => sprintf(__('تم تحسين %d صورة', 'practical-solutions'), $optimized_count),
+            'count' => $optimized_count
+        ]);
+    }
+    
+    private function bulk_optimize_images($limit = 50) {
+        $attachments = get_posts([
+            'post_type' => 'attachment',
+            'post_mime_type' => ['image/jpeg', 'image/png'],
+            'posts_per_page' => $limit,
+            'meta_query' => [
+                [
+                    'key' => '_ps_optimized',
+                    'compare' => 'NOT EXISTS'
+                ]
+            ]
+        ]);
+        
+        $optimized = 0;
+        
+        foreach ($attachments as $attachment) {
+            $file_path = get_attached_file($attachment->ID);
+            
+            if ($file_path && file_exists($file_path)) {
+                if ($this->convert_to_webp($file_path)) {
+                    update_post_meta($attachment->ID, '_ps_optimized', time());
+                    $optimized++;
+                }
+            }
+        }
+        
+        return $optimized;
+    }
+    
+    private function setup_automatic_optimizations() {
+        // جدولة تنظيف تلقائي أسبوعي
+        if (!wp_next_scheduled('ps_weekly_cleanup')) {
+            wp_schedule_event(time(), 'weekly', 'ps_weekly_cleanup');
+        }
+        add_action('ps_weekly_cleanup', [$this, 'cleanup_database']);
+        
+        // جدولة تحسين الصور التلقائي
+        if (!wp_next_scheduled('ps_daily_image_optimization')) {
+            wp_schedule_event(time(), 'daily', 'ps_daily_image_optimization');
+        }
+        add_action('ps_daily_image_optimization', [$this, 'bulk_optimize_images']);
+    }
+    
+    private function is_enabled($option) {
+        return isset($this->options[$option]) && $this->options[$option];
     }
 }
 
-// تشغيل المحسن
+// تشغيل محسن الأداء
 new PS_Performance_Optimizer();
+?>

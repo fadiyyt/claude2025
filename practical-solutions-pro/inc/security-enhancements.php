@@ -1,8 +1,7 @@
 <?php
 /**
- * Security Enhancements for Practical Solutions Pro
- * تحسينات الأمان لقالب الحلول العملية الاحترافي
- * الإصدار: 2.2.2 (محسن)
+ * Security Enhancements - Advanced Version
+ * تحسينات الأمان المتقدمة
  */
 
 if (!defined('ABSPATH')) {
@@ -11,326 +10,432 @@ if (!defined('ABSPATH')) {
 
 class PS_Security_Enhancements {
     
-    private $max_login_attempts = 5;
-    private $lockout_duration = 3600; // ساعة واحدة
+    private $options;
+    private $failed_attempts = [];
     
     public function __construct() {
-        add_action('init', [$this, 'init_security_measures']);
+        $this->options = get_option('ps_security_settings', []);
+        
+        add_action('init', [$this, 'init_security']);
         add_action('wp_login_failed', [$this, 'log_failed_login']);
-        add_filter('authenticate', [$this, 'limit_login_attempts'], 30, 3);
-        add_action('wp_ajax_nopriv_ps_search', [$this, 'verify_ajax_nonce']);
-        add_action('wp_ajax_ps_search', [$this, 'verify_ajax_nonce']);
-        add_action('template_redirect', [$this, 'prevent_user_enumeration']);
-        add_action('wp_login', [$this, 'clear_login_attempts'], 10, 2);
+        add_action('wp_login', [$this, 'log_successful_login'], 10, 2);
+        add_filter('authenticate', [$this, 'check_login_attempts'], 30, 3);
+        add_action('init', [$this, 'add_security_headers']);
+        add_action('admin_init', [$this, 'admin_security_checks']);
+        
+        // حماية ملفات النظام
+        add_action('template_redirect', [$this, 'protect_system_files']);
+        
+        // حماية من هجمات XSS و CSRF
+        add_action('wp_loaded', [$this, 'setup_csrf_protection']);
+        
+        // مراقبة تغييرات الملفات
+        if ($this->is_enabled('file_monitoring')) {
+            add_action('ps_daily_security_check', [$this, 'check_file_integrity']);
+        }
     }
     
-    /**
-     * تطبيق إجراءات الأمان الأساسية
-     */
-    public function init_security_measures() {
-        // منع التنفيذ المباشر لملفات PHP
-        if (!defined('ABSPATH')) {
-            http_response_code(403);
-            exit('Direct access forbidden.');
-        }
-        
-        // إزالة معلومات الإصدار
+    public function init_security() {
+        // إخفاء رقم إصدار WordPress
         remove_action('wp_head', 'wp_generator');
         add_filter('the_generator', '__return_empty_string');
         
         // إخفاء أخطاء تسجيل الدخول
-        add_filter('login_errors', function() {
-            return __('معلومات تسجيل دخول غير صحيحة.', 'practical-solutions');
-        });
+        add_filter('login_errors', [$this, 'generic_login_error']);
         
-        // حماية من XML-RPC attacks
-        add_filter('xmlrpc_enabled', '__return_false');
+        // منع enumeration للمستخدمين
+        if ($this->is_enabled('prevent_user_enumeration')) {
+            add_action('template_redirect', [$this, 'prevent_user_enumeration']);
+        }
         
-        // إزالة معلومات إضافية من head
-        remove_action('wp_head', 'wp_generator');
-        remove_action('wp_head', 'wlwmanifest_link');
-        remove_action('wp_head', 'rsd_link');
+        // تعطيل XML-RPC إذا لم يكن مطلوباً
+        if ($this->is_enabled('disable_xmlrpc')) {
+            add_filter('xmlrpc_enabled', '__return_false');
+        }
         
         // حماية wp-config.php
-        add_action('init', [$this, 'protect_wp_config']);
-    }
-    
-    /**
-     * منع user enumeration المحسن
-     */
-    public function prevent_user_enumeration() {
-        // منع الوصول المباشر لصفحات المؤلفين عبر author parameter
-        if (!is_admin() && isset($_GET['author'])) {
-            wp_redirect(home_url('/'), 301);
-            exit;
-        }
+        $this->protect_wp_config();
         
-        // منع REST API من كشف معلومات المستخدمين
-        if (!current_user_can('manage_options')) {
-            add_filter('rest_authentication_errors', function($access) {
-                if (is_wp_error($access)) {
-                    return $access;
-                }
-                
-                global $wp;
-                if (strpos($wp->request, 'wp/v2/users') !== false) {
-                    return new WP_Error(
-                        'rest_cannot_access',
-                        __('غير مصرح بالوصول', 'practical-solutions'),
-                        ['status' => 401]
-                    );
-                }
-                
-                return $access;
-            });
+        // جدولة فحص أمني يومي
+        if (!wp_next_scheduled('ps_daily_security_check')) {
+            wp_schedule_event(time(), 'daily', 'ps_daily_security_check');
         }
     }
     
-    /**
-     * تسجيل محاولات تسجيل الدخول الفاشلة
-     */
     public function log_failed_login($username) {
-        $ip = $this->get_user_ip();
-        $attempt_key = 'ps_login_attempts_' . md5($ip);
-        $attempts = get_transient($attempt_key) ?: 0;
-        $attempts++;
+        $ip = $this->get_real_ip();
+        $attempts = get_option('ps_failed_logins', []);
         
-        set_transient($attempt_key, $attempts, $this->lockout_duration);
+        if (!isset($attempts[$ip])) {
+            $attempts[$ip] = [];
+        }
         
-        // تسجيل مفصل للمحاولات المشبوهة
-        $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : 'Unknown';
-        $log_entry = [
+        $attempts[$ip][] = [
             'username' => sanitize_user($username),
-            'ip' => $ip,
-            'user_agent' => $user_agent,
-            'attempt' => $attempts,
-            'timestamp' => current_time('mysql'),
-            'referer' => isset($_SERVER['HTTP_REFERER']) ? esc_url_raw($_SERVER['HTTP_REFERER']) : ''
+            'time' => current_time('timestamp'),
+            'user_agent' => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? '')
         ];
         
-        error_log('PS Security - Failed login: ' . wp_json_encode($log_entry));
+        // الاحتفاظ بآخر 10 محاولات لكل IP
+        if (count($attempts[$ip]) > 10) {
+            $attempts[$ip] = array_slice($attempts[$ip], -10);
+        }
         
-        // إنذار للمدير عند تجاوز عدد معين من المحاولات
-        if ($attempts >= 3) {
-            $this->notify_admin_suspicious_activity($log_entry);
+        update_option('ps_failed_logins', $attempts);
+        
+        // إرسال تنبيه للمدير بعد 5 محاولات فاشلة
+        if (count($attempts[$ip]) >= 5) {
+            $this->send_security_alert('Multiple failed login attempts', [
+                'IP' => $ip,
+                'Username' => $username,
+                'Attempts' => count($attempts[$ip])
+            ]);
         }
     }
     
-    /**
-     * تحديد محاولات تسجيل الدخول
-     */
-    public function limit_login_attempts($user, $username, $password) {
+    public function log_successful_login($user_login, $user) {
+        $ip = $this->get_real_ip();
+        
+        // مسح محاولات تسجيل الدخول الفاشلة للـ IP
+        $attempts = get_option('ps_failed_logins', []);
+        if (isset($attempts[$ip])) {
+            unset($attempts[$ip]);
+            update_option('ps_failed_logins', $attempts);
+        }
+        
+        // تسجيل تسجيل الدخول الناجح
+        $successful_logins = get_option('ps_successful_logins', []);
+        $successful_logins[] = [
+            'user_id' => $user->ID,
+            'username' => $user_login,
+            'ip' => $ip,
+            'time' => current_time('timestamp'),
+            'user_agent' => sanitize_text_field($_SERVER['HTTP_USER_AGENT'] ?? '')
+        ];
+        
+        // الاحتفاظ بآخر 50 تسجيل دخول ناجح
+        if (count($successful_logins) > 50) {
+            $successful_logins = array_slice($successful_logins, -50);
+        }
+        
+        update_option('ps_successful_logins', $successful_logins);
+    }
+    
+    public function check_login_attempts($user, $username, $password) {
         if (empty($username) || empty($password)) {
             return $user;
         }
         
-        $ip = $this->get_user_ip();
-        $attempt_key = 'ps_login_attempts_' . md5($ip);
-        $attempts = get_transient($attempt_key) ?: 0;
+        $ip = $this->get_real_ip();
+        $attempts = get_option('ps_failed_logins', []);
         
-        if ($attempts >= $this->max_login_attempts) {
-            $remaining_time = get_option('_transient_timeout_' . $attempt_key) - time();
-            $remaining_minutes = ceil($remaining_time / 60);
+        if (isset($attempts[$ip])) {
+            $recent_attempts = array_filter($attempts[$ip], function($attempt) {
+                return (current_time('timestamp') - $attempt['time']) < 3600; // آخر ساعة
+            });
             
-            return new WP_Error(
-                'too_many_attempts',
-                sprintf(
-                    __('تم تجاوز العدد المسموح من محاولات تسجيل الدخول. حاول مرة أخرى بعد %d دقيقة.', 'practical-solutions'),
-                    $remaining_minutes
-                )
-            );
+            if (count($recent_attempts) >= 5) {
+                return new WP_Error('too_many_attempts', 
+                    __('تم تجاوز عدد محاولات تسجيل الدخول المسموح. يرجى المحاولة بعد ساعة.', 'practical-solutions')
+                );
+            }
         }
         
         return $user;
     }
     
-    /**
-     * مسح محاولات تسجيل الدخول عند النجاح
-     */
-    public function clear_login_attempts($user_login, $user) {
-        $ip = $this->get_user_ip();
-        $attempt_key = 'ps_login_attempts_' . md5($ip);
-        delete_transient($attempt_key);
+    public function generic_login_error($error) {
+        return __('اسم المستخدم أو كلمة المرور غير صحيحة.', 'practical-solutions');
     }
     
-    /**
-     * التحقق من nonce في طلبات AJAX
-     */
-    public function verify_ajax_nonce() {
-        $nonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
+    public function prevent_user_enumeration() {
+        if (is_admin() || current_user_can('administrator')) {
+            return;
+        }
         
-        if (!wp_verify_nonce($nonce, 'ps_nonce')) {
-            wp_send_json_error([
-                'message' => __('غير مصرح', 'practical-solutions'),
-                'code' => 'invalid_nonce'
-            ]);
+        // منع ?author=1
+        if (isset($_GET['author']) || preg_match('/author=([0-9]*)/i', $_SERVER['QUERY_STRING'])) {
+            wp_redirect(home_url(), 301);
+            exit;
+        }
+        
+        // منع REST API user enumeration
+        add_filter('rest_endpoints', function($endpoints) {
+            if (isset($endpoints['/wp/v2/users'])) {
+                unset($endpoints['/wp/v2/users']);
+            }
+            if (isset($endpoints['/wp/v2/users/(?P<id>[\d]+)'])) {
+                unset($endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+            }
+            return $endpoints;
+        });
+    }
+    
+    public function add_security_headers() {
+        if (!is_admin()) {
+            header('X-Content-Type-Options: nosniff');
+            header('X-Frame-Options: SAMEORIGIN');
+            header('X-XSS-Protection: 1; mode=block');
+            header('Referrer-Policy: strict-origin-when-cross-origin');
+            
+            if (is_ssl()) {
+                header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+            }
         }
     }
     
-    /**
-     * حماية ملف wp-config.php
-     */
+    public function protect_system_files() {
+        $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+        
+        // حماية ملفات النظام الحساسة
+        $protected_files = [
+            'wp-config.php',
+            '.htaccess',
+            'error_log',
+            'debug.log',
+            'wp-config-sample.php'
+        ];
+        
+        foreach ($protected_files as $file) {
+            if (strpos($request_uri, $file) !== false) {
+                status_header(404);
+                nocache_headers();
+                include(get_404_template());
+                exit;
+            }
+        }
+        
+        // حماية مجلدات النظام
+        $protected_dirs = [
+            '/wp-admin/',
+            '/wp-includes/',
+            '/wp-content/themes/',
+            '/wp-content/plugins/'
+        ];
+        
+        foreach ($protected_dirs as $dir) {
+            if (strpos($request_uri, $dir) !== false && 
+                (strpos($request_uri, '.php') === false || 
+                 preg_match('/\.(txt|log|sql|md)$/i', $request_uri))) {
+                status_header(403);
+                exit(__('الوصول مرفوض', 'practical-solutions'));
+            }
+        }
+    }
+    
+    public function setup_csrf_protection() {
+        // إضافة nonce للنماذج
+        add_action('wp_footer', function() {
+            echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var forms = document.querySelectorAll("form[method=post]");
+                forms.forEach(function(form) {
+                    if (!form.querySelector("input[name*=nonce]")) {
+                        var nonce = document.createElement("input");
+                        nonce.type = "hidden";
+                        nonce.name = "ps_security_nonce";
+                        nonce.value = "' . wp_create_nonce('ps_security_action') . '";
+                        form.appendChild(nonce);
+                    }
+                });
+            });
+            </script>';
+        });
+        
+        // التحقق من CSRF للطلبات POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !is_admin()) {
+            $this->verify_csrf_token();
+        }
+    }
+    
+    private function verify_csrf_token() {
+        $excluded_actions = [
+            'wp-login.php',
+            'wp-comments-post.php'
+        ];
+        
+        $script_name = basename($_SERVER['SCRIPT_NAME']);
+        
+        if (in_array($script_name, $excluded_actions)) {
+            return;
+        }
+        
+        if (!isset($_POST['ps_security_nonce']) || 
+            !wp_verify_nonce($_POST['ps_security_nonce'], 'ps_security_action')) {
+            
+            wp_die(__('رمز الأمان غير صحيح. يرجى تحديث الصفحة والمحاولة مرة أخرى.', 'practical-solutions'));
+        }
+    }
+    
     public function protect_wp_config() {
-        if (strpos($_SERVER['REQUEST_URI'], 'wp-config.php') !== false) {
-            http_response_code(403);
-            exit('Access Denied');
+        $wp_config_path = ABSPATH . 'wp-config.php';
+        
+        if (file_exists($wp_config_path)) {
+            $permissions = fileperms($wp_config_path) & 0777;
+            
+            // التأكد من أن الصلاحيات ليست 777 أو 666
+            if ($permissions === 0777 || $permissions === 0666) {
+                chmod($wp_config_path, 0644);
+            }
         }
     }
     
-    /**
-     * إشعار المدير بالنشاط المشبوه
-     */
-    private function notify_admin_suspicious_activity($log_entry) {
-        $admin_email = get_option('admin_email');
-        $site_name = get_bloginfo('name');
+    public function admin_security_checks() {
+        if (!current_user_can('administrator')) {
+            return;
+        }
         
-        $subject = sprintf(__('[%s] نشاط مشبوه - محاولات تسجيل دخول متعددة', 'practical-solutions'), $site_name);
+        // فحص كلمات مرور ضعيفة
+        $this->check_weak_passwords();
         
-        $message = sprintf(
-            __("تم رصد محاولات متعددة لتسجيل الدخول من العنوان: %s\n\nالتفاصيل:\n- اسم المستخدم: %s\n- عدد المحاولات: %d\n- المتصفح: %s\n- الوقت: %s\n\nيرجى مراجعة سجلات الأمان.", 'practical-solutions'),
-            $log_entry['ip'],
-            $log_entry['username'],
-            $log_entry['attempt'],
-            $log_entry['user_agent'],
-            $log_entry['timestamp']
-        );
+        // فحص المستخدمين المشبوهين
+        $this->check_suspicious_users();
         
-        wp_mail($admin_email, $subject, $message);
+        // فحص الإضافات المعطلة أو القديمة
+        $this->check_plugins_security();
     }
     
-    /**
-     * الحصول على IP الحقيقي للمستخدم
-     */
-    private function get_user_ip() {
-        $ip_keys = ['HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 
-                   'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR'];
+    private function check_weak_passwords() {
+        $weak_passwords = ['admin', 'password', '123456', 'wordpress'];
+        $users = get_users(['role' => 'administrator']);
         
-        foreach ($ip_keys as $key) {
-            if (array_key_exists($key, $_SERVER) && !empty($_SERVER[$key])) {
-                $ip = sanitize_text_field($_SERVER[$key]);
-                // للـ IPs المتعددة، أخذ الأول
-                if (strpos($ip, ',') !== false) {
-                    $ip = trim(explode(',', $ip)[0]);
+        foreach ($users as $user) {
+            foreach ($weak_passwords as $weak_pass) {
+                if (wp_check_password($weak_pass, $user->user_pass, $user->ID)) {
+                    add_action('admin_notices', function() use ($user) {
+                        echo '<div class="notice notice-error"><p>';
+                        echo sprintf(__('تحذير: المستخدم "%s" يستخدم كلمة مرور ضعيفة!', 'practical-solutions'), $user->user_login);
+                        echo '</p></div>';
+                    });
+                    break;
                 }
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                    return $ip;
+            }
+        }
+    }
+    
+    private function check_suspicious_users() {
+        $suspicious_usernames = ['admin', 'administrator', 'root', 'test', 'demo'];
+        
+        foreach ($suspicious_usernames as $username) {
+            $user = get_user_by('login', $username);
+            if ($user && in_array('administrator', $user->roles)) {
+                add_action('admin_notices', function() use ($username) {
+                    echo '<div class="notice notice-warning"><p>';
+                    echo sprintf(__('تحذير: يوجد مستخدم مدير باسم مشبوه "%s". يُنصح بتغيير اسم المستخدم.', 'practical-solutions'), $username);
+                    echo '</p></div>';
+                });
+            }
+        }
+    }
+    
+    private function check_plugins_security() {
+        $plugins = get_plugins();
+        $active_plugins = get_option('active_plugins', []);
+        
+        foreach ($plugins as $plugin_file => $plugin_data) {
+            if (!in_array($plugin_file, $active_plugins)) {
+                continue;
+            }
+            
+            // فحص الإضافات القديمة
+            $wp_version = get_bloginfo('version');
+            if (isset($plugin_data['RequiresWP']) && 
+                version_compare($plugin_data['RequiresWP'], $wp_version, '>')) {
+                
+                add_action('admin_notices', function() use ($plugin_data) {
+                    echo '<div class="notice notice-warning"><p>';
+                    echo sprintf(__('تحذير: الإضافة "%s" قد تكون غير متوافقة مع إصدار WordPress الحالي.', 'practical-solutions'), $plugin_data['Name']);
+                    echo '</p></div>';
+                });
+            }
+        }
+    }
+    
+    public function check_file_integrity() {
+        $core_files = [
+            ABSPATH . 'wp-config.php',
+            ABSPATH . 'wp-load.php',
+            ABSPATH . 'wp-blog-header.php'
+        ];
+        
+        $stored_hashes = get_option('ps_file_hashes', []);
+        $current_hashes = [];
+        $modified_files = [];
+        
+        foreach ($core_files as $file) {
+            if (file_exists($file)) {
+                $current_hash = md5_file($file);
+                $current_hashes[$file] = $current_hash;
+                
+                if (isset($stored_hashes[$file]) && 
+                    $stored_hashes[$file] !== $current_hash) {
+                    $modified_files[] = $file;
                 }
             }
         }
         
-        return isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '0.0.0.0';
+        if (!empty($modified_files)) {
+            $this->send_security_alert('Core files modified', [
+                'files' => $modified_files,
+                'time' => current_time('mysql')
+            ]);
+        }
+        
+        update_option('ps_file_hashes', $current_hashes);
     }
     
-    /**
-     * تنظيف وتطهير البيانات المدخلة المحسن
-     */
-    public static function sanitize_input($input, $type = 'text') {
-        if (is_array($input)) {
-            return array_map(function($item) use ($type) {
-                return self::sanitize_input($item, $type);
-            }, $input);
+    private function send_security_alert($type, $data) {
+        $admin_email = get_option('admin_email');
+        $site_name = get_bloginfo('name');
+        
+        $subject = sprintf(__('[%s] تنبيه أمني: %s', 'practical-solutions'), $site_name, $type);
+        
+        $message = __('تم رصد نشاط أمني مشبوه على موقعك:', 'practical-solutions') . "\n\n";
+        $message .= __('نوع التنبيه:', 'practical-solutions') . ' ' . $type . "\n";
+        $message .= __('الوقت:', 'practical-solutions') . ' ' . current_time('mysql') . "\n\n";
+        
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $message .= $key . ": \n" . implode("\n", $value) . "\n\n";
+            } else {
+                $message .= $key . ': ' . $value . "\n";
+            }
         }
         
-        switch ($type) {
-            case 'email':
-                return sanitize_email($input);
-            case 'url':
-                return esc_url_raw($input);
-            case 'textarea':
-                return sanitize_textarea_field($input);
-            case 'html':
-                return wp_kses_post($input);
-            case 'int':
-                return intval($input);
-            case 'float':
-                return floatval($input);
-            case 'boolean':
-                return filter_var($input, FILTER_VALIDATE_BOOLEAN);
-            case 'slug':
-                return sanitize_title($input);
-            case 'filename':
-                return sanitize_file_name($input);
-            default:
-                return sanitize_text_field($input);
-        }
+        $message .= "\n" . __('يرجى مراجعة موقعك والتأكد من أمانه.', 'practical-solutions');
+        
+        wp_mail($admin_email, $subject, $message);
     }
     
-    /**
-     * تشفير البيانات الحساسة المحسن
-     */
-    public static function encrypt_data($data, $key = null) {
-        if (!extension_loaded('openssl')) {
-            return base64_encode($data);
-        }
-        
-        $key = $key ?: wp_salt('AUTH_KEY');
-        $iv = openssl_random_pseudo_bytes(16);
-        $encrypted = openssl_encrypt($data, 'AES-256-CBC', hash('sha256', $key), 0, $iv);
-        
-        if ($encrypted === false) {
-            return base64_encode($data);
-        }
-        
-        return base64_encode($iv . $encrypted);
-    }
-    
-    /**
-     * فك تشفير البيانات المحسن
-     */
-    public static function decrypt_data($encrypted_data, $key = null) {
-        if (!extension_loaded('openssl')) {
-            return base64_decode($encrypted_data);
-        }
-        
-        $data = base64_decode($encrypted_data);
-        if ($data === false) {
-            return $encrypted_data;
-        }
-        
-        $key = $key ?: wp_salt('AUTH_KEY');
-        $iv = substr($data, 0, 16);
-        $encrypted = substr($data, 16);
-        
-        $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', hash('sha256', $key), 0, $iv);
-        
-        return $decrypted !== false ? $decrypted : $encrypted_data;
-    }
-    
-    /**
-     * فحص الملفات المرفوعة
-     */
-    public function scan_uploaded_file($file) {
-        if (!isset($file['tmp_name']) || !file_exists($file['tmp_name'])) {
-            return $file;
-        }
-        
-        // فحص أنواع الملفات المسموحة
-        $allowed_mimes = [
-            'jpg|jpeg|jpe' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'png' => 'image/png',
-            'webp' => 'image/webp',
-            'pdf' => 'application/pdf',
-            'doc' => 'application/msword',
-            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    private function get_real_ip() {
+        $ip_keys = [
+            'HTTP_CF_CONNECTING_IP',
+            'HTTP_CLIENT_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_FORWARDED_FOR',
+            'HTTP_FORWARDED',
+            'REMOTE_ADDR'
         ];
         
-        $file_type = wp_check_filetype($file['name'], $allowed_mimes);
-        
-        if (!$file_type['type']) {
-            $file['error'] = __('نوع الملف غير مسموح', 'practical-solutions');
-            return $file;
+        foreach ($ip_keys as $key) {
+            if (array_key_exists($key, $_SERVER) === true) {
+                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                    $ip = trim($ip);
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                        return $ip;
+                    }
+                }
+            }
         }
         
-        // فحص محتوى الملف للتأكد من سلامته
-        $file_content = file_get_contents($file['tmp_name']);
-        if (strpos($file_content, '<?php') !== false || strpos($file_content, '<script') !== false) {
-            $file['error'] = __('محتوى الملف غير آمن', 'practical-solutions');
-        }
-        
-        return $file;
+        return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    }
+    
+    private function is_enabled($option) {
+        return isset($this->options[$option]) && $this->options[$option];
     }
 }
 
-// تشغيل النظام
+// تشغيل تحسينات الأمان
 new PS_Security_Enhancements();

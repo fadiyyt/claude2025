@@ -1,0 +1,56 @@
+<svg width="0" height="0" style="position: absolute;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- أيقونة الهدف -->
+    <symbol id="icon-target" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="12" r="2" fill="currentColor"/>
+    </symbol>
+    
+    <!-- أيقونة البرق (السرعة) -->
+    <symbol id="icon-lightning" viewBox="0 0 24 24">
+      <polygon points="13,2 3,14 12,14 11,22 21,10 12,10" fill="currentColor"/>
+    </symbol>
+    
+    <!-- أيقونة إعادة التدوير -->
+    <symbol id="icon-refresh" viewBox="0 0 24 24">
+      <polyline points="23,4 23,10 17,10" fill="none" stroke="currentColor" stroke-width="2"/>
+      <polyline points="1,20 1,14 7,14" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M3.51,15a9,9,0,0,0,14.85,3.36L23,14" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    
+    <!-- أيقونة الأمان -->
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path d="M12,22s8-4,8-10V5l-8-3L4,5v7C4,18,12,22,12,22z" fill="none" stroke="currentColor" stroke-width="2"/>
+      <polyline points="9,12 10.5,13.5 15,9" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    
+    <!-- أيقونة الساعة -->
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+      <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    
+    <!-- أيقونة الجودة -->
+    <symbol id="icon-award" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+      <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    
+    <!-- أيقونة الدعم -->
+    <symbol id="icon-headphones" viewBox="0 0 24 24">
+      <path d="M3,18v-6a9,9,0,0,1,18,0v6" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M21,19a2,2,0,0,1-2,2H17a2,2,0,0,1-2-2V16a2,2,0,0,1,2-2h2a2,2,0,0,1,2,2Z" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M3,19a2,2,0,0,0,2,2H7a2,2,0,0,0,2-2V16a2,2,0,0,0-2-2H5a2,2,0,0,0-2,2Z" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+    
+    <!-- أيقونة الابتكار -->
+    <symbol id="icon-lightbulb" viewBox="0 0 24 24">
+      <path d="M9,21h6" stroke="currentColor" stroke-width="2"/>
+      <path d="M12,17c0,1-1,2-1,2h2s-1-1-1-2" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M8,13a4,4,0,0,1,8,0c0,2-1,3-1,3H9s-1-1-1-3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+    </symbol>
+  </defs>
+</svg>

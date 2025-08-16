@@ -1,14 +1,393 @@
 /*
 Theme Name: Practical Solutions Pro
-Description: قالب ووردبريس احترافي للحلول العملية مع تقنية Block Theme المتقدمة
-Version: 2.1.0
-Author: Your Name
+Description: قالب احترافي للحلول العملية مع دعم كامل للغة العربية ونظام RTL محسن
+Version: 2.3.0
+Author: Practical Solutions Team
 Text Domain: practical-solutions
-Requires at least: 6.4
-Tested up to: 6.5
+Domain Path: /languages
+Requires at least: 6.0
+Tested up to: 6.4
 Requires PHP: 8.0
-License: GPL v3 or later
-Tags: block-themes, full-site-editing, rtl-language-support, accessibility-ready, custom-colors, custom-logo, custom-menu, featured-images, footer-widgets, sticky-post, theme-options, threaded-comments, translation-ready
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tags: blog, business, education, rtl-language-support, custom-colors, custom-logo, custom-menu, featured-images, footer-widgets, full-site-editing, block-patterns, block-styles, wide-blocks
 */
 
-/* ملف CSS نظيف - الأنماط منفصلة في ملفات مخصصة */
+/*
+=================================================================================
+القالب مُصمم خصيصاً للمحتوى العربي مع:
+- دعم كامل لـ RTL (Right-to-Left)
+- خطوط عربية محسنة
+- تخطيط متجاوب لجميع الأجهزة
+- أداء محسن وسرعة عالية
+- نظام ألوان متقدم وقابل للتخصيص
+- أنماط كتل مخصصة
+- تحسينات SEO
+- ميزات تفاعلية
+=================================================================================
+*/
+
+/* ===== المتغيرات الأساسية ===== */
+:root {
+  /* الألوان الأساسية */
+  --ps-primary: #2563eb;
+  --ps-primary-dark: #1d4ed8;
+  --ps-primary-light: #3b82f6;
+  
+  --ps-secondary: #64748b;
+  --ps-secondary-dark: #475569;
+  --ps-secondary-light: #94a3b8;
+  
+  --ps-accent: #f59e0b;
+  --ps-accent-dark: #d97706;
+  --ps-accent-light: #fbbf24;
+  
+  --ps-success: #10b981;
+  --ps-warning: #f59e0b;
+  --ps-error: #ef4444;
+  --ps-info: #3b82f6;
+  
+  /* الألوان الحيادية */
+  --ps-white: #ffffff;
+  --ps-black: #000000;
+  --ps-gray-50: #f9fafb;
+  --ps-gray-100: #f3f4f6;
+  --ps-gray-200: #e5e7eb;
+  --ps-gray-300: #d1d5db;
+  --ps-gray-400: #9ca3af;
+  --ps-gray-500: #6b7280;
+  --ps-gray-600: #4b5563;
+  --ps-gray-700: #374151;
+  --ps-gray-800: #1f2937;
+  --ps-gray-900: #111827;
+  
+  /* الخطوط */
+  --ps-font-primary: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+  --ps-font-heading: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+  --ps-font-mono: 'Courier New', monospace;
+  
+  /* أحجام الخطوط */
+  --ps-text-xs: 12px;
+  --ps-text-sm: 14px;
+  --ps-text-base: 16px;
+  --ps-text-lg: 18px;
+  --ps-text-xl: 20px;
+  --ps-text-2xl: 24px;
+  --ps-text-3xl: 30px;
+  --ps-text-4xl: 36px;
+  
+  /* المسافات */
+  --ps-space-1: 0.25rem;
+  --ps-space-2: 0.5rem;
+  --ps-space-3: 0.75rem;
+  --ps-space-4: 1rem;
+  --ps-space-5: 1.25rem;
+  --ps-space-6: 1.5rem;
+  --ps-space-8: 2rem;
+  --ps-space-10: 2.5rem;
+  --ps-space-12: 3rem;
+  --ps-space-16: 4rem;
+  
+  /* الحدود والزوايا */
+  --ps-radius-sm: 4px;
+  --ps-radius: 6px;
+  --ps-radius-md: 8px;
+  --ps-radius-lg: 12px;
+  --ps-radius-xl: 16px;
+  --ps-radius-full: 9999px;
+  
+  /* الظلال */
+  --ps-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ps-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --ps-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ps-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* الانتقالات */
+  --ps-transition: all 0.3s ease;
+  --ps-transition-fast: all 0.15s ease;
+  --ps-transition-slow: all 0.5s ease;
+  
+  /* نقاط التوقف المتجاوبة */
+  --ps-screen-sm: 640px;
+  --ps-screen-md: 768px;
+  --ps-screen-lg: 1024px;
+  --ps-screen-xl: 1280px;
+  --ps-screen-2xl: 1536px;
+}
+
+/* ===== إعادة تعيين الأساسيات ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  direction: rtl;
+}
+
+body {
+  font-family: var(--ps-font-primary);
+  font-size: var(--ps-text-base);
+  line-height: 1.6;
+  color: var(--ps-gray-800);
+  background-color: var(--ps-white);
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== العناوين ===== */
+h1, h2, h3, h4, h5, h6,
+.wp-block-heading {
+  font-family: var(--ps-font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ps-gray-900);
+  margin-bottom: var(--ps-space-4);
+}
+
+h1 { font-size: var(--ps-text-4xl); }
+h2 { font-size: var(--ps-text-3xl); }
+h3 { font-size: var(--ps-text-2xl); }
+h4 { font-size: var(--ps-text-xl); }
+h5 { font-size: var(--ps-text-lg); }
+h6 { font-size: var(--ps-text-base); }
+
+/* ===== الفقرات والنصوص ===== */
+p {
+  margin-bottom: var(--ps-space-4);
+  line-height: 1.7;
+}
+
+/* ===== الروابط ===== */
+a {
+  color: var(--ps-primary);
+  text-decoration: none;
+  transition: var(--ps-transition-fast);
+}
+
+a:hover {
+  color: var(--ps-primary-dark);
+  text-decoration: underline;
+}
+
+/* ===== القوائم ===== */
+ul, ol {
+  margin-right: var(--ps-space-6);
+  margin-bottom: var(--ps-space-4);
+}
+
+li {
+  margin-bottom: var(--ps-space-1);
+}
+
+/* ===== الصور ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--ps-radius);
+}
+
+/* ===== الأزرار الأساسية ===== */
+button,
+.wp-block-button__link {
+  font-family: var(--ps-font-primary);
+  font-size: var(--ps-text-base);
+  font-weight: 600;
+  padding: var(--ps-space-3) var(--ps-space-6);
+  border-radius: var(--ps-radius);
+  border: none;
+  cursor: pointer;
+  transition: var(--ps-transition);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ===== أنماط الأزرار المخصصة ===== */
+.is-style-ps-primary-button .wp-block-button__link {
+  background-color: var(--ps-primary);
+  color: var(--ps-white);
+  border: 2px solid var(--ps-primary);
+}
+
+.is-style-ps-primary-button .wp-block-button__link:hover {
+  background-color: var(--ps-primary-dark);
+  border-color: var(--ps-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--ps-shadow-md);
+}
+
+.is-style-ps-outline-button .wp-block-button__link {
+  background-color: transparent;
+  color: var(--ps-primary);
+  border: 2px solid var(--ps-primary);
+}
+
+.is-style-ps-outline-button .wp-block-button__link:hover {
+  background-color: var(--ps-primary);
+  color: var(--ps-white);
+  transform: translateY(-2px);
+  box-shadow: var(--ps-shadow-md);
+}
+
+/* ===== الحاويات والتخطيط ===== */
+.wp-block-group {
+  max-width: 100%;
+}
+
+.wp-block-columns {
+  direction: rtl;
+}
+
+/* ===== تحسينات RTL ===== */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .wp-block-navigation ul {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .wp-block-columns {
+  direction: rtl;
+}
+
+[dir="rtl"] .wp-block-column {
+  text-align: right;
+}
+
+[dir="rtl"] .wp-block-media-text {
+  direction: rtl;
+}
+
+[dir="rtl"] .wp-block-gallery {
+  direction: rtl;
+}
+
+/* ===== أنماط البطاقات المخصصة ===== */
+.ps-card,
+.is-style-ps-card-style {
+  background: var(--ps-white);
+  border-radius: var(--ps-radius-lg);
+  box-shadow: var(--ps-shadow);
+  padding: var(--ps-space-6);
+  margin-bottom: var(--ps-space-6);
+  transition: var(--ps-transition);
+}
+
+.ps-card:hover,
+.is-style-ps-card-style:hover {
+  box-shadow: var(--ps-shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* ===== الصور المستديرة ===== */
+.is-style-ps-rounded-image img {
+  border-radius: var(--ps-radius-lg);
+}
+
+/* ===== أنماط الميزات ===== */
+.ps-feature-card {
+  text-align: center;
+  transition: var(--ps-transition);
+}
+
+.ps-feature-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ===== تحسينات الاستجابة ===== */
+@media (max-width: 768px) {
+  :root {
+    --ps-text-4xl: 28px;
+    --ps-text-3xl: 24px;
+    --ps-text-2xl: 20px;
+  }
+  
+  .wp-block-columns {
+    flex-direction: column;
+  }
+  
+  .wp-block-column {
+    flex-basis: 100% !important;
+  }
+  
+  .ps-card,
+  .is-style-ps-card-style {
+    padding: var(--ps-space-4);
+  }
+}
+
+/* ===== تحسينات الأداء ===== */
+.wp-block-image img {
+  transition: var(--ps-transition);
+}
+
+.wp-block-image img:hover {
+  transform: scale(1.02);
+}
+
+/* تحسينات للطباعة */
+@media print {
+  .ps-header-wrapper,
+  .ps-footer-wrapper,
+  .wp-block-navigation,
+  .ps-social-sharing {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: black;
+    background: white;
+  }
+}
+
+/* ===== ألوان WordPress الافتراضية ===== */
+.has-primary-color { color: var(--ps-primary) !important; }
+.has-primary-background-color { background-color: var(--ps-primary) !important; }
+.has-secondary-color { color: var(--ps-secondary) !important; }
+.has-secondary-background-color { background-color: var(--ps-secondary) !important; }
+.has-accent-color { color: var(--ps-accent) !important; }
+.has-accent-background-color { background-color: var(--ps-accent) !important; }
+.has-white-color { color: var(--ps-white) !important; }
+.has-white-background-color { background-color: var(--ps-white) !important; }
+.has-black-color { color: var(--ps-black) !important; }
+.has-black-background-color { background-color: var(--ps-black) !important; }
+.has-light-gray-background-color { background-color: var(--ps-gray-100) !important; }
+.has-dark-background-color { background-color: var(--ps-gray-800) !important; }
+.has-light-color { color: var(--ps-gray-100) !important; }
+.has-dark-color { color: var(--ps-gray-800) !important; }
+.has-tertiary-color { color: var(--ps-gray-500) !important; }
+
+/* ===== إضافات نهائية ===== */
+.ps-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ps-fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* تحسينات إضافية للوضع المظلم */
+@media (prefers-color-scheme: dark) {
+  .ps-auto-dark {
+    background-color: var(--ps-gray-900);
+    color: var(--ps-gray-100);
+  }
+}

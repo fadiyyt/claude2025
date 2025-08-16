@@ -1,8 +1,8 @@
 <?php
 /**
- * Practical Solutions Pro - Functions (Fixed & Enhanced)
- * قالب الحلول العملية الاحترافي - الوظائف المصححة والمحسنة
- * الإصدار: 2.2.3 (مصحح)
+ * Practical Solutions Pro - Enhanced Functions (FIXED VERSION)
+ * قالب الحلول العملية الاحترافي - الوظائف المُصححة والمحسنة
+ * الإصدار: 2.3.0 (مُصحح ومحسن)
  */
 
 // منع الوصول المباشر
@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
 }
 
 // =============================================================================
-// 1. تعريف الثوابت الأساسية
+// 1. تعريف الثوابت الأساسية (Core Constants)
 // =============================================================================
-define('PS_THEME_VERSION', '2.2.3');
+define('PS_THEME_VERSION', '2.3.0');
 define('PS_THEME_DIR', get_template_directory());
 define('PS_THEME_URI', get_template_directory_uri());
 define('PS_DIST_URI', PS_THEME_URI . '/dist');
@@ -21,16 +21,16 @@ define('PS_CACHE_DURATION', 3600);
 define('PS_DEBUG', defined('WP_DEBUG') && WP_DEBUG);
 
 // =============================================================================
-// 2. تحميل ملفات النظام الأساسية (فقط الموجودة)
+// 2. تحميل ملفات النظام الأساسية (Core System Files) - بدون ai-openrouter
 // =============================================================================
 $ps_core_includes = [
+    'inc/security-enhancements.php',
     'inc/theme-admin-panel.php',      
     'inc/customizer-settings.php',    
     'inc/block-patterns.php',         
     'inc/unified-search-system.php',  
     'inc/rating-system.php',          
-    'inc/performance-optimizer.php',
-    'inc/security-enhancements.php'
+    'inc/performance-optimizer.php'
 ];
 
 foreach ($ps_core_includes as $file) {
@@ -45,7 +45,7 @@ foreach ($ps_core_includes as $file) {
 }
 
 // =============================================================================
-// 3. إعدادات القالب الأساسية
+// 3. إعدادات القالب الأساسية (Theme Setup)
 // =============================================================================
 if (!function_exists('ps_theme_setup')) {
     function ps_theme_setup() {
@@ -64,7 +64,7 @@ if (!function_exists('ps_theme_setup')) {
             'flex-width' => true
         ]);
         
-        // دعم ميزات قوالب الكتل
+        // دعم ميزات قوالب الكتل (Block Theme Features)
         add_theme_support('wp-block-styles');
         add_theme_support('align-wide');
         add_theme_support('editor-styles');
@@ -73,285 +73,387 @@ if (!function_exists('ps_theme_setup')) {
         add_theme_support('appearance-tools');
         add_theme_support('border');
         add_theme_support('link-color');
+        
+        // دعم قوالب الكتل
+        add_theme_support('block-templates');
+        add_theme_support('block-template-parts');
 
         // دعم الترجمة
         load_theme_textdomain('practical-solutions', PS_THEME_DIR . '/languages');
         
-        // تسجيل مناطق القوائم
+        // إعداد أحجام الصور المحسنة
+        add_image_size('ps-thumbnail', 400, 300, true);
+        add_image_size('ps-medium', 800, 600, true);
+        add_image_size('ps-large', 1200, 800, true);
+        add_image_size('ps-hero', 1600, 900, true);
+        
+        // تسجيل القوائم
         register_nav_menus([
             'primary' => __('القائمة الرئيسية', 'practical-solutions'),
             'footer' => __('قائمة التذييل', 'practical-solutions'),
-            'social' => __('الروابط الاجتماعية', 'practical-solutions')
+            'mobile' => __('قائمة الأجهزة المحمولة', 'practical-solutions')
         ]);
-        
-        // إضافة أحجام صور مخصصة
-        add_image_size('ps-featured', 800, 450, true);
-        add_image_size('ps-thumbnail', 300, 200, true);
-        add_image_size('ps-card', 400, 250, true);
     }
 }
 add_action('after_setup_theme', 'ps_theme_setup');
 
 // =============================================================================
-// 4. تحميل الأصول (CSS & JS) - مصحح
+// 4. تحميل الأنماط والسكريبتات (Enqueue Assets)
 // =============================================================================
 function ps_enqueue_assets() {
-    // CSS
-    $css_file = PS_DIST_URI . '/css/main.min.css';
+    // CSS الرئيسي
+    wp_enqueue_style('ps-style', get_stylesheet_uri(), [], PS_THEME_VERSION);
+    
+    // CSS المجمع (إذا كان موجود)
     if (file_exists(PS_THEME_DIR . '/dist/css/main.min.css')) {
-        wp_enqueue_style('ps-main-style', $css_file, [], PS_THEME_VERSION);
-    } else {
-        // fallback للتطوير
-        wp_enqueue_style('ps-main-style', PS_THEME_URI . '/src/scss/main.scss', [], PS_THEME_VERSION);
+        wp_enqueue_style('ps-main', PS_DIST_URI . '/css/main.min.css', [], PS_THEME_VERSION);
     }
     
-    // JavaScript
-    $js_file = PS_DIST_URI . '/js/main.min.js';
+    // دعم RTL
+    if (is_rtl()) {
+        wp_enqueue_style('ps-rtl', PS_THEME_URI . '/rtl.css', ['ps-style'], PS_THEME_VERSION);
+    }
+    
+    // JavaScript الرئيسي
     if (file_exists(PS_THEME_DIR . '/dist/js/main.min.js')) {
-        wp_enqueue_script('ps-main-script', $js_file, ['jquery'], PS_THEME_VERSION, true);
-    } else {
-        // fallback للتطوير
-        wp_enqueue_script('ps-main-script', PS_THEME_URI . '/assets/js/unified.js', ['jquery'], PS_THEME_VERSION, true);
+        wp_enqueue_script('ps-main', PS_DIST_URI . '/js/main.min.js', ['jquery'], PS_THEME_VERSION, true);
     }
     
     // إعدادات JavaScript
-    wp_localize_script('ps-main-script', 'psAjax', [
+    wp_localize_script('ps-main', 'psAjax', [
         'ajaxurl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('ps_nonce'),
-        'home_url' => home_url('/'),
-        'theme_url' => PS_THEME_URI,
-        'is_rtl' => is_rtl(),
-        'lang' => get_locale(),
-        'debug' => PS_DEBUG
+        'strings' => [
+            'loading' => __('جاري التحميل...', 'practical-solutions'),
+            'error' => __('حدث خطأ، يرجى المحاولة مرة أخرى', 'practical-solutions'),
+            'success' => __('تم بنجاح', 'practical-solutions')
+        ]
     ]);
     
-    // تحميل أنماط المحرر
-    add_editor_style($css_file);
+    // إضافة خطوط عربية محسنة
+    wp_enqueue_style('ps-google-fonts', 'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap', [], null);
 }
 add_action('wp_enqueue_scripts', 'ps_enqueue_assets');
 
 // =============================================================================
-// 5. Ajax Endpoints للميزات التفاعلية
+// 5. إعداد الودجات (Widget Areas)
 // =============================================================================
-function ps_ajax_search() {
-    check_ajax_referer('ps_nonce', 'nonce');
+function ps_register_widget_areas() {
+    register_sidebar([
+        'name' => __('الشريط الجانبي الرئيسي', 'practical-solutions'),
+        'id' => 'primary-sidebar',
+        'description' => __('الشريط الجانبي للصفحات الداخلية', 'practical-solutions'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h3 class="widget-title">',
+        'after_title' => '</h3>',
+    ]);
     
-    $query = sanitize_text_field($_POST['query'] ?? '');
-    $results = [];
+    register_sidebar([
+        'name' => __('تذييل الصفحة - العمود 1', 'practical-solutions'),
+        'id' => 'footer-1',
+        'description' => __('العمود الأول في تذييل الصفحة', 'practical-solutions'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="widget-title">',
+        'after_title' => '</h4>',
+    ]);
     
-    if (strlen($query) >= 2) {
-        $search_query = new WP_Query([
-            's' => $query,
-            'posts_per_page' => 5,
-            'post_status' => 'publish'
-        ]);
-        
-        while ($search_query->have_posts()) {
-            $search_query->the_post();
-            $results[] = [
-                'title' => get_the_title(),
-                'url' => get_permalink(),
-                'excerpt' => wp_trim_words(get_the_excerpt(), 15),
-                'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'ps-thumbnail')
-            ];
-        }
-        wp_reset_postdata();
-    }
+    register_sidebar([
+        'name' => __('تذييل الصفحة - العمود 2', 'practical-solutions'),
+        'id' => 'footer-2',
+        'description' => __('العمود الثاني في تذييل الصفحة', 'practical-solutions'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="widget-title">',
+        'after_title' => '</h4>',
+    ]);
     
-    wp_send_json_success($results);
-}
-add_action('wp_ajax_ps_search', 'ps_ajax_search');
-add_action('wp_ajax_nopriv_ps_search', 'ps_ajax_search');
-
-function ps_ajax_save_rating() {
-    check_ajax_referer('ps_nonce', 'nonce');
-    
-    $post_id = intval($_POST['post_id'] ?? 0);
-    $rating = intval($_POST['rating'] ?? 0);
-    
-    if (!$post_id || $rating < 1 || $rating > 5) {
-        wp_send_json_error('بيانات غير صحيحة');
-    }
-    
-    // حفظ التقييم
-    $ratings = get_post_meta($post_id, '_ps_ratings', true) ?: [];
-    $user_ip = $_SERVER['REMOTE_ADDR'];
-    
-    if (!isset($ratings[$user_ip])) {
-        $ratings[$user_ip] = $rating;
-        update_post_meta($post_id, '_ps_ratings', $ratings);
-        
-        // حساب المتوسط
-        $average = array_sum($ratings) / count($ratings);
-        update_post_meta($post_id, '_ps_rating_average', round($average, 1));
-        update_post_meta($post_id, '_ps_rating_count', count($ratings));
-        
-        wp_send_json_success([
-            'average' => round($average, 1),
-            'count' => count($ratings)
-        ]);
-    } else {
-        wp_send_json_error('تم التقييم مسبقاً');
-    }
-}
-add_action('wp_ajax_ps_save_rating', 'ps_ajax_save_rating');
-add_action('wp_ajax_nopriv_ps_save_rating', 'ps_ajax_save_rating');
-
-function ps_ajax_save_bookmark() {
-    check_ajax_referer('ps_nonce', 'nonce');
-    
-    $post_id = intval($_POST['post_id'] ?? 0);
-    if (!$post_id) {
-        wp_send_json_error('معرف المقال غير صحيح');
-    }
-    
-    // حفظ في localStorage من جانب JavaScript
-    wp_send_json_success([
-        'post_id' => $post_id,
-        'title' => get_the_title($post_id),
-        'url' => get_permalink($post_id)
+    register_sidebar([
+        'name' => __('تذييل الصفحة - العمود 3', 'practical-solutions'),
+        'id' => 'footer-3',
+        'description' => __('العمود الثالث في تذييل الصفحة', 'practical-solutions'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="widget-title">',
+        'after_title' => '</h4>',
     ]);
 }
-add_action('wp_ajax_ps_save_bookmark', 'ps_ajax_save_bookmark');
-add_action('wp_ajax_nopriv_ps_save_bookmark', 'ps_ajax_save_bookmark');
+add_action('widgets_init', 'ps_register_widget_areas');
 
 // =============================================================================
-// 6. إعدادات PWA المحسنة
+// 6. تحسينات الأداء (Performance Optimizations)
 // =============================================================================
-function ps_add_pwa_meta() {
-    ?>
-    <meta name="theme-color" content="#007cba">
-    <meta name="msapplication-TileColor" content="#007cba">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="<?php bloginfo('name'); ?>">
-    <link rel="manifest" href="<?php echo PS_THEME_URI; ?>/manifest.json">
-    <?php
+// تأجيل تحميل JavaScript غير الحرج
+function ps_defer_non_critical_js($tag, $handle, $src) {
+    $defer_scripts = ['ps-main'];
     
-    // إضافة أيقونات متعددة الأحجام
-    $icon_sizes = [16, 32, 57, 72, 96, 114, 120, 144, 152, 180, 192, 384, 512];
-    foreach ($icon_sizes as $size) {
-        $icon_path = PS_DIST_URI . "/images/icon-{$size}.png";
-        if (file_exists(PS_THEME_DIR . "/dist/images/icon-{$size}.png")) {
-            echo "<link rel=\"icon\" type=\"image/png\" sizes=\"{$size}x{$size}\" href=\"{$icon_path}\">\n";
-            if ($size >= 57) {
-                echo "<link rel=\"apple-touch-icon\" sizes=\"{$size}x{$size}\" href=\"{$icon_path}\">\n";
-            }
-        }
+    if (in_array($handle, $defer_scripts)) {
+        return str_replace('<script ', '<script defer ', $tag);
     }
+    return $tag;
 }
-add_action('wp_head', 'ps_add_pwa_meta');
+add_filter('script_loader_tag', 'ps_defer_non_critical_js', 10, 3);
 
-// تسجيل Service Worker المصحح
-function ps_register_service_worker() {
+// تحسين تحميل الصور
+function ps_add_image_attributes($attr, $attachment, $size) {
     if (!is_admin()) {
-        ?>
-        <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('<?php echo PS_THEME_URI; ?>/sw.js')
-                    .then(function(registration) {
-                        if (psAjax.debug) console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                        if (psAjax.debug) console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-        </script>
-        <?php
+        $attr['loading'] = 'lazy';
+        $attr['decoding'] = 'async';
     }
+    return $attr;
 }
-add_action('wp_footer', 'ps_register_service_worker');
+add_filter('wp_get_attachment_image_attributes', 'ps_add_image_attributes', 10, 3);
+
+// إضافة preload للخطوط المهمة
+function ps_add_font_preload() {
+    echo '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n";
+    echo '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"></noscript>' . "\n";
+}
+add_action('wp_head', 'ps_add_font_preload', 1);
 
 // =============================================================================
-// 7. تحسينات الأداء
+// 7. تحسينات SEO (SEO Enhancements)
 // =============================================================================
-function ps_optimize_performance() {
-    // تأجيل تحميل JavaScript غير الضروري
-    add_filter('script_loader_tag', function($tag, $handle, $src) {
-        if (!is_admin() && !in_array($handle, ['jquery-core', 'ps-main-script'])) {
-            return str_replace(' src', ' defer src', $tag);
-        }
-        return $tag;
-    }, 10, 3);
-    
-    // إزالة scripts غير الضرورية
-    add_action('wp_enqueue_scripts', function() {
-        if (!is_admin()) {
-            wp_deregister_script('wp-embed');
-            remove_action('wp_head', 'print_emoji_detection_script', 7);
-            remove_action('wp_print_styles', 'print_emoji_styles');
-        }
-    }, 100);
-    
-    // ضغط HTML
-    if (!PS_DEBUG) {
-        add_action('get_header', function() {
-            ob_start(function($buffer) {
-                return preg_replace('/\s+/', ' ', $buffer);
-            });
-        });
-    }
-}
-add_action('init', 'ps_optimize_performance');
-
-// =============================================================================
-// 8. دوال مساعدة
-// =============================================================================
-if (!function_exists('ps_get_post_rating')) {
-    function ps_get_post_rating($post_id = null) {
-        if (!$post_id) $post_id = get_the_ID();
-        
-        $average = get_post_meta($post_id, '_ps_rating_average', true);
-        $count = get_post_meta($post_id, '_ps_rating_count', true);
-        
-        return [
-            'average' => floatval($average ?: 0),
-            'count' => intval($count ?: 0)
+// إضافة البيانات المهيكلة الأساسية
+function ps_add_structured_data() {
+    if (is_singular('post')) {
+        global $post;
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Article',
+            'headline' => get_the_title(),
+            'description' => get_the_excerpt(),
+            'datePublished' => get_the_date('c'),
+            'dateModified' => get_the_modified_date('c'),
+            'author' => [
+                '@type' => 'Person',
+                'name' => get_the_author()
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => get_bloginfo('name'),
+                'url' => home_url()
+            ]
         ];
-    }
-}
-
-if (!function_exists('ps_display_rating_stars')) {
-    function ps_display_rating_stars($rating, $size = 'medium') {
-        $size_class = 'ps-stars-' . $size;
-        $full_stars = floor($rating);
-        $half_star = ($rating - $full_stars) >= 0.5;
         
-        $output = '<div class="ps-rating-stars ' . esc_attr($size_class) . '">';
-        
-        for ($i = 1; $i <= 5; $i++) {
-            if ($i <= $full_stars) {
-                $output .= '<span class="ps-star full">★</span>';
-            } elseif ($i == $full_stars + 1 && $half_star) {
-                $output .= '<span class="ps-star half">☆</span>';
-            } else {
-                $output .= '<span class="ps-star empty">☆</span>';
-            }
+        if (has_post_thumbnail()) {
+            $image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
+            $schema['image'] = $image[0];
         }
         
-        $output .= '</div>';
-        return $output;
+        echo '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE) . '</script>' . "\n";
+    }
+}
+add_action('wp_head', 'ps_add_structured_data');
+
+// تحسين meta tags
+function ps_improve_meta_tags() {
+    if (is_singular()) {
+        global $post;
+        
+        // وصف محسن
+        if (is_single() && !has_excerpt()) {
+            $description = wp_trim_words(strip_tags($post->post_content), 25, '...');
+            echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+        }
+        
+        // Open Graph tags
+        echo '<meta property="og:title" content="' . esc_attr(get_the_title()) . '">' . "\n";
+        echo '<meta property="og:description" content="' . esc_attr(get_the_excerpt() ?: wp_trim_words(strip_tags($post->post_content), 25, '...')) . '">' . "\n";
+        echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '">' . "\n";
+        echo '<meta property="og:type" content="article">' . "\n";
+        
+        if (has_post_thumbnail()) {
+            $image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+            echo '<meta property="og:image" content="' . esc_url($image[0]) . '">' . "\n";
+        }
+    }
+}
+add_action('wp_head', 'ps_improve_meta_tags');
+
+// =============================================================================
+// 8. وظائف مساعدة (Helper Functions)
+// =============================================================================
+// إنشاء breadcrumbs
+function ps_breadcrumbs() {
+    if (!is_front_page()) {
+        echo '<nav class="ps-breadcrumbs" aria-label="' . __('مسار التنقل', 'practical-solutions') . '">';
+        echo '<ol class="breadcrumb-list">';
+        echo '<li><a href="' . home_url() . '">' . __('الرئيسية', 'practical-solutions') . '</a></li>';
+        
+        if (is_category() || is_single()) {
+            if (is_single()) {
+                $categories = get_the_category();
+                if ($categories) {
+                    $category = $categories[0];
+                    echo '<li><a href="' . get_category_link($category->term_id) . '">' . $category->name . '</a></li>';
+                    echo '<li class="current">' . get_the_title() . '</li>';
+                }
+            } else {
+                echo '<li class="current">' . single_cat_title('', false) . '</li>';
+            }
+        } elseif (is_page()) {
+            echo '<li class="current">' . get_the_title() . '</li>';
+        } elseif (is_archive()) {
+            echo '<li class="current">' . get_the_archive_title() . '</li>';
+        } elseif (is_search()) {
+            echo '<li class="current">' . sprintf(__('نتائج البحث عن: %s', 'practical-solutions'), get_search_query()) . '</li>';
+        } elseif (is_404()) {
+            echo '<li class="current">' . __('الصفحة غير موجودة', 'practical-solutions') . '</li>';
+        }
+        
+        echo '</ol>';
+        echo '</nav>';
     }
 }
 
-// =============================================================================
-// 9. تفعيل الميزات حسب الحاجة
-// =============================================================================
-function ps_conditional_features() {
-    // تفعيل ميزات حسب الصفحة
-    global $wp_query;
+// shortcode للـ breadcrumbs
+function ps_breadcrumbs_shortcode() {
+    ob_start();
+    ps_breadcrumbs();
+    return ob_get_clean();
+}
+add_shortcode('ps_breadcrumbs', 'ps_breadcrumbs_shortcode');
+
+// تحسين وقت القراءة
+function ps_reading_time($post_id = null) {
+    if (!$post_id) {
+        global $post;
+        $post_id = $post->ID;
+    }
     
-    $features = [
-        'search' => !is_admin(),
-        'rating' => is_single(),
-        'bookmarks' => !is_admin(),
-        'dark_mode' => true,
-        'scroll_top' => !is_admin()
+    $content = get_post_field('post_content', $post_id);
+    $word_count = str_word_count(strip_tags($content));
+    $reading_time = ceil($word_count / 200); // 200 كلمة في الدقيقة
+    
+    return sprintf(_n('دقيقة واحدة', '%s دقائق', $reading_time, 'practical-solutions'), $reading_time);
+}
+
+// =============================================================================
+// 9. تحسينات الأمان (Security Enhancements)
+// =============================================================================
+// إخفاء رقم إصدار WordPress
+remove_action('wp_head', 'wp_generator');
+
+// منع enumeration للمستخدمين
+function ps_block_user_enumeration() {
+    if (is_admin() || current_user_can('administrator')) {
+        return;
+    }
+    
+    if (isset($_GET['author']) || preg_match('/\?author=([0-9]*)/i', $_SERVER['QUERY_STRING'])) {
+        wp_redirect(home_url(), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'ps_block_user_enumeration');
+
+// تحسين حماية wp-login.php
+function ps_limit_login_attempts() {
+    $attempts = get_option('ps_login_attempts', []);
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $current_time = time();
+    
+    // تنظيف المحاولات القديمة (أكثر من ساعة)
+    foreach ($attempts as $attempt_ip => $data) {
+        if ($current_time - $data['time'] > 3600) {
+            unset($attempts[$attempt_ip]);
+        }
+    }
+    
+    // فحص المحاولات الحالية
+    if (isset($attempts[$ip]) && $attempts[$ip]['count'] >= 5) {
+        wp_die(__('تم تجاوز عدد محاولات تسجيل الدخول المسموح. يرجى المحاولة بعد ساعة.', 'practical-solutions'));
+    }
+}
+
+// تسجيل محاولات تسجيل الدخول الفاشلة
+function ps_record_failed_login($username) {
+    $attempts = get_option('ps_login_attempts', []);
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $current_time = time();
+    
+    if (!isset($attempts[$ip])) {
+        $attempts[$ip] = ['count' => 0, 'time' => $current_time];
+    }
+    
+    $attempts[$ip]['count']++;
+    $attempts[$ip]['time'] = $current_time;
+    
+    update_option('ps_login_attempts', $attempts);
+}
+add_action('wp_login_failed', 'ps_record_failed_login');
+
+// =============================================================================
+// 10. تحسينات خاصة بالمحتوى العربي (Arabic Content Enhancements)
+// =============================================================================
+// تحسين عرض التواريخ بالعربية
+function ps_arabic_date($date) {
+    $english_months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
     ];
     
-    wp_localize_script('ps-main-script', 'psFeatures', $features);
+    $arabic_months = [
+        'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+    ];
+    
+    return str_replace($english_months, $arabic_months, $date);
 }
-add_action('wp_enqueue_scripts', 'ps_conditional_features', 20);
-?>
+
+// تحسين البحث للنصوص العربية
+function ps_improve_arabic_search($search, $wp_query) {
+    if (!$wp_query->is_search() || is_admin()) {
+        return $search;
+    }
+    
+    global $wpdb;
+    $search_term = $wp_query->query_vars['s'];
+    
+    if (!empty($search_term)) {
+        // إضافة بحث مرن للكلمات العربية
+        $search_term = trim($search_term);
+        $search_words = explode(' ', $search_term);
+        
+        $search_conditions = [];
+        foreach ($search_words as $word) {
+            if (strlen($word) > 2) {
+                $word = $wpdb->esc_like($word);
+                $search_conditions[] = "({$wpdb->posts}.post_title LIKE '%{$word}%' OR {$wpdb->posts}.post_content LIKE '%{$word}%')";
+            }
+        }
+        
+        if (!empty($search_conditions)) {
+            $search = ' AND (' . implode(' OR ', $search_conditions) . ') ';
+        }
+    }
+    
+    return $search;
+}
+add_filter('posts_search', 'ps_improve_arabic_search', 10, 2);
+
+// =============================================================================
+// 11. إنهاء التحميل وتأكيد الجاهزية
+// =============================================================================
+if (!defined('PS_THEME_LOADED')) {
+    define('PS_THEME_LOADED', true);
+}
+
+// Hook للتأكد من اكتمال التحميل
+do_action('ps_theme_fully_loaded');
+
+// تسجيل وقت تحميل القالب للإحصائيات (في وضع التطوير فقط)
+if (PS_DEBUG) {
+    $load_time = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
+    error_log("PS Theme loaded successfully in: " . round($load_time * 1000, 2) . "ms");
+}
+
+// إضافة معلومات التقنية في HTML head
+function ps_add_theme_info() {
+    echo "\n<!-- Practical Solutions Pro v" . PS_THEME_VERSION . " (Fixed & Enhanced) -->\n";
+    echo "<!-- WordPress " . get_bloginfo('version') . " | PHP " . PHP_VERSION . " -->\n";
+    echo "<!-- RTL Support: Enabled | Performance: Optimized -->\n";
+}
+add_action('wp_head', 'ps_add_theme_info', 99);
