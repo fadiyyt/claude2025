@@ -1,0 +1,106 @@
+{
+  "name": "الحلول العملية - موقع النصائح والحلول",
+  "short_name": "حلول عملية",
+  "description": "موقعك المفضل للحصول على أفضل الحلول العملية والنصائح المفيدة لحياة أسهل وأكثر تنظيماً",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007cba",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "dist/images/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "dist/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["lifestyle", "education", "productivity"],
+  "screenshots": [
+    {
+      "src": "dist/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "الصفحة الرئيسية على سطح المكتب"
+    },
+    {
+      "src": "dist/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "الصفحة الرئيسية على الجوال"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "البحث عن حلول",
+      "short_name": "بحث",
+      "description": "ابحث عن الحلول والنصائح",
+      "url": "/?s=",
+      "icons": [
+        {
+          "src": "dist/images/icon-search.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "أحدث المقالات",
+      "short_name": "جديد",
+      "description": "تصفح أحدث المقالات والحلول",
+      "url": "/blog/",
+      "icons": [
+        {
+          "src": "dist/images/icon-blog.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

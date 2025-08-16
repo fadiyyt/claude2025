@@ -1,559 +1,0 @@
-<!-- wp:group {"className":"advanced-search-form","layout":{"type":"constrained","contentSize":"600px"}} -->
-<div class="wp-block-group advanced-search-form">
-    
-    <!-- wp:html -->
-    <form role="search" method="get" class="search-form" action="/" id="advanced-search-form">
-        
-        <!-- حاوي البحث الرئيسي -->
-        <div class="search-input-wrapper">
-            
-            <!-- حقل البحث النصي -->
-            <input type="search" 
-                   class="search-field" 
-                   placeholder="ابحث عن الحلول والنصائح..."
-                   value=""
-                   name="s" 
-                   id="search-input"
-                   autocomplete="off"
-                   aria-label="البحث في الموقع"
-                   aria-describedby="search-help" />
-            
-            <!-- زر البحث الصوتي -->
-            <button type="button" 
-                    id="voice-search-btn" 
-                    class="voice-search-btn" 
-                    aria-label="البحث الصوتي"
-                    title="اضغط للبحث بالصوت">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14S15 12.66 15 11V5C15 3.34 13.66 2 12 2Z"/>
-                    <path d="M19 11C19 15.42 15.42 19 11 19H13C17.42 19 21 15.42 21 11H19Z"/>
-                    <path d="M5 11C5 15.42 8.58 19 13 19H11C6.58 19 3 15.42 3 11H5Z"/>
-                    <path d="M12 22V19"/>
-                    <path d="M8 22H16"/>
-                </svg>
-                
-                <!-- حالة التسجيل -->
-                <span class="recording-indicator" style="display: none;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#e74c3c" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="8"/>
-                        <circle cx="12" cy="12" r="4" fill="white"/>
-                    </svg>
-                </span>
-            </button>
-            
-            <!-- زر البحث -->
-            <button type="submit" 
-                    class="search-submit" 
-                    aria-label="بحث"
-                    title="بحث">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                </svg>
-            </button>
-            
-            <!-- زر مسح البحث -->
-            <button type="button" 
-                    class="search-clear" 
-                    style="display: none;"
-                    aria-label="مسح البحث"
-                    title="مسح النص">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-            </button>
-            
-        </div>
-        
-        <!-- مؤشر الحالة للبحث الصوتي -->
-        <div class="voice-status" style="display: none;">
-            <div class="voice-status-content">
-                <div class="voice-animation">
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                    <div class="wave"></div>
-                </div>
-                <span class="voice-status-text">استمع...</span>
-            </div>
-        </div>
-        
-        <!-- مؤشر التحميل -->
-        <div class="search-loading" style="display: none;">
-            <div class="loading-spinner"></div>
-            <span>جاري البحث...</span>
-        </div>
-        
-        <!-- اقتراحات البحث -->
-        <div id="search-suggestions" class="search-suggestions" role="listbox" aria-label="اقتراحات البحث">
-            <!-- سيتم ملؤها ديناميكياً بـ JavaScript -->
-        </div>
-        
-        <!-- فلاتر البحث المتقدم -->
-        <div class="search-filters-toggle" style="display: none;">
-            <button type="button" class="filters-toggle-btn" aria-expanded="false">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-                </svg>
-                <span>فلاتر متقدمة</span>
-                <svg class="expand-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <polyline points="6 9 12 15 18 9"/>
-                </svg>
-            </button>
-        </div>
-        
-        <!-- لوحة الفلاتر المتقدمة -->
-        <div class="advanced-filters" style="display: none;" aria-hidden="true">
-            
-            <div class="filters-grid">
-                
-                <!-- فلتر نوع المحتوى -->
-                <div class="filter-group">
-                    <label class="filter-label">نوع المحتوى:</label>
-                    <div class="filter-options">
-                        <label class="filter-option">
-                            <input type="checkbox" name="post_type[]" value="post" checked>
-                            <span class="checkmark"></span>
-                            مقالات
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="post_type[]" value="solution" checked>
-                            <span class="checkmark"></span>
-                            حلول
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="post_type[]" value="tip" checked>
-                            <span class="checkmark"></span>
-                            نصائح
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="post_type[]" value="page">
-                            <span class="checkmark"></span>
-                            صفحات
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- فلتر التصنيفات -->
-                <div class="filter-group">
-                    <label class="filter-label">التصنيف:</label>
-                    <select name="category" class="filter-select">
-                        <option value="">جميع التصنيفات</option>
-                        <option value="home-solutions">البيت والمنزل</option>
-                        <option value="kitchen-solutions">المطبخ والطبخ</option>
-                        <option value="life-tips">نصائح حياتية</option>
-                        <option value="tech-solutions">حلول تقنية</option>
-                        <option value="health-wellness">صحة ولياقة</option>
-                        <option value="money-saving">توفير المال</option>
-                    </select>
-                </div>
-                
-                <!-- فلتر تاريخ النشر -->
-                <div class="filter-group">
-                    <label class="filter-label">تاريخ النشر:</label>
-                    <select name="date_filter" class="filter-select">
-                        <option value="">أي وقت</option>
-                        <option value="last_week">الأسبوع الماضي</option>
-                        <option value="last_month">الشهر الماضي</option>
-                        <option value="last_3_months">آخر 3 أشهر</option>
-                        <option value="last_year">السنة الماضية</option>
-                    </select>
-                </div>
-                
-                <!-- فلتر مستوى الصعوبة -->
-                <div class="filter-group">
-                    <label class="filter-label">مستوى الصعوبة:</label>
-                    <div class="filter-options">
-                        <label class="filter-option">
-                            <input type="checkbox" name="difficulty[]" value="easy">
-                            <span class="checkmark"></span>
-                            سهل
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="difficulty[]" value="medium">
-                            <span class="checkmark"></span>
-                            متوسط
-                        </label>
-                        <label class="filter-option">
-                            <input type="checkbox" name="difficulty[]" value="hard">
-                            <span class="checkmark"></span>
-                            صعب
-                        </label>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- أزرار الفلاتر -->
-            <div class="filters-actions">
-                <button type="button" class="apply-filters-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                    تطبيق الفلاتر
-                </button>
-                <button type="button" class="reset-filters-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 12A9 9 0 0 1 12 3A9 9 0 0 1 21 12A9 9 0 0 1 12 21"/>
-                        <path d="M8 12L12 16L16 12"/>
-                    </svg>
-                    إعادة تعيين
-                </button>
-            </div>
-            
-        </div>
-        
-        <!-- نصائح البحث -->
-        <div class="search-help" id="search-help" style="display: none;">
-            <div class="search-tips">
-                <h4>💡 نصائح للبحث الفعال:</h4>
-                <ul>
-                    <li>استخدم كلمات مفتاحية واضحة ومحددة</li>
-                    <li>جرب استخدام مرادفات مختلفة للكلمة</li>
-                    <li>استخدم علامات التنصيص للبحث عن عبارة محددة</li>
-                    <li>استفد من البحث الصوتي للسرعة والدقة</li>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- البحث السريع (اختصارات) -->
-        <div class="quick-search" style="display: none;">
-            <div class="quick-search-title">🔥 عمليات بحث شائعة:</div>
-            <div class="quick-search-tags">
-                <button type="button" class="quick-tag" data-query="تنظيف المنزل">تنظيف المنزل</button>
-                <button type="button" class="quick-tag" data-query="وصفات سريعة">وصفات سريعة</button>
-                <button type="button" class="quick-tag" data-query="توفير المال">توفير المال</button>
-                <button type="button" class="quick-tag" data-query="إدارة الوقت">إدارة الوقت</button>
-                <button type="button" class="quick-tag" data-query="صحة ولياقة">صحة ولياقة</button>
-                <button type="button" class="quick-tag" data-query="تقنية">تقنية</button>
-            </div>
-        </div>
-        
-        <!-- رسائل الخطأ والتنبيهات -->
-        <div class="search-messages" style="display: none;">
-            <div class="search-error" style="display: none;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#e74c3c" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="15" y1="9" x2="9" y2="15"/>
-                    <line x1="9" y1="9" x2="15" y2="15"/>
-                </svg>
-                <span class="error-text">حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.</span>
-            </div>
-            
-            <div class="voice-error" style="display: none;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f39c12" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14S15 12.66 15 11V5C15 3.34 13.66 2 12 2Z"/>
-                    <path d="M19 11C19 15.42 15.42 19 11 19H13C17.42 19 21 15.42 21 11H19Z"/>
-                    <path d="M5 11C5 15.42 8.58 19 13 19H11C6.58 19 3 15.42 3 11H5Z"/>
-                    <line x1="1" y1="1" x2="23" y2="23"/>
-                </svg>
-                <span class="voice-error-text">البحث الصوتي غير متاح. تأكد من إعطاء الإذن لاستخدام الميكروفون.</span>
-            </div>
-            
-            <div class="no-mic-support" style="display: none;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#95a5a6" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <span>البحث الصوتي غير مدعوم في هذا المتصفح.</span>
-            </div>
-        </div>
-        
-        <!-- حقول مخفية للفلاتر -->
-        <input type="hidden" name="search_filters" value="" id="search-filters-data">
-        <input type="hidden" name="voice_search" value="0" id="voice-search-flag">
-        
-    </form>
-    <!-- /wp:html -->
-    
-</div>
-<!-- /wp:group -->
-
-<!-- الأنماط المدمجة للتفاعل السريع -->
-<!-- wp:html -->
-<style>
-/* أنماط أساسية لنموذج البحث المتقدم */
-.advanced-search-form {
-    position: relative;
-    margin: 0 auto;
-}
-
-.search-form {
-    position: relative;
-    width: 100%;
-}
-
-.search-input-wrapper {
-    display: flex;
-    align-items: center;
-    background: var(--wp--preset--color--background, #ffffff);
-    border: 2px solid var(--wp--preset--color--base, #ecf0f1);
-    border-radius: 50px;
-    padding: 0.25rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.search-input-wrapper:focus-within {
-    border-color: var(--wp--preset--color--primary, #007cba);
-    box-shadow: 0 4px 20px rgba(0, 124, 186, 0.2);
-}
-
-.search-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-    background: transparent;
-    color: var(--wp--preset--color--foreground, #2c3e50);
-    font-family: inherit;
-}
-
-.search-field::placeholder {
-    color: var(--wp--preset--color--contrast, #95a5a6);
-    opacity: 0.8;
-}
-
-.voice-search-btn,
-.search-submit,
-.search-clear {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    padding: 0.75rem;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    color: var(--wp--preset--color--primary, #007cba);
-}
-
-.voice-search-btn:hover,
-.search-submit:hover,
-.search-clear:hover {
-    background: var(--wp--preset--color--base, #ecf0f1);
-    transform: scale(1.1);
-}
-
-.search-submit {
-    background: var(--wp--preset--color--primary, #007cba);
-    color: white;
-    margin-left: 0.25rem;
-}
-
-.search-submit:hover {
-    background: var(--wp--preset--color--accent, #e74c3c);
-    transform: scale(1.05);
-}
-
-/* حالة البحث الصوتي النشط */
-.voice-search-btn.recording {
-    animation: pulse 1.5s ease-in-out infinite;
-    color: var(--wp--preset--color--accent, #e74c3c);
-}
-
-.voice-search-btn.recording .recording-indicator {
-    display: block !important;
-}
-
-/* مؤشر حالة الصوت */
-.voice-status {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--wp--preset--color--foreground, #2c3e50);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    margin-top: 0.5rem;
-    z-index: 1001;
-}
-
-.voice-animation {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.wave {
-    width: 4px;
-    height: 20px;
-    background: var(--wp--preset--color--primary, #007cba);
-    border-radius: 2px;
-    animation: wave 1.2s ease-in-out infinite;
-}
-
-.wave:nth-child(2) { animation-delay: 0.1s; }
-.wave:nth-child(3) { animation-delay: 0.2s; }
-
-/* اقتراحات البحث */
-.search-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--wp--preset--color--background, #ffffff);
-    border: 1px solid var(--wp--preset--color--base, #ecf0f1);
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    margin-top: 0.5rem;
-    max-height: 300px;
-    overflow-y: auto;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-.search-suggestions.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* مؤشر التحميل */
-.search-loading {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--wp--preset--color--background, #ffffff);
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 0.5rem;
-    z-index: 1001;
-}
-
-.loading-spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--wp--preset--color--base, #ecf0f1);
-    border-top: 2px solid var(--wp--preset--color--primary, #007cba);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-/* البحث السريع */
-.quick-search {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.quick-search-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: var(--wp--preset--color--foreground, #2c3e50);
-}
-
-.quick-search-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.quick-tag {
-    background: var(--wp--preset--color--base, #ecf0f1);
-    color: var(--wp--preset--color--foreground, #2c3e50);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.quick-tag:hover {
-    background: var(--wp--preset--color--primary, #007cba);
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* الرسوم المتحركة */
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-@keyframes wave {
-    0%, 40%, 100% { transform: scaleY(0.4); }
-    20% { transform: scaleY(1); }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* الاستجابة للجوال */
-@media (max-width: 768px) {
-    .search-input-wrapper {
-        flex-direction: column;
-        border-radius: 16px;
-        padding: 0.5rem;
-    }
-    
-    .search-field {
-        padding: 0.75rem 1rem;
-        text-align: center;
-        width: 100%;
-    }
-    
-    .voice-search-btn,
-    .search-submit {
-        margin: 0.25rem 0;
-        padding: 0.75rem 1.5rem;
-        border-radius: 25px;
-        width: 100%;
-    }
-    
-    .quick-search-tags {
-        justify-content: center;
-    }
-    
-    .quick-tag {
-        flex: 0 1 auto;
-        min-width: max-content;
-    }
-}
-
-/* رسائل الأخطاء */
-.search-messages > div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.search-error {
-    background: #fee;
-    color: #c53030;
-    border: 1px solid #fed7d7;
-}
-
-.voice-error {
-    background: #fffbeb;
-    color: #b7791f;
-    border: 1px solid #fbd38d;
-}
-
-.no-mic-support {
-    background: #f7fafc;
-    color: #4a5568;
-    border: 1px solid #e2e8f0;
-}
-</style>
-<!-- /wp:html -->

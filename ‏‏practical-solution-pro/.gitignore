@@ -1,0 +1,54 @@
+---
+
+## 📁 **اسم الملف:** .gitignore  
+**المسار:** /.gitignore  
+**الوصف:** ملف تجاهل Git
+
+```gitignore
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/backup-db/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+
+# Theme Development
+node_modules/
+npm-debug.log
+.npm
+*.log
+.sass-cache/
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary
+*.tmp
+*.temp
+*~
+.cache/
+
+# Compiled
+dist/
+build/
+*.min.css
+*.min.js
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup
+*.bak
+*.backup
+*.sql

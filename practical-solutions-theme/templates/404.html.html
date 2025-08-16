@@ -1,249 +1,0 @@
-<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
-
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"0","bottom":"0"},"padding":{"top":"var:preset|spacing|x-large","bottom":"var:preset|spacing|x-large"}}},"className":"site-main error-404","layout":{"type":"constrained"}} -->
-<main class="wp-block-group site-main error-404" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--x-large);padding-bottom:var(--wp--preset--spacing--x-large)">
-    
-    <!-- قسم رسالة الخطأ الرئيسية -->
-    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|x-large","bottom":"var:preset|spacing|x-large"}}},"className":"error-hero","layout":{"type":"constrained","contentSize":"600px"}} -->
-    <div class="wp-block-group error-hero" style="padding-top:var(--wp--preset--spacing--x-large);padding-bottom:var(--wp--preset--spacing--x-large)">
-        
-        <!-- رقم الخطأ -->
-        <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"8rem","fontWeight":"900","lineHeight":"0.8"},"color":{"text":"#f0f4f8"},"spacing":{"margin":{"bottom":"0"}}},"className":"error-number"} -->
-        <h1 class="wp-block-heading error-number has-text-align-center has-text-color" style="color:#f0f4f8;margin-bottom:0;font-size:8rem;font-weight:900;line-height:0.8">
-            404
-        </h1>
-        <!-- /wp:heading -->
-        
-        <!-- رسالة الخطأ -->
-        <!-- wp:heading {"textAlign":"center","level":2,"style":{"typography":{"fontWeight":"700","fontSize":"2.5rem","lineHeight":"1.2"},"spacing":{"margin":{"top":"var:preset|spacing|medium","bottom":"var:preset|spacing|medium"}}},"textColor":"foreground","className":"error-title"} -->
-        <h2 class="wp-block-heading error-title has-text-align-center has-foreground-color has-text-color" style="margin-top:var(--wp--preset--spacing--medium);margin-bottom:var(--wp--preset--spacing--medium);font-size:2.5rem;font-weight:700;line-height:1.2">
-            عذراً، الصفحة غير موجودة!
-        </h2>
-        <!-- /wp:heading -->
-        
-        <!-- وصف الخطأ -->
-        <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.25rem","lineHeight":"1.6"}},"textColor":"contrast","className":"error-description"} -->
-        <p class="error-description has-text-align-center has-contrast-color has-text-color" style="font-size:1.25rem;line-height:1.6">
-            يبدو أن الصفحة التي تبحث عنها قد تم نقلها أو حذفها أو أن الرابط غير صحيح.
-        </p>
-        <!-- /wp:paragraph -->
-        
-        <!-- أيقونة مرئية -->
-        <!-- wp:html -->
-        <div class="error-icon" style="text-align: center; margin: 2rem 0;">
-            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.7;">
-                <circle cx="60" cy="60" r="50" stroke="var(--wp--preset--color--primary)" stroke-width="4" fill="none"/>
-                <path d="M40 45 L80 45" stroke="var(--wp--preset--color--primary)" stroke-width="4" stroke-linecap="round"/>
-                <path d="M35 75 Q60 95 85 75" stroke="var(--wp--preset--color--primary)" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <circle cx="45" cy="45" r="3" fill="var(--wp--preset--color--primary)"/>
-                <circle cx="75" cy="45" r="3" fill="var(--wp--preset--color--primary)"/>
-            </svg>
-        </div>
-        <!-- /wp:html -->
-        
-    </div>
-    <!-- /wp:group -->
-    
-    <!-- قسم البحث والتنقل -->
-    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|large","bottom":"var:preset|spacing|large"}}},"backgroundColor":"secondary","className":"error-actions","layout":{"type":"constrained","contentSize":"800px"}} -->
-    <div class="wp-block-group error-actions has-secondary-background-color has-background" style="padding-top:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--large)">
-        
-        <!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontWeight":"600","fontSize":"1.5rem"}},"textColor":"foreground"} -->
-        <h3 class="wp-block-heading has-text-align-center has-foreground-color has-text-color" style="font-size:1.5rem;font-weight:600">
-            لا تقلق، يمكننا مساعدتك!
-        </h3>
-        <!-- /wp:heading -->
-        
-        <!-- شريط البحث -->
-        <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|large","bottom":"var:preset|spacing|large"}}},"layout":{"type":"constrained","contentSize":"500px"}} -->
-        <div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--large);margin-bottom:var(--wp--preset--spacing--large)">
-            
-            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1rem","fontWeight":"500"}},"textColor":"foreground"} -->
-            <p class="has-text-align-center has-foreground-color has-text-color" style="font-size:1rem;font-weight:500">
-                🔍 جرب البحث عما تريد:
-            </p>
-            <!-- /wp:paragraph -->
-            
-            <!-- wp:template-part {"slug":"search-form","className":"error-search-form"} /-->
-            
-        </div>
-        <!-- /wp:group -->
-        
-        <!-- أزرار التنقل السريع -->
-        <!-- wp:group {"layout":{"type":"constrained"}} -->
-        <div class="wp-block-group">
-            
-            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1rem","fontWeight":"500"},"spacing":{"margin":{"bottom":"var:preset|spacing|medium"}}},"textColor":"foreground"} -->
-            <p class="has-text-align-center has-foreground-color has-text-color" style="margin-bottom:var(--wp--preset--spacing--medium);font-size:1rem;font-weight:500">
-                أو انتقل إلى:
-            </p>
-            <!-- /wp:paragraph -->
-            
-            <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"var:preset|spacing|medium"}}} -->
-            <div class="wp-block-buttons">
-                
-                <!-- wp:button {"style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|large","right":"var:preset|spacing|large"}}},"className":"home-btn"} -->
-                <div class="wp-block-button home-btn">
-                    <a class="wp-block-button__link wp-element-button" href="/" style="border-radius:50px;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--large)">
-                        🏠 الصفحة الرئيسية
-                    </a>
-                </div>
-                <!-- /wp:button -->
-                
-                <!-- wp:button {"style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|large","right":"var:preset|spacing|large"}}},"className":"blog-btn","outline":true} -->
-                <div class="wp-block-button blog-btn">
-                    <a class="wp-block-button__link wp-element-button" href="/blog" style="border-radius:50px;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--large)">
-                        📝 المدونة
-                    </a>
-                </div>
-                <!-- /wp:button -->
-                
-                <!-- wp:button {"style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|large","right":"var:preset|spacing|large"}}},"className":"solutions-btn","outline":true} -->
-                <div class="wp-block-button solutions-btn">
-                    <a class="wp-block-button__link wp-element-button" href="/solutions" style="border-radius:50px;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--large)">
-                        💡 الحلول
-                    </a>
-                </div>
-                <!-- /wp:button -->
-                
-                <!-- wp:button {"style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|large","right":"var:preset|spacing|large"}}},"className":"contact-btn","outline":true} -->
-                <div class="wp-block-button contact-btn">
-                    <a class="wp-block-button__link wp-element-button" href="/contact" style="border-radius:50px;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--large)">
-                        ✉️ اتصل بنا
-                    </a>
-                </div>
-                <!-- /wp:button -->
-                
-            </div>
-            <!-- /wp:buttons -->
-            
-        </div>
-        <!-- /wp:group -->
-        
-    </div>
-    <!-- /wp:group -->
-    
-    <!-- قسم المقالات الشائعة -->
-    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|x-large","bottom":"var:preset|spacing|x-large"}}},"className":"popular-content","layout":{"type":"constrained"}} -->
-    <div class="wp-block-group popular-content" style="padding-top:var(--wp--preset--spacing--x-large);padding-bottom:var(--wp--preset--spacing--x-large)">
-        
-        <!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontWeight":"700","fontSize":"1.75rem"}},"textColor":"foreground"} -->
-        <h3 class="wp-block-heading has-text-align-center has-foreground-color has-text-color" style="font-size:1.75rem;font-weight:700">
-            ربما تهتم بهذا المحتوى
-        </h3>
-        <!-- /wp:heading -->
-        
-        <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1rem"}},"textColor":"contrast"} -->
-        <p class="has-text-align-center has-contrast-color has-text-color" style="font-size:1rem">
-            إليك بعض المقالات والحلول الشائعة على موقعنا
-        </p>
-        <!-- /wp:paragraph -->
-        
-        <!-- wp:query {"queryId":2,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"meta_value_num","metaKey":"post_views_count","author":"","search":"","exclude":[],"sticky":"exclude","inherit":false},"layout":{"type":"constrained"}} -->
-        <div class="wp-block-query">
-            
-            <!-- wp:post-template {"style":{"spacing":{"blockGap":"var:preset|spacing|large"}},"layout":{"type":"grid","columnCount":3}} -->
-            
-                <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|medium","bottom":"var:preset|spacing|medium","left":"var:preset|spacing|medium","right":"var:preset|spacing|medium"}},"border":{"radius":"12px"}},"backgroundColor":"background","className":"popular-post-card","layout":{"type":"constrained"},"shadow":"natural"} -->
-                <div class="wp-block-group popular-post-card has-background-background-color has-background has-shadow" style="border-radius:12px;padding-top:var(--wp--preset--spacing--medium);padding-right:var(--wp--preset--spacing--medium);padding-bottom:var(--wp--preset--spacing--medium);padding-left:var(--wp--preset--spacing--medium)">
-                    
-                    <!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"8px"},"spacing":{"margin":{"bottom":"var:preset|spacing|small"}}}} /-->
-                    
-                    <!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|small"}},"layout":{"type":"constrained"}} -->
-                    <div class="wp-block-group">
-                        
-                        <!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"0.75rem","fontWeight":"500","textTransform":"uppercase"}},"textColor":"primary"} /-->
-                        
-                        <!-- wp:post-title {"level":4,"isLink":true,"style":{"typography":{"fontWeight":"600","lineHeight":"1.3","fontSize":"1.1rem"},"spacing":{"margin":{"top":"var:preset|spacing|x-small","bottom":"var:preset|spacing|small"}}}} /-->
-                        
-                        <!-- wp:post-excerpt {"moreText":"","excerptLength":12,"style":{"typography":{"fontSize":"0.9rem","lineHeight":"1.5"}},"textColor":"contrast"} /-->
-                        
-                        <!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|x-small","margin":{"top":"var:preset|spacing|small"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
-                        <div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--small)">
-                            
-                            <!-- wp:post-date {"style":{"typography":{"fontSize":"0.8rem"}},"textColor":"contrast"} /-->
-                            
-                            <!-- wp:html -->
-                            <span class="popular-badge" style="font-size: 0.75rem; background: var(--wp--preset--color--accent); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 500;">
-                                🔥 شائع
-                            </span>
-                            <!-- /wp:html -->
-                            
-                        </div>
-                        <!-- /wp:group -->
-                        
-                    </div>
-                    <!-- /wp:group -->
-                    
-                </div>
-                <!-- /wp:group -->
-                
-            <!-- /wp:post-template -->
-            
-            <!-- wp:query-no-results -->
-            
-                <!-- wp:paragraph {"align":"center","textColor":"contrast"} -->
-                <p class="has-text-align-center has-contrast-color has-text-color">
-                    لا توجد مقالات شائعة حالياً.
-                </p>
-                <!-- /wp:paragraph -->
-                
-            <!-- /wp:query-no-results -->
-            
-        </div>
-        <!-- /wp:query -->
-        
-    </div>
-    <!-- /wp:group -->
-    
-    <!-- قسم الاقتراحات الإضافية -->
-    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|large","bottom":"var:preset|spacing|large"}}},"backgroundColor":"base","className":"additional-help","layout":{"type":"constrained","contentSize":"600px"}} -->
-    <div class="wp-block-group additional-help has-base-background-color has-background" style="padding-top:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--large)">
-        
-        <!-- wp:heading {"textAlign":"center","level":4,"style":{"typography":{"fontWeight":"600","fontSize":"1.25rem"}},"textColor":"foreground"} -->
-        <h4 class="wp-block-heading has-text-align-center has-foreground-color has-text-color" style="font-size:1.25rem;font-weight:600">
-            💬 هل تحتاج مساعدة إضافية؟
-        </h4>
-        <!-- /wp:heading -->
-        
-        <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1rem","lineHeight":"1.6"}},"textColor":"contrast"} -->
-        <p class="has-text-align-center has-contrast-color has-text-color" style="font-size:1rem;line-height:1.6">
-            إذا كنت تبحث عن شيء محدد أو تواجه مشكلة، لا تتردد في التواصل معنا. 
-            فريقنا مستعد لمساعدتك في العثور على ما تحتاج إليه.
-        </p>
-        <!-- /wp:paragraph -->
-        
-        <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|medium"}}}} -->
-        <div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--medium)">
-            
-            <!-- wp:button {"style":{"border":{"radius":"50px"},"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|large","right":"var:preset|spacing|large"}}},"className":"contact-support-btn"} -->
-            <div class="wp-block-button contact-support-btn">
-                <a class="wp-block-button__link wp-element-button" href="/contact" style="border-radius:50px;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--large);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--large)">
-                    📞 تواصل معنا
-                </a>
-            </div>
-            <!-- /wp:button -->
-            
-        </div>
-        <!-- /wp:buttons -->
-        
-        <!-- معلومات إضافية مفيدة -->
-        <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|large"}},"border":{"radius":"8px","width":"1px","color":"var:preset|color|base"}},"className":"helpful-info","layout":{"type":"constrained"}} -->
-        <div class="wp-block-group helpful-info has-border-color has-base-border-color" style="border-color:var(--wp--preset--color--base);border-width:1px;border-radius:8px;margin-top:var(--wp--preset--spacing--large)">
-            
-            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"0.9rem","fontWeight":"500"}},"textColor":"foreground"} -->
-            <p class="has-text-align-center has-foreground-color has-text-color" style="font-size:0.9rem;font-weight:500">
-                💡 نصيحة: يمكنك استخدام البحث الصوتي أعلاه للعثور بسرعة على ما تريد!
-            </p>
-            <!-- /wp:paragraph -->
-            
-        </div>
-        <!-- /wp:group -->
-        
-    </div>
-    <!-- /wp:group -->
-    
-</main>
-<!-- /wp:group -->
-
-<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

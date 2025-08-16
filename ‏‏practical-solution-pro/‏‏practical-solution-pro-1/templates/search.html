@@ -1,0 +1,127 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:3rem;padding-bottom:3rem">
+
+  <!-- wp:group {"className":"ps-search-header","style":{"spacing":{"margin":{"bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-search-header" style="margin-bottom:3rem">
+    
+    <!-- Breadcrumbs -->
+    <!-- wp:shortcode -->
+    [ps_breadcrumbs]
+    <!-- /wp:shortcode -->
+    
+    <!-- wp:query-title {"type":"search","textAlign":"center","className":"is-style-ps-section-title","style":{"spacing":{"margin":{"top":"2rem","bottom":"2rem"}}}} /-->
+    
+    <!-- wp:html -->
+    <div class="ps-search-container">
+      <form role="search" method="get" class="ps-search-form" action="/">
+        <input type="search" class="ps-search-input" placeholder="ابحث مرة أخرى..." name="s" id="search-input" value="<?php echo get_search_query(); ?>">
+        <button type="button" class="ps-voice-btn" id="voice-search" title="البحث الصوتي">🎤</button>
+        <button type="submit" class="ps-search-btn" title="بحث">🔍</button>
+      </form>
+      <div class="ps-search-suggestions"></div>
+    </div>
+    <!-- /wp:html -->
+    
+    <!-- wp:group {"className":"ps-search-stats","style":{"spacing":{"margin":{"top":"1.5rem"}}},"layout":{"type":"flex","justifyContent":"center"}} -->
+    <div class="wp-block-group ps-search-stats" style="margin-top:1.5rem">
+      <!-- wp:html -->
+      <div class="search-info">
+        <span class="results-count">🔍 تم العثور على <?php echo $wp_query->found_posts; ?> نتيجة</span>
+      </div>
+      <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:group {"className":"ps-search-results","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-search-results">
+    
+    <!-- wp:query {"queryId":0,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"relevance","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+    <div class="wp-block-query">
+      
+      <!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"default"}} -->
+      
+      <!-- wp:group {"className":"ps-search-result-item","style":{"spacing":{"padding":{"top":"1.5rem","right":"1.5rem","bottom":"1.5rem","left":"1.5rem"}},"border":{"radius":"12px"}},"backgroundColor":"secondary","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+      <div class="wp-block-group ps-search-result-item has-secondary-background-color has-background" style="border-radius:12px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
+        
+        <!-- wp:post-featured-image {"isLink":true,"width":"120px","height":"120px","className":"is-style-ps-rounded-image","style":{"spacing":{"margin":{"left":"1rem"}}}} /-->
+        
+        <!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"constrained"}} -->
+        <div class="wp-block-group" style="--wp--style--block-gap:0.5rem">
+          
+          <!-- wp:post-title {"level":3,"isLink":true,"style":{"spacing":{"margin":{"bottom":"0.5rem"}}}} /-->
+          
+          <!-- wp:post-excerpt {"moreText":"اقرأ المزيد","excerptLength":30,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} /-->
+          
+          <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left"}} -->
+          <div class="wp-block-group">
+            <!-- wp:post-date {"format":"j F Y","style":{"typography":{"fontSize":"13px"}},"textColor":"tertiary"} /-->
+            <!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"13px"}},"textColor":"primary"} /-->
+            <!-- wp:post-author {"showAvatar":false,"style":{"typography":{"fontSize":"13px"}},"textColor":"tertiary"} /-->
+          </div>
+          <!-- /wp:group -->
+          
+        </div>
+        <!-- /wp:group -->
+        
+      </div>
+      <!-- /wp:group -->
+      
+      <!-- /wp:post-template -->
+      
+      <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"3rem"}}}} -->
+      <!-- wp:query-pagination-previous {"label":"السابق"} /-->
+      <!-- wp:query-pagination-numbers /-->
+      <!-- wp:query-pagination-next {"label":"التالي"} /-->
+      <!-- /wp:query-pagination -->
+      
+      <!-- wp:query-no-results -->
+      <!-- wp:group {"className":"ps-no-search-results","style":{"spacing":{"padding":{"top":"4rem","bottom":"4rem"}}},"layout":{"type":"constrained"}} -->
+      <div class="wp-block-group ps-no-search-results" style="padding-top:4rem;padding-bottom:4rem">
+        
+        <!-- wp:heading {"textAlign":"center","level":3,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+        <h3 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">🔍 لم نجد نتائج لبحثك</h3>
+        <!-- /wp:heading -->
+        
+        <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+        <p class="has-text-align-center" style="margin-bottom:2rem">حاول استخدام كلمات مختلفة أو تصفح الأقسام الرئيسية</p>
+        <!-- /wp:paragraph -->
+        
+        <!-- wp:heading {"level":4,"textAlign":"center","style":{"spacing":{"margin":{"bottom":"1.5rem"}}}} -->
+        <h4 class="wp-block-heading has-text-align-center" style="margin-bottom:1.5rem">أو تصفح الأقسام:</h4>
+        <!-- /wp:heading -->
+        
+        <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"1rem"}}} -->
+        <div class="wp-block-buttons">
+          <!-- wp:button {"className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link wp-element-button" href="/category/home">🏠 البيت والمنزل</a></div>
+          <!-- /wp:button -->
+          
+          <!-- wp:button {"className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link wp-element-button" href="/category/kitchen">🍳 المطبخ والطبخ</a></div>
+          <!-- /wp:button -->
+          
+          <!-- wp:button {"className":"is-style-ps-outline-button"} -->
+          <div class="wp-block-button is-style-ps-outline-button"><a class="wp-block-button__link wp-element-button" href="/category/lifestyle">💡 نصائح حياتية</a></div>
+          <!-- /wp:button -->
+        </div>
+        <!-- /wp:buttons -->
+        
+      </div>
+      <!-- /wp:group -->
+      <!-- /wp:query-no-results -->
+      
+    </div>
+    <!-- /wp:query -->
+    
+  </div>
+  <!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

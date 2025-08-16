@@ -1,0 +1,99 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:3rem;padding-bottom:3rem">
+
+  <!-- wp:group {"className":"ps-archive-header","style":{"spacing":{"margin":{"bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-archive-header" style="margin-bottom:3rem">
+    
+    <!-- Breadcrumbs -->
+    <!-- wp:shortcode -->
+    [ps_breadcrumbs]
+    <!-- /wp:shortcode -->
+    
+    <!-- wp:query-title {"type":"archive","textAlign":"center","className":"is-style-ps-section-title","style":{"spacing":{"margin":{"top":"2rem","bottom":"1rem"}}}} /-->
+    
+    <!-- wp:term-description {"textAlign":"center","style":{"spacing":{"margin":{"bottom":"2rem"}}}} /-->
+    
+    <!-- wp:group {"className":"ps-archive-stats","layout":{"type":"flex","justifyContent":"center"}} -->
+    <div class="wp-block-group ps-archive-stats">
+      <!-- wp:html -->
+      <div class="archive-info">
+        <span class="post-count">📄 عدد المقالات: <?php echo $wp_query->found_posts; ?></span>
+      </div>
+      <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+    
+  </div>
+  <!-- /wp:group -->
+
+  <!-- wp:group {"className":"ps-archive-content","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ps-archive-content">
+    
+    <!-- wp:query {"queryId":0,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+    <div class="wp-block-query">
+      
+      <!-- wp:post-template {"style":{"spacing":{"blockGap":"2rem"}},"layout":{"type":"grid","columnCount":3}} -->
+      
+      <!-- wp:group {"className":"is-style-ps-card-style","layout":{"type":"constrained"}} -->
+      <div class="wp-block-group is-style-ps-card-style">
+        
+        <!-- wp:post-featured-image {"isLink":true,"className":"is-style-ps-rounded-image","style":{"spacing":{"margin":{"bottom":"1rem"}}}} /-->
+        
+        <!-- wp:post-title {"level":3,"isLink":true,"style":{"spacing":{"margin":{"bottom":"0.5rem"}}}} /-->
+        
+        <!-- wp:post-excerpt {"moreText":"اقرأ المزيد","excerptLength":20} /-->
+        
+        <!-- wp:group {"style":{"spacing":{"margin":{"top":"1rem"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+        <div class="wp-block-group" style="margin-top:1rem">
+          <!-- wp:post-date {"format":"j F Y","style":{"typography":{"fontSize":"13px"}},"textColor":"tertiary"} /-->
+          <!-- wp:post-author {"showAvatar":false,"style":{"typography":{"fontSize":"13px"}},"textColor":"tertiary"} /-->
+        </div>
+        <!-- /wp:group -->
+        
+      </div>
+      <!-- /wp:group -->
+      
+      <!-- /wp:post-template -->
+      
+      <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"3rem"}}}} -->
+      <!-- wp:query-pagination-previous {"label":"السابق"} /-->
+      <!-- wp:query-pagination-numbers /-->
+      <!-- wp:query-pagination-next {"label":"التالي"} /-->
+      <!-- /wp:query-pagination -->
+      
+      <!-- wp:query-no-results -->
+      <!-- wp:group {"className":"ps-no-results","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"constrained"}} -->
+      <div class="wp-block-group ps-no-results" style="padding-top:3rem;padding-bottom:3rem">
+        
+        <!-- wp:heading {"textAlign":"center","level":3,"style":{"spacing":{"margin":{"bottom":"1rem"}}}} -->
+        <h3 class="wp-block-heading has-text-align-center" style="margin-bottom:1rem">📭 لا توجد مقالات في هذا التصنيف حالياً</h3>
+        <!-- /wp:heading -->
+        
+        <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"bottom":"2rem"}}}} -->
+        <p class="has-text-align-center" style="margin-bottom:2rem">يرجى المحاولة لاحقاً أو تصفح الأقسام الأخرى</p>
+        <!-- /wp:paragraph -->
+        
+        <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+        <div class="wp-block-buttons">
+          <!-- wp:button {"className":"is-style-ps-primary-button"} -->
+          <div class="wp-block-button is-style-ps-primary-button"><a class="wp-block-button__link wp-element-button" href="/">العودة للرئيسية</a></div>
+          <!-- /wp:button -->
+        </div>
+        <!-- /wp:buttons -->
+        
+      </div>
+      <!-- /wp:group -->
+      <!-- /wp:query-no-results -->
+      
+    </div>
+    <!-- /wp:query -->
+    
+  </div>
+  <!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
