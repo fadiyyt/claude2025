@@ -1,42 +1,0 @@
-<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB"/>
-      <stop offset="100%" style="stop-color:#E0F6FF"/>
-    </linearGradient>
-    <linearGradient id="houseGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#8B4513"/>
-      <stop offset="100%" style="stop-color:#D2691E"/>
-    </linearGradient>
-  </defs>
-  
-  <!-- خلفية السماء -->
-  <rect width="400" height="200" fill="url(#skyGradient)"/>
-  
-  <!-- الأرض -->
-  <rect y="200" width="400" height="100" fill="#90EE90"/>
-  
-  <!-- المنزل -->
-  <polygon points="200,80 120,160 280,160" fill="#FF6347"/>
-  <rect x="140" y="160" width="120" height="100" fill="url(#houseGradient)"/>
-  
-  <!-- الباب -->
-  <rect x="180" y="200" width="40" height="60" fill="#8B4513"/>
-  <circle cx="210" cy="230" r="3" fill="#FFD700"/>
-  
-  <!-- النوافذ -->
-  <rect x="150" y="180" width="20" height="20" fill="#87CEEB"/>
-  <rect x="230" y="180" width="20" height="20" fill="#87CEEB"/>
-  
-  <!-- الشمس -->
-  <circle cx="350" cy="50" r="25" fill="#FFD700"/>
-  
-  <!-- السحب -->
-  <ellipse cx="100" cy="40" rx="30" ry="15" fill="white" opacity="0.8"/>
-  <ellipse cx="300" cy="60" rx="25" ry="12" fill="white" opacity="0.8"/>
-  
-  <!-- نص توضيحي -->
-  <text x="200" y="280" text-anchor="middle" font-family="Cairo, Arial" font-size="14" fill="#2563eb">
-    🏠 البيت والمنزل
-  </text>
-</svg>

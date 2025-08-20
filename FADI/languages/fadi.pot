@@ -1,0 +1,269 @@
+# FADI Theme Translation Template
+# Copyright (C) 2025 FADI Theme
+# This file is distributed under the same license as the FADI package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: FADI 1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/fadi\n"
+"POT-Creation-Date: 2025-01-01 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: fadi\n"
+
+#: functions.php:42
+msgid "القائمة الرئيسية"
+msgstr ""
+
+#: functions.php:43
+msgid "قائمة لوحة التحكم"
+msgstr ""
+
+#: functions.php:95
+msgid "خطأ في بيانات تسجيل الدخول"
+msgstr ""
+
+#: functions.php:111
+msgid "خطأ في التحقق الأمني"
+msgstr ""
+
+#: functions.php:136
+msgid "لوحة التحكم"
+msgstr ""
+
+#: functions.php:164
+msgid "إعدادات FADI"
+msgstr ""
+
+#: functions.php:165
+msgid "FADI"
+msgstr ""
+
+#: functions.php:175
+msgid "إعدادات قالب FADI"
+msgstr ""
+
+#: functions.php:178
+msgid "معلومات القالب"
+msgstr ""
+
+#: functions.php:179
+msgid "قالب FADI مخصص للوحة تحكم شخصية لأتمتة وتنظيم المهام اليومية"
+msgstr ""
+
+#: functions.php:180
+msgid "الإصدار:"
+msgstr ""
+
+#: functions.php:181
+msgid "حالة القالب:"
+msgstr ""
+
+#: functions.php:181
+msgid "نشط ويعمل بشكل صحيح"
+msgstr ""
+
+#: inc/theme-admin-panel.php:45
+msgid "نظام FADI"
+msgstr ""
+
+#: inc/theme-admin-panel.php:53
+msgid "عروض الأسعار"
+msgstr ""
+
+#: inc/theme-admin-panel.php:61
+msgid "إدارة المشتريات"
+msgstr ""
+
+#: inc/theme-admin-panel.php:69
+msgid "شؤون الموظفين"
+msgstr ""
+
+#: inc/theme-admin-panel.php:77
+msgid "المناقصات"
+msgstr ""
+
+#: inc/theme-admin-panel.php:85
+msgid "الوثائق الحكومية"
+msgstr ""
+
+#: inc/theme-admin-panel.php:93
+msgid "إعدادات النظام"
+msgstr ""
+
+#: inc/theme-admin-panel.php:94
+msgid "الإعدادات"
+msgstr ""
+
+#: inc/theme-admin-panel.php:104
+msgid "لوحة تحكم نظام FADI"
+msgstr ""
+
+#: inc/theme-admin-panel.php:139
+msgid "الأنشطة الأخيرة"
+msgstr ""
+
+#: inc/theme-admin-panel.php:162
+msgid "لا توجد أنشطة حديثة"
+msgstr ""
+
+#: inc/theme-admin-panel.php:168
+msgid "حالة النظام"
+msgstr ""
+
+#: inc/theme-admin-panel.php:172
+msgid "إصدار ووردبريس:"
+msgstr ""
+
+#: inc/theme-admin-panel.php:176
+msgid "إصدار PHP:"
+msgstr ""
+
+#: inc/theme-admin-panel.php:180
+msgid "إصدار القالب:"
+msgstr ""
+
+#: inc/theme-admin-panel.php:184
+msgid "حالة النظام:"
+msgstr ""
+
+#: inc/theme-admin-panel.php:185
+msgid "نشط"
+msgstr ""
+
+#: inc/post-types.php:25
+msgid "عروض الأسعار"
+msgstr ""
+
+#: inc/post-types.php:26
+msgid "عرض سعر"
+msgstr ""
+
+#: inc/post-types.php:27
+msgid "إضافة عرض جديد"
+msgstr ""
+
+#: inc/post-types.php:28
+msgid "إضافة عرض سعر جديد"
+msgstr ""
+
+#: inc/post-types.php:29
+msgid "تعديل عرض السعر"
+msgstr ""
+
+#: inc/post-types.php:30
+msgid "عرض سعر جديد"
+msgstr ""
+
+#: inc/post-types.php:31
+msgid "عرض السعر"
+msgstr ""
+
+#: inc/post-types.php:32
+msgid "البحث في عروض الأسعار"
+msgstr ""
+
+#: inc/post-types.php:33
+msgid "لا توجد عروض أسعار"
+msgstr ""
+
+#: inc/post-types.php:34
+msgid "لا توجد عروض أسعار في المهملات"
+msgstr ""
+
+#: inc/post-types.php:35
+msgid "جميع عروض الأسعار"
+msgstr ""
+
+#: install.php:67
+msgid "شركة FADI"
+msgstr ""
+
+#: install.php:68
+msgid "الرياض، المملكة العربية السعودية"
+msgstr ""
+
+#: shortcodes.php:45
+msgid "يجب تسجيل الدخول لمشاهدة الإحصائيات"
+msgstr ""
+
+#: shortcodes.php:67
+msgid "عروض الأسعار"
+msgstr ""
+
+#: shortcodes.php:79
+msgid "الموردين"
+msgstr ""
+
+#: shortcodes.php:91
+msgid "الموظفين"
+msgstr ""
+
+#: shortcodes.php:103
+msgid "المناقصات"
+msgstr ""
+
+#: shortcodes.php:114
+msgid "إيرادات الشهر (ر.س)"
+msgstr ""
+
+#: uninstall.php:158
+msgid "تحذير:"
+msgstr ""
+
+#: uninstall.php:158
+msgid "هذا الإجراء سيحذف جميع بيانات القالب نهائياً ولا يمكن التراجع عنه!"
+msgstr ""
+
+#: uninstall.php:162
+msgid "ما الذي سيتم حذفه؟"
+msgstr ""
+
+#: uninstall.php:164
+msgid "جميع عروض الأسعار والموردين والموظفين"
+msgstr ""
+
+#: uninstall.php:165
+msgid "جميع المناقصات والوثائق والمهام"
+msgstr ""
+
+#: uninstall.php:166
+msgid "جميع الإعدادات والتخصيصات"
+msgstr ""
+
+#: uninstall.php:167
+msgid "جميع النسخ الاحتياطية والتقارير"
+msgstr ""
+
+#: uninstall.php:168
+msgid "جميع الملفات المرفوعة المرتبطة بالقالب"
+msgstr ""
+
+#: uninstall.php:169
+msgid "جداول قاعدة البيانات المخصصة"
+msgstr ""
+
+#: uninstall.php:175
+msgid "تأكيد الإلغاء"
+msgstr ""
+
+#: uninstall.php:178
+msgid "أؤكد أنني أريد حذف جميع بيانات قالب FADI نهائياً"
+msgstr ""
+
+#: uninstall.php:182
+msgid "إلغاء التثبيت نهائياً"
+msgstr ""
+
+#: uninstall.php:183
+msgid "إلغاء"
+msgstr ""

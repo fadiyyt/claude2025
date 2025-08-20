@@ -1,0 +1,180 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)">
+    
+    <!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+    <div class="wp-block-group alignwide">
+        
+        <!-- عنوان الصفحة -->
+        <!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"default"}} -->
+        <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)">
+            
+            <!-- wp:post-title {"level":1,"style":{"typography":{"fontSize":"2.5rem","fontWeight":"700"},"color":{"text":"#333"},"spacing":{"margin":{"bottom":"var:preset|spacing|20"}}}} /-->
+            
+            <!-- معلومات الصفحة -->
+            <!-- wp:group {"style":{"spacing":{"padding":{"all":"var:preset|spacing|20"}},"color":{"background":"#f8f9fa"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+            <div class="wp-block-group has-background" style="background-color:#f8f9fa;padding:var(--wp--preset--spacing--20)">
+                
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"},"color":{"text":"#666"}}} -->
+                <p style="color:#666;font-size:0.9rem">📅 آخر تحديث: <?php echo get_the_modified_date('Y-m-d H:i'); ?></p>
+                <!-- /wp:paragraph -->
+                
+                <?php if (is_user_logged_in()): ?>
+                <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"},"color":{"text":"#666"}}} -->
+                <p style="color:#666;font-size:0.9rem">✏️ <a href="<?php echo get_edit_post_link(); ?>">تعديل الصفحة</a></p>
+                <!-- /wp:paragraph -->
+                <?php endif; ?>
+                
+            </div>
+            <!-- /wp:group -->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <!-- محتوى الصفحة -->
+        <!-- wp:group {"style":{"spacing":{"padding":{"all":"var:preset|spacing|30"}},"color":{"background":"#fff"}},"className":"page-content","layout":{"type":"default"}} -->
+        <div class="wp-block-group page-content has-background" style="background-color:#fff;padding:var(--wp--preset--spacing--30)">
+            
+            <!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <!-- أزرار التنقل للصفحات الخاصة -->
+        <?php if (is_user_logged_in()): ?>
+        
+        <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"}}},"layout":{"type":"default"}} -->
+        <div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--40)">
+            
+            <?php 
+            global $post;
+            $page_slug = $post->post_name;
+            
+            // التحقق من نوع الصفحة وإضافة أزرار مناسبة
+            switch($page_slug) {
+                case 'dashboard':
+                    echo '<!-- أزرار لوحة التحكم -->';
+                    break;
+                case 'quotes':
+                    echo '<!-- أزرار عروض الأسعار -->';
+                    break;
+                case 'purchases':
+                    echo '<!-- أزرار المشتريات -->';
+                    break;
+                case 'employees':
+                    echo '<!-- أزرار الموظفين -->';
+                    break;
+                case 'tenders':
+                    echo '<!-- أزرار المناقصات -->';
+                    break;
+                case 'documents':
+                    echo '<!-- أزرار الوثائق -->';
+                    break;
+            }
+            ?>
+            
+            <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+            <div class="wp-block-buttons">
+                
+                <!-- wp:button {"backgroundColor":"primary","textColor":"white","style":{"border":{"radius":"5px"}}} -->
+                <div class="wp-block-button">
+                    <a class="wp-block-button__link has-white-color has-primary-background-color has-text-color has-background wp-element-button" href="/dashboard/" style="border-radius:5px">🏠 العودة للوحة التحكم</a>
+                </div>
+                <!-- /wp:button -->
+                
+                <?php if ($page_slug !== 'dashboard'): ?>
+                <!-- wp:button {"backgroundColor":"secondary","textColor":"white","style":{"border":{"radius":"5px"}}} -->
+                <div class="wp-block-button">
+                    <a class="wp-block-button__link has-white-color has-secondary-background-color has-text-color has-background wp-element-button" href="#" onclick="window.print(); return false;" style="border-radius:5px">🖨️ طباعة</a>
+                </div>
+                <!-- /wp:button -->
+                <?php endif; ?>
+                
+            </div>
+            <!-- /wp:buttons -->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <?php endif; ?>
+        
+        <!-- مساحة للإضافات والملاحظات -->
+        <?php if (is_user_logged_in() && current_user_can('manage_options')): ?>
+        
+        <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"},"padding":{"all":"var:preset|spacing|20"}},"color":{"background":"#fffbeb","text":"#92400e"},"border":{"width":"1px","color":"#fbbf24"}},"layout":{"type":"default"}} -->
+        <div class="wp-block-group has-text-color has-background" style="border-color:#fbbf24;border-width:1px;color:#92400e;background-color:#fffbeb;margin-top:var(--wp--preset--spacing--40);padding:var(--wp--preset--spacing--20)">
+            
+            <!-- wp:heading {"level":4,"style":{"color":{"text":"#92400e"},"typography":{"fontSize":"1rem","fontWeight":"600"}}} -->
+            <h4 style="color:#92400e;font-size:1rem;font-weight:600">💡 ملاحظات للمدير</h4>
+            <!-- /wp:heading -->
+            
+            <!-- wp:paragraph {"style":{"typography":{"fontSize":"0.9rem"}}} -->
+            <p style="font-size:0.9rem">يمكنك تخصيص هذه الصفحة وإضافة المزيد من الوظائف من خلال محرر الكتل أو تعديل الملفات مباشرة.</p>
+            <!-- /wp:paragraph -->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <?php endif; ?>
+        
+    </div>
+    <!-- /wp:group -->
+    
+</main>
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+
+<!-- تحسينات CSS إضافية للصفحات -->
+<style>
+.page-content {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.page-content h1, .page-content h2, .page-content h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.page-content p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.page-content a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.page-content a:hover {
+    text-decoration: underline;
+}
+
+/* تحسين الطباعة */
+@media print {
+    .wp-block-buttons,
+    .page-admin-info {
+        display: none !important;
+    }
+    
+    .page-content {
+        box-shadow: none;
+        border: none;
+    }
+}
+
+/* تحسين للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .wp-block-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .wp-block-button {
+        width: 100%;
+        max-width: 250px;
+        margin-bottom: 10px;
+    }
+}
+</style>

@@ -1,0 +1,178 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group main-content" style="padding-top:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50)">
+    
+    <!-- wp:query {"queryId":0,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+    <div class="wp-block-query">
+        
+        <!-- wp:group {"layout":{"type":"constrained"}} -->
+        <div class="wp-block-group">
+            
+            <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"2.5rem","fontWeight":"700"},"color":{"text":"#333"},"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->
+            <h1 class="wp-block-heading has-text-align-center" style="color:#333;margin-bottom:var(--wp--preset--spacing--50);font-size:2.5rem;font-weight:700">مرحباً بك في نظام FADI</h1>
+            <!-- /wp:heading -->
+            
+            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.2rem"},"color":{"text":"#666"},"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->
+            <p class="has-text-align-center" style="color:#666;margin-bottom:var(--wp--preset--spacing--50);font-size:1.2rem">نظام إدارة شخصي متطور لأتمتة وتنظيم المهام اليومية</p>
+            <!-- /wp:paragraph -->
+            
+        </div>
+        <!-- /wp:group -->
+        
+        <!-- التحقق من تسجيل الدخول -->
+        <!-- wp:group {"style":{"spacing":{"padding":{"all":"var:preset|spacing|30"}}},"backgroundColor":"white","className":"login-section"} -->
+        <div class="wp-block-group login-section has-white-background-color has-background" style="padding:var(--wp--preset--spacing--30)">
+            
+            <?php if (!is_user_logged_in()): ?>
+            
+            <!-- نموذج تسجيل الدخول -->
+            <!-- wp:group {"style":{"spacing":{"padding":{"all":"var:preset|spacing|40"},"margin":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}},"border":{"radius":"10px"}},"backgroundColor":"white","className":"login-form","layout":{"type":"constrained","contentSize":"400px"}} -->
+            <div class="wp-block-group login-form has-white-background-color has-background" style="border-radius:10px;margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30);padding:var(--wp--preset--spacing--40)">
+                
+                <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|30"}}}} -->
+                <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:var(--wp--preset--spacing--30)">تسجيل الدخول</h2>
+                <!-- /wp:heading -->
+                
+                <!-- نموذج HTML مخصص -->
+                <form method="post" action="">
+                    <?php wp_nonce_field('fadi_login_nonce', 'login_nonce'); ?>
+                    
+                    <div class="form-group">
+                        <label for="username">اسم المستخدم:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">كلمة المرور:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" name="fadi_login" class="btn-login">دخول</button>
+                </form>
+                
+                <?php if (get_transient('fadi_login_error')): ?>
+                    <div class="alert alert-error">
+                        <?php echo esc_html(get_transient('fadi_login_error')); ?>
+                        <?php delete_transient('fadi_login_error'); ?>
+                    </div>
+                <?php endif; ?>
+                
+            </div>
+            <!-- /wp:group -->
+            
+            <?php else: ?>
+            
+            <!-- لوحة التحكم للمستخدم المسجل -->
+            <!-- wp:group {"className":"dashboard"} -->
+            <div class="wp-block-group dashboard">
+                
+                <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|40"}}}} -->
+                <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:var(--wp--preset--spacing--40)">لوحة التحكم الرئيسية</h2>
+                <!-- /wp:heading -->
+                
+                <!-- wp:group {"className":"dashboard-grid"} -->
+                <div class="wp-block-group dashboard-grid">
+                    
+                    <!-- بطاقة عروض الأسعار -->
+                    <!-- wp:group {"className":"dashboard-card"} -->
+                    <div class="wp-block-group dashboard-card">
+                        <div class="card-icon">📋</div>
+                        <h3>عروض الأسعار والعقود</h3>
+                        <p>إنشاء وإدارة عروض الأسعار مع حساب تلقائي للمبالغ والضرائب</p>
+                        <a href="/quotes/" class="btn">إدارة العروض</a>
+                    </div>
+                    <!-- /wp:group -->
+                    
+                    <!-- بطاقة إدارة المشتريات -->
+                    <!-- wp:group {"className":"dashboard-card"} -->
+                    <div class="wp-block-group dashboard-card">
+                        <div class="card-icon">🛒</div>
+                        <h3>إدارة المشتريات</h3>
+                        <p>قائمة الموردين وإدارة الأسعار والمنتجات</p>
+                        <a href="/purchases/" class="btn">إدارة المشتريات</a>
+                    </div>
+                    <!-- /wp:group -->
+                    
+                    <!-- بطاقة شؤون الموظفين -->
+                    <!-- wp:group {"className":"dashboard-card"} -->
+                    <div class="wp-block-group dashboard-card">
+                        <div class="card-icon">👥</div>
+                        <h3>شؤون الموظفين</h3>
+                        <p>ملفات الموظفين والعهد ومتابعة المهام</p>
+                        <a href="/employees/" class="btn">إدارة الموظفين</a>
+                    </div>
+                    <!-- /wp:group -->
+                    
+                    <!-- بطاقة منصة اعتماد -->
+                    <!-- wp:group {"className":"dashboard-card"} -->
+                    <div class="wp-block-group dashboard-card">
+                        <div class="card-icon">🏢</div>
+                        <h3>منصة اعتماد والمناقصات</h3>
+                        <p>تسجيل ومتابعة المناقصات مع نظام التنبيهات</p>
+                        <a href="/tenders/" class="btn">إدارة المناقصات</a>
+                    </div>
+                    <!-- /wp:group -->
+                    
+                    <!-- بطاقة الوثائق -->
+                    <!-- wp:group {"className":"dashboard-card"} -->
+                    <div class="wp-block-group dashboard-card">
+                        <div class="card-icon">📄</div>
+                        <h3>الوثائق الحكومية</h3>
+                        <p>تخزين الوثائق الرسمية مع تنبيهات التجديد</p>
+                        <a href="/documents/" class="btn">إدارة الوثائق</a>
+                    </div>
+                    <!-- /wp:group -->
+                    
+                </div>
+                <!-- /wp:group -->
+                
+                <!-- إحصائيات سريعة -->
+                <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|50"},"padding":{"all":"var:preset|spacing|30"}}},"backgroundColor":"white","className":"quick-stats"} -->
+                <div class="wp-block-group quick-stats has-white-background-color has-background" style="margin-top:var(--wp--preset--spacing--50);padding:var(--wp--preset--spacing--30)">
+                    
+                    <!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|20"}}}} -->
+                    <h3 class="wp-block-heading" style="margin-bottom:var(--wp--preset--spacing--20)">إحصائيات سريعة</h3>
+                    <!-- /wp:heading -->
+                    
+                    <!-- wp:columns -->
+                    <div class="wp-block-columns">
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <p><strong>عروض الأسعار هذا الشهر:</strong> <?php echo wp_count_posts('quote')->publish; ?></p>
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <p><strong>الموردين المسجلين:</strong> <?php echo wp_count_posts('supplier')->publish; ?></p>
+                        </div>
+                        <!-- /wp:column -->
+                        
+                        <!-- wp:column -->
+                        <div class="wp-block-column">
+                            <p><strong>آخر تحديث:</strong> <?php echo date('Y-m-d H:i'); ?></p>
+                        </div>
+                        <!-- /wp:column -->
+                        
+                    </div>
+                    <!-- /wp:columns -->
+                    
+                </div>
+                <!-- /wp:group -->
+                
+            </div>
+            <!-- /wp:group -->
+            
+            <?php endif; ?>
+            
+        </div>
+        <!-- /wp:group -->
+        
+    </div>
+    <!-- /wp:query -->
+    
+</main>
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
