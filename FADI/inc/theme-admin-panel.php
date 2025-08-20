@@ -1,6 +1,6 @@
 <?php
 /**
- * لوحة إدارة القالب المخصصة
+ * لوحة الإدارة المخصصة لقالب FADI
  * 
  * @package FADI
  * @version 1.0
@@ -12,484 +12,394 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * إضافة صفحات الإدارة المخصصة
+ * فئة لوحة الإدارة
  */
-function fadi_admin_menu_setup() {
-    // الصفحة الرئيسية
-    add_menu_page(
-        __('نظام FADI', 'fadi'),
-        __('نظام FADI', 'fadi'),
-        'manage_options',
-        'fadi-dashboard',
-        'fadi_admin_dashboard_page',
-        'dashicons-admin-multisite',
-        3
-    );
+class FADI_Admin_Panel {
     
-    // عروض الأسعار
-    add_submenu_page(
-        'fadi-dashboard',
-        __('عروض الأسعار', 'fadi'),
-        __('عروض الأسعار', 'fadi'),
-        'manage_options',
-        'fadi-quotes',
-        'fadi_quotes_page'
-    );
+    public function __construct() {
+        add_action('admin_menu', array($this, 'add_admin_menu'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        add_action('wp_ajax_fadi_admin_action', array($this, 'handle_admin_action'));
+    }
     
-    // إدارة المشتريات
-    add_submenu_page(
-        'fadi-dashboard',
-        __('إدارة المشتريات', 'fadi'),
-        __('إدارة المشتريات', 'fadi'),
-        'manage_options',
-        'fadi-purchases',
-        'fadi_purchases_page'
-    );
-    
-    // شؤون الموظفين
-    add_submenu_page(
-        'fadi-dashboard',
-        __('شؤون الموظفين', 'fadi'),
-        __('شؤون الموظفين', 'fadi'),
-        'manage_options',
-        'fadi-employees',
-        'fadi_employees_page'
-    );
-    
-    // المناقصات
-    add_submenu_page(
-        'fadi-dashboard',
-        __('المناقصات', 'fadi'),
-        __('المناقصات', 'fadi'),
-        'manage_options',
-        'fadi-tenders',
-        'fadi_tenders_page'
-    );
-    
-    // الوثائق
-    add_submenu_page(
-        'fadi-dashboard',
-        __('الوثائق الحكومية', 'fadi'),
-        __('الوثائق الحكومية', 'fadi'),
-        'manage_options',
-        'fadi-documents',
-        'fadi_documents_page'
-    );
-    
-    // الإعدادات
-    add_submenu_page(
-        'fadi-dashboard',
-        __('إعدادات النظام', 'fadi'),
-        __('الإعدادات', 'fadi'),
-        'manage_options',
-        'fadi-settings',
-        'fadi_settings_page'
-    );
-}
-add_action('admin_menu', 'fadi_admin_menu_setup');
-
-/**
- * لوحة التحكم الرئيسية
- */
-function fadi_admin_dashboard_page() {
-    ?>
-    <div class="wrap fadi-admin-page">
-        <h1><?php _e('لوحة تحكم نظام FADI', 'fadi'); ?></h1>
+    /**
+     * إضافة قائمة الإدارة
+     */
+    public function add_admin_menu() {
+        add_menu_page(
+            __('نظام FADI', 'fadi'),
+            __('نظام FADI', 'fadi'),
+            'manage_options',
+            'fadi-dashboard',
+            array($this, 'dashboard_page'),
+            'dashicons-dashboard',
+            2
+        );
         
-        <div class="fadi-dashboard-grid">
-            <!-- بطاقات سريعة -->
-            <div class="fadi-stats-grid">
-                <div class="fadi-stat-card">
-                    <div class="fadi-stat-icon">📋</div>
-                    <div class="fadi-stat-content">
-                        <h3><?php echo wp_count_posts('quote')->publish; ?></h3>
-                        <p><?php _e('عروض الأسعار', 'fadi'); ?></p>
-                        <a href="?page=fadi-quotes" class="button button-primary"><?php _e('إدارة', 'fadi'); ?></a>
-                    </div>
-                </div>
-                
-                <div class="fadi-stat-card">
-                    <div class="fadi-stat-icon">🛒</div>
-                    <div class="fadi-stat-content">
-                        <h3><?php echo wp_count_posts('supplier')->publish; ?></h3>
-                        <p><?php _e('الموردين', 'fadi'); ?></p>
-                        <a href="?page=fadi-purchases" class="button button-primary"><?php _e('إدارة', 'fadi'); ?></a>
-                    </div>
-                </div>
-                
-                <div class="fadi-stat-card">
-                    <div class="fadi-stat-icon">👥</div>
-                    <div class="fadi-stat-content">
-                        <h3><?php echo wp_count_posts('employee')->publish; ?></h3>
-                        <p><?php _e('الموظفين', 'fadi'); ?></p>
-                        <a href="?page=fadi-employees" class="button button-primary"><?php _e('إدارة', 'fadi'); ?></a>
-                    </div>
-                </div>
-                
-                <div class="fadi-stat-card">
-                    <div class="fadi-stat-icon">🏢</div>
-                    <div class="fadi-stat-content">
-                        <h3><?php echo wp_count_posts('tender')->publish; ?></h3>
-                        <p><?php _e('المناقصات', 'fadi'); ?></p>
-                        <a href="?page=fadi-tenders" class="button button-primary"><?php _e('إدارة', 'fadi'); ?></a>
-                    </div>
-                </div>
-            </div>
+        add_submenu_page(
+            'fadi-dashboard',
+            __('عروض الأسعار', 'fadi'),
+            __('عروض الأسعار', 'fadi'),
+            'manage_options',
+            'fadi-quotes',
+            array($this, 'quotes_page')
+        );
+        
+        add_submenu_page(
+            'fadi-dashboard',
+            __('إدارة المشتريات', 'fadi'),
+            __('إدارة المشتريات', 'fadi'),
+            'manage_options',
+            'fadi-purchases',
+            array($this, 'purchases_page')
+        );
+        
+        add_submenu_page(
+            'fadi-dashboard',
+            __('شؤون الموظفين', 'fadi'),
+            __('شؤون الموظفين', 'fadi'),
+            'manage_options',
+            'fadi-employees',
+            array($this, 'employees_page')
+        );
+        
+        add_submenu_page(
+            'fadi-dashboard',
+            __('المناقصات', 'fadi'),
+            __('المناقصات', 'fadi'),
+            'manage_options',
+            'fadi-tenders',
+            array($this, 'tenders_page')
+        );
+        
+        add_submenu_page(
+            'fadi-dashboard',
+            __('الوثائق الحكومية', 'fadi'),
+            __('الوثائق الحكومية', 'fadi'),
+            'manage_options',
+            'fadi-documents',
+            array($this, 'documents_page')
+        );
+        
+        add_submenu_page(
+            'fadi-dashboard',
+            __('إعدادات النظام', 'fadi'),
+            __('الإعدادات', 'fadi'),
+            'manage_options',
+            'fadi-settings',
+            array($this, 'settings_page')
+        );
+    }
+    
+    /**
+     * صفحة لوحة التحكم الرئيسية
+     */
+    public function dashboard_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('لوحة تحكم نظام FADI', 'fadi'); ?></h1>
             
-            <!-- الأنشطة الأخيرة -->
-            <div class="fadi-recent-activity">
-                <h2><?php _e('الأنشطة الأخيرة', 'fadi'); ?></h2>
-                <div class="fadi-activity-list">
-                    <?php
-                    $recent_posts = get_posts(array(
-                        'numberposts' => 5,
-                        'post_type' => array('quote', 'supplier', 'employee', 'tender'),
-                        'post_status' => 'publish',
-                        'orderby' => 'date',
-                        'order' => 'DESC'
-                    ));
+            <div class="fadi-dashboard-grid">
+                <div class="fadi-stats-row">
+                    <?php $this->render_stats_widgets(); ?>
+                </div>
+                
+                <div class="fadi-content-row">
+                    <div class="fadi-main-content">
+                        <?php $this->render_recent_activities(); ?>
+                    </div>
                     
-                    if ($recent_posts) {
-                        foreach ($recent_posts as $post) {
-                            $icon = array(
-                                'quote' => '📋',
-                                'supplier' => '🛒',
-                                'employee' => '👥',
-                                'tender' => '🏢'
-                            );
-                            echo '<div class="fadi-activity-item">';
-                            echo '<span class="fadi-activity-icon">' . $icon[$post->post_type] . '</span>';
-                            echo '<div class="fadi-activity-content">';
-                            echo '<strong>' . get_the_title($post) . '</strong>';
-                            echo '<span class="fadi-activity-date">' . get_the_date('Y-m-d H:i', $post) . '</span>';
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo '<p>' . __('لا توجد أنشطة حديثة', 'fadi') . '</p>';
-                    }
-                    ?>
-                </div>
-            </div>
-            
-            <!-- حالة النظام -->
-            <div class="fadi-system-status">
-                <h2><?php _e('حالة النظام', 'fadi'); ?></h2>
-                <div class="fadi-status-grid">
-                    <div class="fadi-status-item">
-                        <span class="fadi-status-label"><?php _e('إصدار ووردبريس:', 'fadi'); ?></span>
-                        <span class="fadi-status-value"><?php echo get_bloginfo('version'); ?></span>
-                    </div>
-                    <div class="fadi-status-item">
-                        <span class="fadi-status-label"><?php _e('إصدار PHP:', 'fadi'); ?></span>
-                        <span class="fadi-status-value"><?php echo PHP_VERSION; ?></span>
-                    </div>
-                    <div class="fadi-status-item">
-                        <span class="fadi-status-label"><?php _e('إصدار القالب:', 'fadi'); ?></span>
-                        <span class="fadi-status-value">1.0</span>
-                    </div>
-                    <div class="fadi-status-item">
-                        <span class="fadi-status-label"><?php _e('حالة النظام:', 'fadi'); ?></span>
-                        <span class="fadi-status-value fadi-status-active"><?php _e('نشط', 'fadi'); ?></span>
+                    <div class="fadi-sidebar">
+                        <?php $this->render_system_status(); ?>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <style>
-    .fadi-admin-page {
-        margin: 20px 0;
+        <?php
     }
     
-    .fadi-dashboard-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 20px;
-        margin-top: 20px;
+    /**
+     * عرض ودجات الإحصائيات
+     */
+    private function render_stats_widgets() {
+        $stats = $this->get_dashboard_stats();
+        ?>
+        <div class="fadi-stats-grid">
+            <div class="fadi-stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <h3><?php echo $stats['quotes_count']; ?></h3>
+                    <p>عروض الأسعار</p>
+                </div>
+            </div>
+            
+            <div class="fadi-stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-content">
+                    <h3><?php echo $stats['employees_count']; ?></h3>
+                    <p>الموظفين</p>
+                </div>
+            </div>
+            
+            <div class="fadi-stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                    <h3><?php echo $stats['tenders_count']; ?></h3>
+                    <p>المناقصات</p>
+                </div>
+            </div>
+            
+            <div class="fadi-stat-card">
+                <div class="stat-icon">📄</div>
+                <div class="stat-content">
+                    <h3><?php echo $stats['documents_count']; ?></h3>
+                    <p>الوثائق</p>
+                </div>
+            </div>
+        </div>
+        <?php
     }
     
-    .fadi-stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 20px;
+    /**
+     * عرض الأنشطة الأخيرة
+     */
+    private function render_recent_activities() {
+        ?>
+        <div class="fadi-widget">
+            <h3><?php _e('الأنشطة الأخيرة', 'fadi'); ?></h3>
+            <div class="fadi-activities">
+                <?php
+                $activities = $this->get_recent_activities();
+                if (!empty($activities) && is_array($activities)) {
+                    foreach ($activities as $activity) {
+                        // التأكد من وجود جميع الخصائص المطلوبة
+                        if (isset($activity->action) && isset($activity->description) && isset($activity->time)) {
+                            ?>
+                            <div class="activity-item">
+                                <div class="activity-icon"><?php echo $this->get_activity_icon($activity->action); ?></div>
+                                <div class="activity-content">
+                                    <p><?php echo esc_html($activity->description); ?></p>
+                                    <small><?php echo human_time_diff($activity->time, current_time('timestamp')) . ' ' . __('منذ', 'fadi'); ?></small>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                } else {
+                    ?>
+                    <div class="no-activities">
+                        <p><?php _e('لا توجد أنشطة حديثة', 'fadi'); ?></p>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <?php
     }
     
-    .fadi-stat-card {
-        background: #fff;
-        border: 1px solid #c3c4c7;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        transition: transform 0.2s ease;
+    /**
+     * عرض حالة النظام
+     */
+    private function render_system_status() {
+        ?>
+        <div class="fadi-widget">
+            <h3><?php _e('حالة النظام', 'fadi'); ?></h3>
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="label"><?php _e('إصدار ووردبريس:', 'fadi'); ?></span>
+                    <span class="value"><?php echo get_bloginfo('version'); ?></span>
+                </div>
+                
+                <div class="status-item">
+                    <span class="label"><?php _e('إصدار PHP:', 'fadi'); ?></span>
+                    <span class="value"><?php echo PHP_VERSION; ?></span>
+                </div>
+                
+                <div class="status-item">
+                    <span class="label"><?php _e('إصدار القالب:', 'fadi'); ?></span>
+                    <span class="value">1.0</span>
+                </div>
+                
+                <div class="status-item">
+                    <span class="label"><?php _e('حالة النظام:', 'fadi'); ?></span>
+                    <span class="value status-active"><?php _e('نشط', 'fadi'); ?></span>
+                </div>
+            </div>
+        </div>
+        <?php
     }
     
-    .fadi-stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    /**
+     * الحصول على إحصائيات لوحة التحكم
+     */
+    private function get_dashboard_stats() {
+        return array(
+            'quotes_count' => $this->get_count('fadi_quotes'),
+            'employees_count' => $this->get_count('fadi_employees'),
+            'tenders_count' => $this->get_count('fadi_tenders'),
+            'documents_count' => $this->get_count('fadi_documents')
+        );
     }
     
-    .fadi-stat-icon {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+    /**
+     * الحصول على عدد العناصر
+     */
+    private function get_count($post_type) {
+        $count = wp_count_posts($post_type);
+        // التأكد من وجود الخاصية publish قبل الوصول إليها
+        return isset($count->publish) ? $count->publish : 0;
     }
     
-    .fadi-stat-content h3 {
-        font-size: 2rem;
-        margin: 10px 0 5px;
-        color: #1d2327;
+    /**
+     * الحصول على الأنشطة الأخيرة
+     */
+    private function get_recent_activities() {
+        $activities = get_option('fadi_recent_activities', array());
+        
+        // إذا لم توجد أنشطة، إنشاء بعض الأنشطة التجريبية
+        if (empty($activities)) {
+            $activities = array(
+                (object) array(
+                    'action' => 'login',
+                    'description' => 'تم تسجيل الدخول إلى النظام',
+                    'time' => current_time('timestamp') - 3600
+                ),
+                (object) array(
+                    'action' => 'create',
+                    'description' => 'تم إنشاء عرض سعر جديد',
+                    'time' => current_time('timestamp') - 7200
+                )
+            );
+        }
+        
+        return $activities;
     }
     
-    .fadi-stat-content p {
-        color: #646970;
-        margin-bottom: 15px;
+    /**
+     * الحصول على أيقونة النشاط
+     */
+    private function get_activity_icon($action) {
+        $icons = array(
+            'login' => '🔐',
+            'create' => '➕',
+            'update' => '✏️',
+            'delete' => '🗑️',
+            'view' => '👁️'
+        );
+        
+        return isset($icons[$action]) ? $icons[$action] : '📝';
     }
     
-    .fadi-recent-activity,
-    .fadi-system-status {
-        background: #fff;
-        border: 1px solid #c3c4c7;
-        border-radius: 8px;
-        padding: 20px;
+    /**
+     * صفحة عروض الأسعار
+     */
+    public function quotes_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إدارة عروض الأسعار', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - قسم إدارة عروض الأسعار', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-list {
-        max-height: 300px;
-        overflow-y: auto;
+    /**
+     * صفحة المشتريات
+     */
+    public function purchases_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إدارة المشتريات', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - قسم إدارة المشتريات', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-item {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #f0f0f1;
+    /**
+     * صفحة الموظفين
+     */
+    public function employees_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إدارة الموظفين', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - قسم إدارة الموظفين', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-item:last-child {
-        border-bottom: none;
+    /**
+     * صفحة المناقصات
+     */
+    public function tenders_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إدارة المناقصات', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - قسم إدارة المناقصات', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-icon {
-        font-size: 1.5rem;
-        margin-left: 15px;
+    /**
+     * صفحة الوثائق
+     */
+    public function documents_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إدارة الوثائق الحكومية', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - قسم إدارة الوثائق', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-content {
-        flex: 1;
+    /**
+     * صفحة الإعدادات
+     */
+    public function settings_page() {
+        ?>
+        <div class="wrap fadi-admin">
+            <h1><?php _e('إعدادات النظام', 'fadi'); ?></h1>
+            <p><?php _e('قريباً - صفحة الإعدادات', 'fadi'); ?></p>
+        </div>
+        <?php
     }
     
-    .fadi-activity-date {
-        display: block;
-        font-size: 0.9rem;
-        color: #646970;
-    }
-    
-    .fadi-status-grid {
-        display: grid;
-        gap: 10px;
-    }
-    
-    .fadi-status-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #f0f0f1;
-    }
-    
-    .fadi-status-item:last-child {
-        border-bottom: none;
-    }
-    
-    .fadi-status-label {
-        font-weight: 600;
-        color: #1d2327;
-    }
-    
-    .fadi-status-value {
-        color: #646970;
-    }
-    
-    .fadi-status-active {
-        color: #00a32a !important;
-        font-weight: 600;
-    }
-    
-    @media (max-width: 1024px) {
-        .fadi-dashboard-grid {
-            grid-template-columns: 1fr;
+    /**
+     * تحميل ملفات الإدارة
+     */
+    public function enqueue_admin_scripts($hook) {
+        if (strpos($hook, 'fadi') !== false) {
+            wp_enqueue_style('fadi-admin', get_template_directory_uri() . '/src/css/admin.css', array(), '1.0');
+            wp_enqueue_script('fadi-admin', get_template_directory_uri() . '/src/js/admin.js', array('jquery'), '1.0', true);
+            
+            wp_localize_script('fadi-admin', 'fadi_admin', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('fadi_admin_nonce')
+            ));
         }
     }
-    </style>
-    <?php
-}
-
-/**
- * صفحة عروض الأسعار
- */
-function fadi_quotes_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('إدارة عروض الأسعار', 'fadi'); ?></h1>
-        
-        <div class="fadi-page-actions">
-            <a href="#" class="button button-primary" onclick="fadi_create_new_quote()"><?php _e('إنشاء عرض جديد', 'fadi'); ?></a>
-            <a href="#" class="button"><?php _e('تصدير البيانات', 'fadi'); ?></a>
-        </div>
-        
-        <div class="fadi-quotes-list">
-            <h2><?php _e('عروض الأسعار الحالية', 'fadi'); ?></h2>
-            <!-- سيتم إضافة قائمة العروض هنا -->
-            <p><?php _e('سيتم تطوير هذا القسم في الإصدارات القادمة لعرض وإدارة عروض الأسعار.', 'fadi'); ?></p>
-        </div>
-    </div>
     
-    <script>
-    function fadi_create_new_quote() {
-        alert('سيتم فتح نموذج إنشاء عرض سعر جديد');
-        // هنا سيتم إضافة وظيفة إنشاء عرض سعر جديد
-    }
-    </script>
-    <?php
-}
-
-/**
- * صفحة إدارة المشتريات
- */
-function fadi_purchases_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('إدارة المشتريات', 'fadi'); ?></h1>
-        <p><?php _e('إدارة الموردين والمنتجات وأسعارها', 'fadi'); ?></p>
-        <!-- محتوى الصفحة سيتم تطويره لاحقاً -->
-    </div>
-    <?php
-}
-
-/**
- * صفحة شؤون الموظفين
- */
-function fadi_employees_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('شؤون الموظفين', 'fadi'); ?></h1>
-        <p><?php _e('إدارة ملفات الموظفين والعهد والمهام', 'fadi'); ?></p>
-        <!-- محتوى الصفحة سيتم تطويره لاحقاً -->
-    </div>
-    <?php
-}
-
-/**
- * صفحة المناقصات
- */
-function fadi_tenders_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('إدارة المناقصات', 'fadi'); ?></h1>
-        <p><?php _e('تسجيل ومتابعة المناقصات مع نظام التنبيهات', 'fadi'); ?></p>
-        <!-- محتوى الصفحة سيتم تطويره لاحقاً -->
-    </div>
-    <?php
-}
-
-/**
- * صفحة الوثائق
- */
-function fadi_documents_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('الوثائق الحكومية', 'fadi'); ?></h1>
-        <p><?php _e('تخزين وإدارة الوثائق الرسمية مع تنبيهات التجديد', 'fadi'); ?></p>
-        <!-- محتوى الصفحة سيتم تطويره لاحقاً -->
-    </div>
-    <?php
-}
-
-/**
- * صفحة الإعدادات
- */
-function fadi_settings_page() {
-    ?>
-    <div class="wrap">
-        <h1><?php _e('إعدادات نظام FADI', 'fadi'); ?></h1>
+    /**
+     * معالج الإجراءات
+     */
+    public function handle_admin_action() {
+        check_ajax_referer('fadi_admin_nonce', 'nonce');
         
-        <form method="post" action="options.php">
-            <?php
-            settings_fields('fadi_settings');
-            do_settings_sections('fadi_settings');
-            ?>
-            
-            <table class="form-table">
-                <tr>
-                    <th scope="row"><?php _e('اسم الشركة', 'fadi'); ?></th>
-                    <td>
-                        <input type="text" name="fadi_company_name" value="<?php echo esc_attr(get_option('fadi_company_name')); ?>" class="regular-text" />
-                        <p class="description"><?php _e('اسم الشركة الذي سيظهر في عروض الأسعار', 'fadi'); ?></p>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row"><?php _e('عنوان الشركة', 'fadi'); ?></th>
-                    <td>
-                        <textarea name="fadi_company_address" class="large-text" rows="3"><?php echo esc_textarea(get_option('fadi_company_address')); ?></textarea>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row"><?php _e('رقم الهاتف', 'fadi'); ?></th>
-                    <td>
-                        <input type="text" name="fadi_company_phone" value="<?php echo esc_attr(get_option('fadi_company_phone')); ?>" class="regular-text" />
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row"><?php _e('البريد الإلكتروني', 'fadi'); ?></th>
-                    <td>
-                        <input type="email" name="fadi_company_email" value="<?php echo esc_attr(get_option('fadi_company_email')); ?>" class="regular-text" />
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row"><?php _e('نسبة الضريبة المضافة (%)', 'fadi'); ?></th>
-                    <td>
-                        <input type="number" name="fadi_vat_rate" value="<?php echo esc_attr(get_option('fadi_vat_rate', '15')); ?>" min="0" max="100" step="0.01" class="small-text" />
-                        <p class="description"><?php _e('النسبة الافتراضية للضريبة المضافة', 'fadi'); ?></p>
-                    </td>
-                </tr>
-            </table>
-            
-            <?php submit_button(); ?>
-        </form>
-    </div>
-    <?php
+        if (!current_user_can('manage_options')) {
+            wp_die();
+        }
+        
+        $action = sanitize_text_field($_POST['action_type']);
+        $result = array('success' => false);
+        
+        switch ($action) {
+            case 'test_connection':
+                $result = array('success' => true, 'message' => 'الاتصال يعمل بشكل صحيح');
+                break;
+        }
+        
+        wp_send_json($result);
+    }
 }
 
-/**
- * تسجيل الإعدادات
- */
-function fadi_register_settings() {
-    register_setting('fadi_settings', 'fadi_company_name');
-    register_setting('fadi_settings', 'fadi_company_address');
-    register_setting('fadi_settings', 'fadi_company_phone');
-    register_setting('fadi_settings', 'fadi_company_email');
-    register_setting('fadi_settings', 'fadi_vat_rate');
-}
-add_action('admin_init', 'fadi_register_settings');
-
-/**
- * تحسين شريط الإدارة
- */
-function fadi_customize_admin_interface() {
-    // إضافة ستايل مخصص لشريط الإدارة
-    echo '<style>
-    #adminmenu #toplevel_page_fadi-dashboard .wp-menu-image:before {
-        content: "\f319";
-    }
-    #adminmenu #toplevel_page_fadi-dashboard:hover .wp-menu-image:before,
-    #adminmenu #toplevel_page_fadi-dashboard.wp-has-current-submenu .wp-menu-image:before {
-        color: #00a0d2;
-    }
-    </style>';
-}
-add_action('admin_head', 'fadi_customize_admin_interface');
+// تهيئة فئة لوحة الإدارة
+new FADI_Admin_Panel();
